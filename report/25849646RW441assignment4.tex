@@ -1,0 +1,837 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage[font=footnotesize]{subcaption}
+\usepackage[acronym]{glossaries}
+\makeglossaries
+\newacronym{ml}{ML}{Machine Learning}
+\newacronym{knn}{kNN}{k-Nearest Neighbours}
+\newacronym{dt}{DT}{Decision Tree}
+\newacronym{cv}{CV}{Cross-validation}
+\newacronym{smt}{SMOTE}{Synthetic Minority Over-Sampling Technique}
+\newacronym{TP}{TP}{True Positive}
+\newacronym{FP}{FP}{False Positive}
+\newacronym{TN}{TN}{True Negative}
+\newacronym{FN}{FN}{False Negative}
+\newacronym{rocauc}{ROC AUC}{Receiver Operating Characteristic Area Under the Curve}
+\newacronym{kde}{KDE}{Kernel Density Estimation}
+\newacronym{mcc}{MCC}{Matthews Correlation Coefficient}
+% *** START DOCUMENT ***
+\begin{document}
+
+% Title Section
+\title{Assignment 4: Incremental Class Learning}
+
+\author{
+\IEEEauthorblockN{Grant Booysen 25849646}
+\IEEEauthorblockA{Email: 25849646@sun.ac.za}
+}
+
+\maketitle
+
+% Abstract
+\begin{abstract}
+The report follows the evaluation of an incremental class learning approach with neural networks, specifically applied to imbalanced classification tasks. An incremental class neural network architecture 
+was built to progressively train minority classes until all the classes were covered in the training set. The architecture was applied to a modified Iris dataset \cite{fisher1936iris} and a modified Fashion-MNIST dataset \cite{xiao2017fashionmnist}. 
+The goal is to determine in imbalanced class learning scenarios if a neural network with incremental learning will outperform a static neural network model. The task was achieved by constructing each model architecture, tuning the hyperparameters for each dataset, and evaluating the models on accuracy and F1-score. 
+In the case of the report, the incremental class learner demonstrated strong performance on the Fashion-MNIST dataset, achieving high cross-validated test accuracy and F1-scores of 83.77\% and 83.73\%, respectively. The incremental model did not have a statistically
+significant difference in the metrics compared to the baseline model and had no clear advantage in terms of improving the evaluation metrics of smaller classes. Despite the lack of improvement in smaller classes, the incremental model was more stable and significantly more data efficient, where it 
+achieved 92\% validation accuracy with only 40\% of the original training data, whereas the baseline model 
+required 60\% to achieve the same performance.
+\end{abstract}
+
+% Keywords (optional)
+\begin{IEEEkeywords}
+Incremental Class Learning, Neural Networks, Imbalanced Classification
+\end{IEEEkeywords}
+
+% 1. Introduction
+\section{Introduction}
+Classification tasks are a core component of machine learning, where the objective is to predict, given input data, a discrete label from a set of possible classes. Classification 
+problems are present in various domains, including fraud detection, medical diagnosis, and image recognition. A significant challenge in classification tasks is the presence of 
+imbalanced datasets where certain classes have more representative samples than other minority classes. These imbalances can lead to biased models that would favour majority classes. The bias 
+in the model leads to poor performance in the minority classes, where metrics such as accuracy can be misleading. Various techniques are adopted to mitigate the effects of class imbalance, such as 
+resampling, synthetic data generation, and cost-sensitive learning. The approach taken by incremental class learning is to train a model progressively, exposing the model to 
+classes with the poorer representation first, and then slowly introducing the larger classes. The training of the incremental class learner allows for the model to 
+learn the underlying signal of the minority classes first and then build on that knowledge as more classes are introduced.\\
+
+The report explores the performance of an implemented incremental class learning approach using neural networks and compares it to a baseline neural network model. The models 
+are evaluated on two datasets: a modified Fashion-MNIST dataset \cite{xiao2017fashionmnist}, and a modified Iris dataset \cite{fisher1936iris}. The two datasets 
+provide different scenarios to evaluate the models in order to provide a comprehensive understanding of the strengths and weaknesses of the incremental class learning approach. The Iris dataset was 
+used to determine whether the incremental class learning approach would effectively learn from imbalanced classes with limited data. The 
+Fashion-MNIST dataset was used to evaluate the model's performance on a more complex and high-dimensional dataset. Each dataset 
+was explored, preprocessed, and the models were tuned to ensure optimal performance. \\
+
+The baseline model and the incremental class learning model were implemented using the \texttt{PyTorch} library in Python \cite{paszke2019pytorch}. The models were implemented from scratch to ensure a fair 
+comparison of the two approaches. Secondly, the incremental model required a custom implementation of the training procedure with a means to 
+dynamically adjust the model architecture as new classes were introduced. The custom architecture allowed for the model to adapt to the changing training data and learn the underlying signal of the classes effectively. Each model was tuned using grid search with cross-validation to ensure optimal hyperparameter values were selected. The models were evaluated using stratified K-fold cross-validation to ensure robust performance estimates and reported the mean and standard deviation of the metrics across the folds.\\
+
+The primary metrics used to evaluate the models were accuracy and F1-score. The accuracy provides a straightforward measure of overall correctness, but since in imbalanced learning tasks, 
+accuracy is misleading as a metric, the F1-score was also used to provide a more balanced view of performance. The F1-score is the harmonic mean of precision and recall, which provides a better 
+measure of a model's ability to correctly identify minority class instances.\\
+
+The incremental learner matched the baseline on Fashion-MNIST in test accuracy and F1-score, with paired Wilcoxon tests 
+detecting no statistically significant difference, yet it was notably more data-efficient. On the small Iris dataset, the baseline outperformed the 
+incremental class learning approach. Sequential exposure and very limited samples made the incremental procedure unsuccessful.\\
+
+The remainder of this report is organized as follows: Section~2 describes the background of the topic, 
+Section~3 presents the methods, Section~4 explains the empirical procedure, Section~5 reports the results and Section~6 ends with the conclusion and future directions.
+
+\section{Background}
+The problem domain is \textit{multi-class classification}. Multi-class classification is the process of predicting one class label from a set of available classes.
+Multi-class classification seeks to map inputs from a continuous space \(\mathcal{X} \subseteq \mathbb{R}^d\) 
+to categorical outputs in \(\mathcal{Y} = \{1,2,\dots,K\}\). 
+Given training data \(\mathcal{D} = \{(x_i, y_i)\}_{i=1}^n\) 
+with feature representations \(x_i \in \mathcal{X}\) 
+and class assignments \(y_i \in \mathcal{Y}\), 
+the task involves learning a classifier 
+\(\phi: \mathcal{X} \to \mathcal{Y}\) 
+that generalizes to predict labels for novel inputs. Neural network approaches are powerful frameworks for approximating the mapping function and were the foundational architecture for the 
+models that were implemented in the report.\\
+
+\paragraph{Incremental Class Learning}
+Incremental class learning is a technique used to address class imbalance challenges in classification tasks. If a classification model is 
+trained on the entire dataset containing class imbalances at once, the model potentially biases towards the majority classes to reduce the overall loss whilst training. 
+The bias towards the majority classes leads to the model struggling to learn the underlying signal of the minority classes and hence does not generalize well to unseen data. The aim 
+of incremental class learning is to expose the model to the minority classes first, which will allow the model to focus on learning the distinguishing features 
+of the minority classes. Larger classes are added progressively, by first allowing the model to fully learn the minority classes before introducing the larger classes. The main algorithm 
+for incremental class learning is as follows:
+
+\begin{algorithm}[H]
+\caption{Incremental Class Learning}
+\begin{algorithmic}[1]
+\REQUIRE Training data $\mathcal{D}$ with features $X$ and labels $Y$
+\ENSURE A trained classifier $\phi$
+\STATE Initialize $\phi$ with a model capable of multi-class classification
+\FOR{each class $c \in \mathcal{Y}$}
+    \STATE Expose $\phi$ to the training samples of class $c$
+    \STATE Train $\phi$ on the current class while freezing the weights for previously learned classes
+\ENDFOR
+\RETURN $\phi$
+\end{algorithmic}
+\end{algorithm}
+
+A practical example of incremental class learning is available in the \texttt{SGDClassifier} implementation of the \texttt{scikit-learn} library. 
+The \texttt{partial\_fit} method allows the classifier to be trained incrementally on batches of data, enabling new classes to be introduced progressively during training. 
+In the context of incremental class learning, the functionality makes it possible to expose the classifier to minority classes first, thereby strengthening its ability to capture 
+the underlying decision boundaries for underrepresented data before the introduction of majority classes. The incremental training interface provided by \texttt{SGDClassifier} has become one of the most widely used 
+tools for implementing online and incremental learning in practice \cite{pedregosa2011scikit}.
+
+\paragraph{Related Work}
+A key challenge in incremental decision tree induction is that each new training observation is incorporated into the growing structure, leading to
+ large memory requirements and slower training times. Fisher and Schlimmer \cite{fisher1986} demonstrate that this is not strictly necessary. Those 
+ objects that actively influence the formation of the decision tree need to be retained. By selectively incorporating examples that alter entropy measures or 
+ decision boundaries, and discarding those that contribute no new information, the learner can substantially reduce the number of stored instances. Their 
+ analysis, supported by empirical results, shows that this reduction in object incorporation yields little to no decrease in the overall quality of 
+ the derived decision trees. In their empirical evaluation, Fisher and Schlimmer demonstrate that both the batch learner with incremental 
+ updates \(\widehat{\mathrm{ID3}}\) and its counterpart ID4 were able to achieve effective classification accuracy of approximately 90\%. Remarkably, 
+ this level of accuracy was observed after as few as 100 training instances, 
+ indicating that reliable generalization could be obtained well before the learners had processed the full dataset. The incremental version of
+ ID4 took longer to reach the same level of accuracy and needed 750 observations to reach 90\% accuracy. The cost of building 
+ ID3 was significantly larger than that of \(\widehat{\mathrm{ID3}}\) despite both having the same upper bound of computational cost of 
+  $\mathcal{O}(|I|\,|A|^2)$ where \(|I|\) is the number of training instances and \(|A|\) is the number of attributes.\\
+
+Fisher and Schlimmer's selective incorporation idea carries directly to the neural network setting. Rather than 
+retaining all past data, the neural network can keep a compact rehearsal buffer of informative boundary cases that change the decision boundary. The rehearsal buffer allows the model to focus on the most relevant examples, reducing memory and training cost without sacrificing generalization. 
+The rehearsal buffer is relevant to the incremental class learning approach as it allows the model to retain knowledge of previously learned classes while learning new classes. 
+Secondly, the implementation of the incremental class learning model in the assignment validates how the incremental learning 
+approach is data efficient, as the model can achieve high performance with fewer training samples.
+% 3. Methodology
+
+\section{Methodology}
+The manner in which the baseline and incremental learner models were constructed, tuned and evaluated is discussed in the following section. 
+
+\subsection{Preprocessing dataset steps}
+Each dataset was preprocessed to ensure that the data was in a suitable format for the models. The datasets each had unique characteristics 
+that would highlight the strengths and weaknesses of the incremental class learning approach. 
+\paragraph{Iris dataset}
+The Iris dataset \cite{fisher1936iris} is a classic dataset in machine learning and statistics. It consists of a limited 150 samples from 
+three species of iris flowers. Each sample has four features: sepal length, sepal width, petal length, and petal width. The dataset is balanced with 50 samples per class. 
+ The training data was modified to create class imbalances, where the excess points were assigned to the test set. The final class 
+distribution for the sets is seen in Table~\ref{tab:iris_class_dist}.
+\begin{table}[H]
+  \centering
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+ Class & Training Samples & Validation Samples & Test Samples \\
+    \hline
+ Iris-setosa (0) & 37    & 8 & 5  \\
+ Iris-versicolor (1) & 21 & 7 & 22 \\
+ Iris-virginica (2) & 19 & 3 & 23 \\
+    \hline
+  \end{tabular}%
+ }
+  \caption{Class distribution of the modified Iris dataset}
+  \label{tab:iris_class_dist}
+\end{table}
+
+
+\paragraph{Fashion-MNIST dataset}
+The Fashion-MNIST dataset \cite{xiao2017fashionmnist} is a dataset of 70000 grayscale images of 10 different fashion items. Each image is 28x28 pixels, and the 
+dataset is split into a training set of 60000 images and a test set of 10000 images. The dataset is balanced with 6000 images per class in 
+the training set and 1000 images per class in the test set. The training data was modified to create class imbalances by removing samples from 
+several classes. The training set was further separated into a validation set using 30\% of the training data. The validation set was used in the training process to monitor 
+the performance of the models and to prevent overfitting. The test set was kept separate and only used for the final evaluation of the models. The features for the 
+Fashion-MNIST dataset are all numerical and have values between 0 and 1. 
+The final class distribution for the training, validation, and test set is seen in Table~\ref{tab:fashion_mnist_class_dist}.
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+ Class & Training Samples & Validation Samples & Test Samples \\
+    \hline
+ 0 & 6000 & 1779 & 1000\\
+ 1 & 5500 & 1640 & 1000\\
+ 2 & 5000 & 1522 & 1000\\
+ 3 & 4500 & 1340 & 1000\\
+ 4 & 4000 & 1174 & 1000\\
+ 5 & 3500 & 1064 & 1000\\
+ 6 & 3000 & 885 & 1000\\
+ 7 & 2500 & 763 & 1000\\
+ 8 & 2000 & 630 & 1000\\
+ 9 & 1500 & 453 & 1000\\
+    \hline
+  \end{tabular}
+  \caption{Class distribution of the modified Fashion-MNIST training dataset}
+  \label{tab:fashion_mnist_class_dist}
+\end{table}
+
+\paragraph{Data preparation}
+Each training and validation dataset was separated into multiple pandas DataFrames \cite{reback2020pandas}, one for each class. The DataFrames were sorted by class size in ascending order to ensure that the minority classes were
+exposed to the model first. The list of sorted DataFrames was then used in the training process to progressively introduce classes to the model. Each class label had to be mapped to a new label indicating the order in which the class 
+would be introduced to the model. The mapping was done as PyTorch \cite{paszke2019pytorch} requires that the class labels are in the range [0, K-1] where K is the number of classes that is currently being trained. For example, in the Fashion-MNIST dataset, the 
+class label 9 would be mapped to 0, class label 8 to 1, and so on.
+
+\paragraph{Baseline model}
+The baseline model is a feedforward multilayer perceptron implemented in PyTorch, with a configurable list of hidden layers and selectable Rectified Linear Unit (ReLU) or hyperbolic tangent (Tanh) activations for the hidden layers. It produces raw logits from a 
+final linear layer (suitable for cross‑entropy loss) and enforces seeded, deterministic settings to ensure reproducible training runs.
+
+\paragraph{Incremental class learning model}
+The dynamic incremental class learning model is also a feedforward multilayer perceptron implemented in PyTorch. The model starts with a single identity layer (no neurons) and one linear output layer to predict between the original two classes. The architecture of 
+the model allows for the progressive addition of neurons to the hidden layers and to update the output layer to accommodate the new classes. Each hidden layer is limited to 512 neurons for computational reasons and as a mechanism to 
+help combat overfitting. The dynamic addition of neurons is done by replacing the existing layer with a new layer that has the same weights as the previous layer, but with additional neurons initialized to zero. The model adds new 
+neurons in base-2 (powers-of-two) increments. The model keeps an internal expansion counter $k$ and, on each expansion, adds $2^k$ neurons (starting with $2^0=1$); $k$ is incremented after every addition. If the next expansion would exceed 512 neurons, the counter is reset to $k=0$, a new layer is added, and the cycle restarts until the maximum number of layers is reached. The algorithm for the expansion of the model is as follows:
+\begin{algorithm}[H]
+\caption{Dynamic Expansion of Neural Network}
+\begin{algorithmic}[1]
+\REQUIRE Current model $\phi$ with hidden layers $H$, output layer $O$, expansion counter $k$
+\STATE $n \gets 2^k$ \COMMENT{Number of neurons to add}
+\IF{$\text{last}(H).\text{out\_features} + n \leq 512$}
+    \STATE Add $n$ neurons to the last hidden layer in $H$
+    \STATE $k \gets k+1$
+\ELSE
+    \STATE Reset $k \gets 0$
+    \STATE Create a new hidden layer with $2^k = 1$ neuron
+    \STATE Append new hidden layer to $H$
+    \STATE $k \gets k+1$
+\ENDIF
+\STATE Update output layer $O$ to match new hidden dimension
+\end{algorithmic}
+\end{algorithm}
+The incremental class learning model exposes the following parameters to control the training process and help avoid under- or overfitting. The parameters are described as follows:
+\begin{itemize}
+\item \textbf{Moving average window size} \textemdash\ how many recent epochs that are included when smoothing the training/validation losses. Larger windows give smoother but slower-to-react curves; smaller windows react faster but can be noisy. The smoothing is used to judge trends rather than single-epoch noise.
+\item \textbf{Plateau threshold} \textemdash\ a tolerance on the absolute slope of the \emph{smoothed} loss trends. In the implementation, the slope magnitude is treated on a 0--1 scale: values near zero mean very strict flatness, while larger values up to one would be very lenient. When both slopes are below the threshold, training is considered plateaued, and the procedure may take action.
+\item \textbf{Underfit threshold} \textemdash\ an upper bound on the \emph{smoothed training loss}, chosen on a 0--1 scale in the implementation. Lower values closer to zero demand very low training loss before declaring the model adequately fit; higher values closer to one tolerate higher loss. For example, setting 0.5 means: if the smoothed training loss stays above 0.5 and is not meaningfully decreasing, increase complexity.
+\item \textbf{Overfit threshold (training)} \textemdash\ a requirement on how strongly the training loss must be trending downward, expressed as a normalized slope magnitude in 0--1. Smaller values near zero make the detector sensitive to even tiny decreases; larger values require a clearly negative trend before triggering. The condition, combined with the validation trend below, flags overfitting.
+\item \textbf{Overfit threshold (validation)} \textemdash\ a requirement on how strongly the validation loss must be trending upward, also on a 0--1 slope scale. Smaller values near zero react to slight increases; larger values only react to clear worsening. When training improves past its threshold while validation worsens past the threshold, the model is considered to be overfitting, and the procedure reacts.
+\item \textbf{Minimum number of neurons} \textemdash\ the least number of neurons that are added on the first expansion of the first hidden layer. A larger minimum accelerates early capacity growth; a smaller one grows the network more cautiously.
+\item \textbf{Learning rate} \textemdash\ the optimizer step size. Because the architecture can change during training by adding neurons or outputs, the optimizer is reinitialized with this rate after structural updates to maintain stable training.
+\item \textbf{Activation function} \textemdash\ the hidden-layer nonlinearity.
+\item \textbf{Maximum hidden layers} \textemdash\ the maximum number of hidden layers that can be added to the model architecture. Once the limit is reached, no further layers are added.
+\end{itemize}
+
+\paragraph{Data-efficiency protocol}
+To quantify data efficiency, the validation accuracy was evaluated as a function of the fraction of training data available. For each 
+percentage, a \emph{stratified} subset was drawn to preserve class proportions, trained with the same optimization settings, and  
+run over a small set of random seeds from 42 to 46. The \emph{maximum} validation accuracy was kept across those seeds at that 
+percentage. The max-over-seeds view intentionally reflected a best-case outcome for the data available and was applied identically to 
+the baseline and incremental learners. An acceptable validation goal threshold was chosen where the \emph{data-efficiency point} 
+for a model is the smallest percentage at which its best-seed accuracy first reached or exceeded the goal threshold.
+
+\subsection{Training procedure}
+The training procedure for each model was different. Both models use the Adam optimizer \cite{kingma2015adam} with a tuned learning rate and use cross-entropy loss. The training procedure for each model is described below.
+\paragraph{Baseline model training}
+The model was trained for a specified 
+number of epochs with early stopping based on the validation loss. 
+
+\paragraph{Incremental class learning model training}
+The model was trained for a specified number of epochs; however, unlike the baseline model, the plateau, underfit, and overfit thresholds were used to determine how the 
+model would progress through the classes. The thresholds were thus used to determine when to stop training on the current class set and to add the next class to the set. 
+The incremental model was trained in stages, starting with the two smallest classes and gradually 
+introduced the remaining classes as the learning curves stabilized. At each epoch, training and validation 
+losses/accuracies were computed, smoothed the losses with a moving-average window, and fitted a simple linear trend 
+to the smoothed series. The slopes drive three decisions:
+\begin{itemize}
+  \item \textbf{Plateau detection} \textemdash\ if both smoothed losses have slopes below the plateau threshold, training is considered plateaued and the next class can be added.
+  \item \textbf{Underfitting detection} \textemdash\ if the smoothed training loss is above the underfit threshold and not meaningfully decreasing, the model is considered underfit and neurons are added to the last hidden layer.
+  \item \textbf{Overfitting detection} \textemdash\ if the smoothed training loss is meaningfully decreasing while the smoothed validation loss is not improving, the model is considered overfit and the training for the current class set is stopped. 
+ If the model has not yet reached the minimum number of neurons, neurons are added to the last hidden layer; otherwise, the next class is added. The choice to add 
+ neurons in the seemingly overfit condition was to prevent the model from memorizing the training data and never growing in complexity as more classes are added. 
+\end{itemize}
+
+The trend-based control loop prioritizes signal over per-epoch noise, letting the model grow only when needed and advance through classes when learning has
+saturated. Training stops early if a target validation accuracy is reached when all classes have been introduced or when the epoch budget is exhausted.
+
+\subsection{Comparison of models}
+The models were compared using the training, cross-validation, and test results using different metrics. The final confirmation of model performance was concluded using statistical tests to have 
+reasonable confidence in the results. In the process of cross-validation, the following metrics were recorded:
+ Training time, accuracy, precision, recall, and F1-score for the training, validation, and test sets. The metrics are 
+defined as follows:
+\begin{itemize}
+  \item Accuracy - the proportion of all examples that the model classified correctly.
+  \item Precision - the fraction of instances predicted as positive that are truly positive.
+  \item Recall - the fraction of true positive instances that the model successfully detected.
+  \item F1-score - the harmonic mean of precision and recall, giving a single measure that balances both.
+\end{itemize}
+
+\paragraph{Statistical tests of models}
+The normality of the test F1 and accuracy distributions was determined using Shapiro-Wilk ($\alpha{=}0.05$) to determine the appropriate statistical tests to use.
+ The null hypothesis of the Shapiro-Wilk test states that the data is normally distributed. If the p-value is less than the significance level, the null hypothesis is rejected, and it is concluded that the data is not normally distributed. The Shapiro-Wilk test results indicate whether the metrics 
+ for both models were normally distributed. The following statistical test was used:
+\begin{itemize}
+\item Wilcoxon signed-rank test - a nonparametric test for comparing two related samples when distributional assumptions (such as normality) do not hold. The null hypothesis is that there is no difference between the models.
+\end{itemize}
+
+% 4. Empirical Procedure
+
+\section{Empirical Procedure}
+The empirical procedure involved the following steps: model construction with hyperparameter tuning, training and validation, and finally testing and evaluation. Each step is described in detail in the following subsections.
+
+\subsection{Pipeline and hyperparameter tuning}
+Each dataset required different preprocessing steps for the hyperparameter tuning. The method for tuning is described in this subsection.
+
+\paragraph{Iris dataset hyperparameter tuning}
+The Iris dataset was small enough to directly apply the hyperparameter tuning on the full training and validation sets. The hyperparameters that were tuned included the number of hidden layers, the number of 
+neurons per layer, learning rate, and activation function. The following configurations were used for the baseline hyperparameter tuning over 300 epochs:
+\begin{itemize}
+\item Hidden layers: [1, 2]
+\item Neurons per layer: [1, 2, 4, 8]
+\item Learning rate: [0.001, 0.005, 0.01, 0.5, 0.1]
+\item Activation function: [ReLU, Tanh]
+\end{itemize}
+ The following configurations were used for the incremental class learner hyperparameter tuning over 1000 epochs:
+\begin{itemize}
+\item Moving average window size: [1, 2, 3, 5, 10, 20]
+\item Plateau threshold: [0.004, 0.01, 0.05, 0.1]
+\item Underfit threshold: [0.1, 0.2, 0.3, 0.4, 0.5]
+\item Overfit threshold (training): [0.1, 0.15, 0.2]
+\item Overfit threshold (validation): [0.1, 0.15, 0.2]
+\item Minimum number of neurons: [1, 2, 4, 8]
+\item Learning rate: [0.001, 0.005, 0.01, 0.5, 0.1]
+\item Activation function: [ReLU, Tanh]
+\item Maximum hidden layers: [1, 2, 3]
+\end{itemize}
+Each configuration was run three times with different random seeds; however, the results were the same across the runs due to 
+the small size of the dataset. The best configuration was selected based on the highest validation accuracy.
+\paragraph{Fashion-MNIST dataset hyperparameter tuning}
+ The Fashion-MNIST dataset required a smaller stratified sample of the training and validation sets to perform the hyperparameter tuning. Specifically, 10\% of the training and validation set was used for the Fashion-MNIST hyperparameter tuning. The baseline tuning required a minimum of 300 epochs to 
+ converge to a good solution for the sample data. 
+The following configurations were used for the baseline hyperparameter tuning over 300 epochs:
+\begin{itemize}
+\item Hidden layers: [1, 2, 3, 4]
+\item Neurons per layer: [50, 64, 100, 128, 150, 200, 256, 300, 512]
+\item Learning rate: [0.001, 0.005, 0.5, 0.1]
+\item Activation function: [ReLU, Tanh]
+\end{itemize}
+ The incremental class learner made use of the same configurations as the Iris dataset; however, the maximum 
+ number of hidden layers was increased to [1, 2, 3, 4]. Each configuration was run three times with
+ different random seeds, starting from 42 to 44. The best configuration was selected based on the highest validation accuracy.
+
+\subsection{Training and validation}
+Each model was trained on the full training set and validation set. The training and validation losses and accuracies were recorded 
+at each epoch to monitor the training process.  The models were cross-validated over 30 independent runs with different random seeds starting from 42 and incrementing by one per run. Over each run, the training and validation sets 
+were ensured to be stratified to maintain the class distribution. The best model was selected based on the highest validation accuracy. The final 
+test set was only used for the final evaluation of the models. 
+
+\paragraph{Iris model training}
+ Each Iris dataset baseline model was trained for a maximum of 150 epochs with early stopping using a patience of 10 epochs. 
+Each incremental class learning model was trained for a maximum of 1000 epochs.
+\paragraph{Fashion-MNIST model training}
+ Each Fashion-MNIST dataset baseline model was trained for a maximum of 350 epochs with early stopping using a patience of 25 epochs. Each incremental 
+ model was trained for a maximum of 3500 epochs.
+
+\subsection{Metric comparison and statistical tests}
+The following empirical procedure was used to determine whether the observed differences in test metrics (accuracy and F1) between the baseline and incremental models are statistically significant.
+
+\begin{enumerate}
+  \item Collect paired metric values across the repeated experiments where over 30 independent runs record the baseline and incremental values. 
+  \item Visual inspection: produce paired boxplots of the differences to check for obvious non-normality or extreme outliers.
+  \item Normality check: apply the Shapiro--Wilk test to the sample of paired differences for each metric using significance level \(\alpha=0.05\). Record the test statistic and p-value.
+  \item Test selection:
+    \begin{itemize}
+      \item If the Shapiro--Wilk p-value \(\ge 0.05\), assume approximate normality and perform a two-sided paired Student's t-test on the differences.
+      \item If the Shapiro--Wilk p-value \(< 0.05\), reject normality and perform a two-sided Wilcoxon signed-rank test on the paired differences.
+    \end{itemize}
+  \item Report results for each metric: test statistic, p-value, and decision (reject/fail to reject $H_0$ at \(\alpha=0.05\)).
+\end{enumerate}
+
+% 5. Research Results
+
+\section{Research Results}
+The results of the models are presented in the following section. The results include the hyperparameter tuning, training, validation, and
+ cross-validation results, and finally, the statistical tests to determine if there was a significant difference between the two models.
+
+\subsection{Iris dataset hyperparameter tuning results}
+ The top configurations were found to have a single hidden layer with few neurons, a high learning rate of 0.1, and the ReLU activation function. To keep the model simple, the configuration with 4 neurons was chosen as the final model. 
+ The configurations and their corresponding mean accuracy are shown in Table~\ref{tab:baseline_iris_best_configs}.
+\begin{table}[H]
+  \centering
+  \begin{minipage}{0.85\linewidth}
+    \centering
+    \caption{Best Baseline Model Hyperparameter Configurations for Iris}
+    \label{tab:baseline_iris_best_configs}
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}p{0.19\linewidth} p{0.31\linewidth} p{0.15\linewidth} p{0.15\linewidth} p{0.15\linewidth}@{}}
+      \toprule
+      \shortstack{Hidden\\Layers} &
+      \shortstack{Number of Neurons\\(layer 1, layer 2, \dots)} &
+      \shortstack{Learning\\Rate} &
+      \shortstack{Activation\\Function} &
+      \shortstack{Accuracy\\(mean)} \\
+      \midrule
+ 1 & (8,)   & 0.10  & ReLU & 0.977 $\pm$ 0.000\\
+ 1 & (4,)   & 0.10  & ReLU & 0.977 $\pm$ 0.000\\
+ 2 & (1,1)  & 0.001 & ReLU & 0.622 $\pm$ 0.000\\
+ 1 & (2,)   & 0.10  & ReLU & 0.611 $\pm$ 0.000\\
+      \bottomrule
+    \end{tabular}
+  \end{minipage}
+\end{table}
+The optimal hyperparameter values for the incremental class learning model can be found in Table~\ref{tab:icl_iris_best_configs}. 
+\begin{table}[H]
+  \centering
+  \caption{Best Incremental Class Learning Model Hyperparameter Configurations for Iris}
+  \label{tab:icl_iris_best_configs}
+  \scriptsize
+  \setlength{\tabcolsep}{6pt}
+
+  % First sub-table: training thresholds
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{tabular}{@{}ccccc@{}}
+      \toprule
+ Moving & Plateau & Underfit & Overfit (Training) & Overfit (Validation) \\
+ Average & Threshold & Threshold & Threshold & Threshold \\
+ Window & & & & \\
+      \midrule
+ 3 & 0.004 & 0.4 & 0.2 & 0.2 \\
+ 3 & 0.004 & 0.3 & 0.1 & 0.1 \\
+ 3 & 0.004 & 0.4 & 0.2 & 0.1 \\
+ 3 & 0.004 & 0.2 & 0.2 & 0.2 \\
+      \bottomrule
+    \end{tabular}
+  \end{minipage}
+
+  \vspace{6pt}
+
+  % Second sub-table: architecture and results
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{tabular}{@{}cccc@{}}
+      \toprule
+ Min Neurons & Learning Rate & Activation Function & Accuracy (mean) \\
+      \midrule
+ 1 & 0.5 & ReLU & 0.9773 $\pm$ 0.0001\\
+ 8 & 0.5 & Tanh & 0.9772 $\pm$ 0.0001\\
+ 8 & 0.5 & ReLU & 0.9772 $\pm$ 0.0001\\
+ 8 & 0.5 & Tanh & 0.9500 $\pm$ 0.0001\\
+      \bottomrule
+    \end{tabular}
+  \end{minipage}
+\end{table}
+A particular point to be made from looking at the results in Table~\ref{tab:icl_iris_best_configs} is the high learning rate of 0.5. 
+The high learning rate is likely due to the small size of the dataset and the simplicity of the model. The high learning rate allows the model to converge quickly to a good solution.
+
+\subsection{Fashion-MNIST dataset hyperparameter tuning results}
+ The top configurations were found to have three or four hidden layers with many neurons, a low 
+ learning rate of 0.001, and the ReLU activation function. The configurations and their 
+ corresponding mean validation accuracy is shown in Table~\ref{tab:baseline_fashion_mnist_best_configs}. 
+\begin{table}[H]
+  \centering
+  \begin{minipage}{0.85\linewidth}
+    \centering
+    \caption{Best Baseline Model Hyperparameter Configurations for Fashion-MNIST}
+    \label{tab:baseline_fashion_mnist_best_configs}
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \begin{tabular}{@{}p{0.19\linewidth} p{0.31\linewidth} p{0.15\linewidth} p{0.15\linewidth} p{0.15\linewidth}@{}}
+      \toprule
+      \shortstack{Hidden\\Layers} &
+      \shortstack{Number of Neurons\\(layer 1, layer 2, \dots)} &
+      \shortstack{Learning\\Rate} &
+      \shortstack{Activation\\Function} &
+      \shortstack{Accuracy\\(mean)} \\
+      \midrule
+      4 & (512, 256, 128, 64)   & 0.001  & ReLU & 0.8860 $\pm$ 0.0054 \\
+      4 & (300, 200, 100, 50)   & 0.001  & ReLU & 0.8833 $\pm$ 0.0067 \\
+      3 & (512, 512, 512)  & 0.001 & ReLU & 0.8817 $\pm$ 0.0075 \\
+      3 & (256, 128, 64)   & 0.001  & ReLU & 0.8816 $\pm$ 0.0076 \\
+      \bottomrule
+    \end{tabular}
+  \end{minipage}
+\end{table}
+The optimal parameter values for the incremental class learning model indicate that adding more complexity past three hidden layers to the model was 
+not very beneficial, with only a minimal increase in accuracy. The simplest model was thus chosen as the final model. 
+The optimal hyperparameter values for the incremental class learning model can be found in Table~\ref{tab:icl_fashion_best_configs}. 
+\begin{table}[H]
+  \centering
+  \caption{Best Incremental Class Learning Model Hyperparameter Configurations for Fashion-MNIST}
+  \label{tab:icl_fashion_best_configs}
+  \scriptsize
+  \setlength{\tabcolsep}{6pt}
+
+  % First sub-table: training thresholds
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{tabular}{@{}ccccc@{}}
+      \toprule
+ Moving & Plateau & Underfit & Overfit (Training) & Overfit (Validation) \\
+ Average & Threshold & Threshold & Threshold & Threshold \\
+ Window & & & & \\
+      \midrule
+ 10 & 0.001 & 0.5 & 0.1 & 0.15 \\
+ 10 & 0.001 & 0.5 & 0.15 & 0.1 \\
+ 10 & 0.001 & 0.5 & 0.15 & 0.15 \\
+ 10 & 0.001 & 0.4 & 0.1 & 0.1 \\
+      \bottomrule
+    \end{tabular}
+  \end{minipage}
+
+  \vspace{6pt}
+
+  % Second sub-table: architecture and results
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{tabular}{@{}cccc@{}}
+      \toprule
+ Min Neurons & Learning Rate & Activation Function & Accuracy (mean) \\
+      \midrule
+ 16 & 0.01 & ReLU & 0.9374 $\pm$ 0.001\\
+ 16 & 0.01 & ReLU & 0.9374 $\pm$ 0.001\\
+ 16 & 0.01 & ReLU & 0.9374 $\pm$ 0.001\\
+ 16 & 0.01 & ReLU & 0.9277 $\pm$ 0.002\\
+      \bottomrule
+    \end{tabular}
+  \end{minipage}
+\end{table}
+The best-performing incremental setup on Fashion-MNIST reached a mean accuracy of 0.9374 with 16 minimum neurons, 
+a 0.01 learning rate, and ReLU activations. The top-performing models had similar configurations for the 
+parameters, with the focus on the balance of underfitting and overfitting thresholds to ensure that the model was not 
+too complex or too simple.
+
+\subsection{Iris model training and validation results}
+The learning curves for the best run of the baseline and incremental class learning models are shown in Figure~\ref{fig:iris_baseline_learning_curves}. 
+The difference in the two loss curves highlights the difference in learning approaches, where the baseline 
+model's loss progressively decreases until stabilizing, whilst the incremental learner first stabilizes the 
+loss for the first two minority classes, and when adding the next class, there is a spike in loss, which is then smoothed and stabilized.
+From the below learning curves, it can be seen that the incremental class learning model had 
+sufficiently reduced the training and validation losses to a point where the model was not underfitting or overfitting. Although the final loss 
+appears to be quite low for both training and validation, keep in mind that the dataset is small and thus has limited 
+exposure to all the variability in the data.
+% \begin{figure}[H]
+%   \centering
+%   \begin{subfigure}[b]{\linewidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{images/iris_baseline_learning_curves_loss.pdf}
+%     \caption{Training and validation loss for baseline Iris model}
+%     \label{fig:iris_baseline_loss}
+%   \end{subfigure}\hfill
+%   \begin{subfigure}[b]{\linewidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{images/iris_dynamic_learning_curves_loss.pdf}
+%     \caption{Training and validation loss for dynamic Iris model}
+%     \label{fig:iris_dyn_loss}
+%   \end{subfigure}
+%   \caption{Iris baseline model learning curves for the best run.}
+%   \label{fig:iris_baseline_learning_curves}
+% \end{figure}
+
+ The cross-validation and test results provide a better indication of the model's performance and can be seen in Table~\ref{tab:metric_means_iris}.
+The results below indicate that the baseline model outperformed the incremental class learning model on all metrics. The incremental class learning 
+model struggled with the small dataset and was unable to learn the relationships in the data. The incremental model's underwhelming performance is likely due 
+to the small size of the dataset. The baseline model performed better than the incremental class learning model, as it was able to consider the 
+entire dataset at once and thus could learn the more nuanced relationships between classes better. The incremental class learning model was at a disadvantage as it had to learn the classes
+progressively and thus had limited exposure to the data at any given time. Furthermore, since the validation set was small, the model 
+would not be able to compute reliable trends to determine when to add complexity or new classes. The incremental model evidently struggled to 
+improve its performance as it consistently predicted the same incorrect outputs as seen in the lack of variance in the results.
+
+\begin{table}[H]
+  \centering
+  \caption{Mean $\pm$ std.\ dev.\ for Baseline and Incremental models. Percentage metrics shown as mean $\pm$ std (percent); time shown in seconds.}
+  \label{tab:metric_means_iris}
+  \scriptsize
+  \setlength{\tabcolsep}{6pt}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{@{}lcc@{}}
+    \toprule
+ Metric & Baseline (Mean $\pm$ Std) & Incremental (Mean $\pm$ Std) \\
+    \midrule
+ Accuracy (Test)        & 96.21\% $\pm$ 2.17\% & 44.07\% $\pm$ 0.00\% \\
+ F1 (Test)              & 96.87\% $\pm$ 1.78\% & 20.39\% $\pm$ 0.00\% \\
+ Precision (Test)       & 97.16\% $\pm$ 1.73\% & 14.69\% $\pm$ 0.00\% \\
+ Recall (Test)          & 96.79\% $\pm$ 1.72\% & 33.33\% $\pm$ 0.00\% \\
+ Training Time (s)      & 0.376 $\pm$ 0.008 s   & 0.271 $\pm$ 0.004 s \\
+ Accuracy (Train)       & 98.58\% $\pm$ 2.05\% & 32.00\% $\pm$ 0.00\% \\
+ F1 (Train)             & 96.58\% $\pm$ 2.07\% & 13.01\% $\pm$ 0.00\% \\
+ Precision (Train)      & 96.64\% $\pm$ 2.01\% & 8.08\%  $\pm$ 0.00\% \\
+ Recall (Train)         & 96.58\% $\pm$ 2.12\% & 33.33\% $\pm$ 0.00\% \\
+ Accuracy (Validation)  & 98.00\% $\pm$ 2.52\% & 32.00\% $\pm$ 0.00\% \\
+ F1 (Validation)        & 98.12\% $\pm$ 2.38\% & 16.16\% $\pm$ 0.00\% \\
+ Precision (Validation) & 98.35\% $\pm$ 2.05\% & 10.67\% $\pm$ 0.00\% \\
+ Recall (Validation)    & 98.14\% $\pm$ 2.37\% & 33.33\% $\pm$ 0.00\% \\
+      \bottomrule
+      \end{tabular}%
+ }
+  \vspace{2pt}
+  \footnotesize Note: Percentage metrics: means and standard deviations computed from raw decimals, then multiplied by 100 and shown with two decimal places. Time reported in seconds.
+\end{table}
+
+\subsection{Fashion-MNIST training and validation results}
+Fortunately, the Fashion-MNIST dataset was large enough for the incremental class learning model to learn the relationships in the data. The results are thus more 
+promising than that of the Iris dataset.
+The learning curves for the best run of the baseline and incremental class learning models are shown in Figure~\ref{fig:fashion_baseline_learning_curves}. 
+The baseline model's loss curves in Figure~\ref{fig:fashion_baseline_loss} show a typical training pattern where the training loss decreases and stabilizes,
+ while the validation loss decreases and stabilizes at a higher loss. The incremental class learning model's loss curves in Figure~\ref{fig:fashions_dyn_loss} show a more complex pattern due to 
+ the dynamic nature of the model. The loss curves show spikes in loss, indicative of either a new class being added to the training and validation set 
+or a new hidden layer being added. Due to the strict thresholds for overfitting and underfitting, the loss curves for 
+the dynamic model seemingly lie on top of each other. The scale of the fluctuations is much smaller compared to the baseline model, where the difference in training and validation loss is not as pronounced. To better visualize the results of the training of the dynamic 
+Fashion-MNIST model, refer to the accuracies obtained as seen in Figure~\ref{fig:fashions_dyn_acc}.
+
+% \begin{figure}[H]
+%   \centering
+%   \begin{subfigure}[b]{\linewidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{images/fashion-mnist_baseline_learning_curves_loss.pdf}
+%     \caption{Training and validation loss for baseline Fashion model}
+%     \label{fig:fashion_baseline_loss}
+%   \end{subfigure}\hfill
+%   \begin{subfigure}[b]{\linewidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{images/fashion_dynamic_learning_curves_loss.pdf}
+%     \caption{Training and validation loss for the dynamic Fashion model}
+%     \label{fig:fashions_dyn_loss}
+%   \end{subfigure}
+%   \hfill
+%   \begin{subfigure}[b]{\linewidth}
+%     \centering
+%     \includegraphics[width=\linewidth]{images/fashion_dynamic_learning_curves_acc.pdf}
+%     \caption{Training and validation accuracy for the dynamic Fashion model}
+%     \label{fig:fashions_dyn_acc}
+%   \end{subfigure}
+%   \caption{Fashion baseline model learning curves for the best run.}
+%   \label{fig:fashion_baseline_learning_curves}
+% \end{figure}
+
+A particular point of interest is the first 100 epochs of Figure~\ref{fig:fashions_dyn_acc}, which highlight the initial learning dynamics. The validation accuracy oscillates 
+between extremes, achieving incredibly high and low accuracies. The oscillation is due to the following: The model initially being simple memorizes the 
+training data, achieves high training accuracy, and low validation accuracy. The model training process recognizes that result as overfitting, thus first tries 
+to add complexity if the minimum number of neurons was not reached. The model then adds complexity and improves the validation performance, and achieves very high validation results as the data is still small. The model then adds 
+a new class when a sufficiently low validation loss is reached. The process then repeats itself. The training only begins to stabilize when the model 
+is complex enough to start learning relationships instead of memorizing the data. \\
+
+The results of the cross validation and test results for the Fashion-MNIST dataset were more promising than that of the Iris dataset. 
+The results can be found in Table~\ref{tab:metric_means_fashion}. As is seen from the results in Table~\ref{tab:metric_means_fashion}, the incremental class learning model outperformed the baseline model on most metrics; however, the 
+ test metrics were very similar. The incremental learner had more stable performance as the standard deviations were lower across all metrics. A particular point 
+ of interest is the training times, where the incremental learner took significantly longer to train than the baseline model. The trade-off between the two models 
+ is between performance and training time, as the incremental class learning model took significantly longer to tune, train, and validate; however, it achieved more stable performance. 
+
+\begin{table}[H]
+  \centering
+  \caption{Mean $\pm$ std.\ dev.\ for Baseline and Incremental models. Percentage metrics shown as mean $\pm$ std (percent); time shown in seconds.}
+  \label{tab:metric_means_fashion}
+  \scriptsize
+  \setlength{\tabcolsep}{6pt}
+  \resizebox{\columnwidth}{!}{%
+  \begin{tabular}{@{}lcc@{}}
+    \toprule
+ Metric & Baseline (Mean $\pm$ Std) & Incremental (Mean $\pm$ Std) \\
+      \midrule
+ Accuracy (Test)        & 83.59\% $\pm$ 7.04\% & 83.77\% $\pm$ 5.74\% \\
+ F1 (Test)              & 82.96\% $\pm$ 8.18\% & 83.73\% $\pm$ 6.33\% \\
+ Precision (Test)       & 83.87\% $\pm$ 7.70\% & 83.54\% $\pm$ 7.45\% \\
+ Recall (Test)          & 83.55\% $\pm$ 6.93\% & 84.35\% $\pm$ 4.43\% \\
+ Training Time (s)      & 9.65 $\pm$ 1.88 s    & 115.77 $\pm$ 12.70 s \\
+ Accuracy (Train)       & 88.88\% $\pm$ 9.79\% & 93.94\% $\pm$ 8.26\% \\
+ F1 (Train)             & 88.53\% $\pm$ 10.66\% & 94.29\% $\pm$ 7.93\% \\
+ Precision (Train)      & 89.72\% $\pm$ 9.43\% & 93.84\% $\pm$ 9.27\% \\
+ Recall (Train)         & 89.00\% $\pm$ 9.57\% & 95.25\% $\pm$ 5.36\% \\
+ Accuracy (Validation)  & 86.89\% $\pm$ 8.81\% & 90.21\% $\pm$ 7.36\% \\
+ F1 (Validation)        & 86.31\% $\pm$ 9.79\% & 90.29\% $\pm$ 7.42\% \\
+ Precision (Validation) & 87.24\% $\pm$ 9.12\% & 89.98\% $\pm$ 8.71\% \\
+ Recall (Validation)    & 86.76\% $\pm$ 8.66\% & 91.07\% $\pm$ 5.09\% \\
+        \bottomrule
+        \end{tabular}%
+ }
+  \vspace{2pt}
+  \footnotesize Note: Percentage metrics: means and standard deviations computed from raw decimals, then multiplied by 100 and shown with two decimal places. Time reported in seconds.
+\end{table}
+The test metrics were very similar, thus requires further analysis to determine if the models were statistically different. 
+The box plots in Figure~\ref{fig:boxplots} show the distributions of the test accuracy and F1 metrics across the 30 cross-validation runs. The box plot was 
+used for the primary metrics of interest, accuracy and F1, as they provide a good visual representation of the distribution of the metrics.
+Both boxplot figures show the same outlier performance in the incremental model. The baseline model had a higher median 
+performance across both metrics and higher maximum values. The baseline performance is skewed to the left, where the 
+distribution of the values is gathered at the higher scores. The results suggest that the baseline model is 
+generally, a stronger performer than the incremental model; however, the baseline model had more variability in its performance. The statistical tests will confirm whether there 
+is any statistical difference between the two models. 
+% \begin{figure}[H]
+%   \centering
+%   \begin{subfigure}[b]{\linewidth}
+%     \centering
+%     \includegraphics[height=5cm,keepaspectratio]{images/test_acc.pdf}
+%     \caption{Test accuracy distributions (30 runs)}
+%     \label{fig:box_accuracy}
+%   \end{subfigure}\hfill
+%   \begin{subfigure}[b]{\linewidth}
+%     \centering
+%     \includegraphics[height=5cm,keepaspectratio]{images/test_f1.pdf}
+%     \caption{Test F1 distributions (30 runs)}
+%     \label{fig:box_f1}
+%   \end{subfigure}
+%   \caption{Box plots comparing the baseline and incremental models across cross-validation runs for Fashion-MNIST. Boxes show median, interquartile range, and outliers for each model.}
+%   \label{fig:boxplots}
+% \end{figure}
+
+
+\paragraph{Per-class breakdown (Fashion-MNIST test)}
+The per-class breakdown of the test results will better expose how the model performed on the minority classes on a particular run. The 
+class-level F1s in Table~\ref{tab:fashion_per_class_f1} show that the dynamic model's main gain appears on Class 3, rather than exclusively on the 
+minority classes in the training distribution. In other words, the incremental learner unfortunately did not simply “boost the small classes”. 
+
+\begin{table}[H]
+  \centering
+  \caption{Per-class F1 on Fashion-MNIST test. Delta is (Dynamic $-$ Baseline). The largest improvement is on Class 3.}
+  \label{tab:fashion_per_class_f1}
+  \scriptsize
+  \setlength{\tabcolsep}{6pt}
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+ Class & F1 (Baseline) & F1 (Dynamic) & $\Delta$ \\
+    \midrule
+ 0 & 0.93 & 0.94 & +0.01 \\
+ 1 & 0.95 & 0.95 & +0.00 \\
+ 2 & 0.92 & 0.94 & +0.02 \\
+    \textbf{3} & \textbf{0.62} & \textbf{0.65} & \textbf{+0.03} \\
+ 4 & 0.94 & 0.95 & +0.01 \\
+ 5 & 0.77 & 0.77 & +0.00 \\
+ 6 & 0.87 & 0.86 & $-$0.01 \\
+ 7 & 0.77 & 0.78 & +0.01 \\
+ 8 & 0.97 & 0.97 & +0.00 \\
+ 9 & 0.81 & 0.80 & $-$0.01 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Data-efficiency findings (Fashion-MNIST)}
+ Using random seeds 42 to 46 and a target validation accuracy of 92\%, the incremental learner
+ reached the threshold with a smaller fraction of the training data than the baseline network. In other words, as the data budget increased, 
+ the incremental curve crossed 0.92 earlier, whereas the baseline required a higher percentage to meet the same criterion. The behaviour 
+matched the staged, trend-based training. By focusing capacity on the early classes and expanding only when losses plateau or change, the 
+incremental model learns useful patterns sooner. The data efficiency graph can be seen in Figure~\ref{fig:data_efficiency}.
+% \begin{figure}[H]
+%   \centering
+%     \includegraphics[width=\linewidth]{images/fashion-mnist:_baseline_vs_dynamic_accuracy_quick_plot.pdf}
+%     \caption{Data efficiency comparison for Fashion-MNIST. Each point is the maximum validation accuracy over four random seeds at that training percentage. The horizontal dashed line marks the 92\% target.}
+%     \label{fig:data_efficiency}
+% \end{figure}
+Over the four random seeds, both models dipped in performance at 50\% of the training data. The dip is likely due to the 
+ particular samples chosen for that percentage, as the samples were stratified, but not guaranteed to be representative of the full dataset. 
+ The incremental model reached the 92\% target at 40\% of the training data, whereas the baseline model required 60\% of the training data
+ to reach the same target in the best run. The incremental model was thus more data efficient than the baseline model.
+\paragraph{Statistical Significance Testing}
+
+Shapiro-Wilk tests were used to assess the normality of the paired differences between the two models. The results
+ for the tests were:
+\begin{itemize}
+  \item Shapiro-Wilk p-value for accuracy difference equals 0.0195; Shapiro-Wilk p-value for F1 difference equals 0.0204.
+  \item Both p-values are less than 0.05, so the null hypothesis of normality is rejected for both differences.
+\end{itemize}
+
+
+Hypotheses (for each metric):
+$H_0$: no difference between models; $H_1$: difference between models.
+
+Because normality was rejected, Wilcoxon signed-rank tests were used:
+\begin{table}[H]
+  \centering
+  \caption{Normality and Wilcoxon test results}
+  \label{tab:stats_tests}
+  \begin{tabular}{@{}l c c@{}}
+    \toprule
+ Test (metric) & Statistic & p-value \\
+    \midrule
+ Shapiro-Wilk (Accuracy diff) & -- & 0.0195 (reject normality) \\
+ Shapiro-Wilk (F1 diff)       & -- & 0.0204 (reject normality) \\
+ Wilcoxon (Accuracy)          & 215.0000 & 0.7188 (fail to reject $H_0$) \\
+ Wilcoxon (F1)                & 228.0000 & 0.9262 (fail to reject $H_0$) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Both paired differences deviate from normality, so nonparametric Wilcoxon tests were used, and in
+ both cases fail to reject the null hypothesis, as no significant difference was detected between the models for
+ accuracy or F1.
+
+  \paragraph{Discussion}
+The statistical tests indicate that there was no statistically significant difference between the two models for both accuracy and F1 metrics. Therefore, in the case of the Fashion-MNIST dataset, 
+the incremental class learning model does not provide a statistically significant improvement over the baseline model in pure evaluation metrics. However, despite the 
+lack of statistical significance, the incremental class learning model showed major improvement on the Fashion-MNIST dataset as compared to the Iris 
+dataset. The poor performance on the Iris dataset was due to the small size of the dataset, where inter-class relationships 
+could not be learned effectively. The architecture of the model favoured more aggressive learning, where the model would 
+quickly add complexity to learn the relationships in the data. The aggressive learning was not suitable for the small Iris 
+dataset, where the model would quickly overfit to the small amount of data. The incremental class learning model was more suited to the
+ larger Fashion-MNIST dataset, where the model could learn the relationships in the data better. The incremental class learning model was 
+ more stable, with lower standard deviations across all metrics. The improvement in stability was surprising as the incremental class learning model had more hyperparameters to tune, which would typically lead to more variability in the results.\\
+ 
+ The incremental class learning model was also more data efficient, reaching 
+ a target validation accuracy of 92\% with only 40\% of the training data, whereas the baseline model required 60\% of the training data
+ to reach the same target for the Fashion-MNIST dataset. The incremental model was not able to show significant improvement on the minority 
+ classes, where the largest improvement was on Class 3, which was not a minority class. Despite the lack of significant improvement on the 
+ minority classes, the ability of the model to be more data efficient is beneficial in scenarios where data is imbalanced, limited, or expensive to obtain.
+ In such scenarios, the imbalanced data problem is often coupled with limited data, where the incremental class learning model could be beneficial.
+
+ Overall, the incremental class learning model shows promise as a learning approach if data efficiency and stability are priorities. The challenge 
+ with the dynamic model was the hyperparameter tuning, where the model had many more parameters to tune than the baseline. Secondly, the dynamic model required 
+ significantly more time and resources to train and validate, as the model took over 12 times longer to train than the baseline model. However, due to the flexibility of the approach, 
+ the model could be adapted to different datasets and learning scenarios. 
+
+\section{Conclusion}
+The intention of the report was to determine the benefit of making use of incremental learning in neural networks to combat imbalanced datasets. Two datasets were used to evaluate the performance of the incremental class learning model against a baseline model. The Iris dataset was too small for the incremental class learning model to be effective, where the baseline model outperformed it on all metrics. 
+The Fashion-MNIST dataset was more promising, where the incremental class learning model achieved higher scores on all metrics. Despite these metrics being higher, the models 
+did not have a statistically significant difference in the accuracy and F1 scores. Despite the lack of statistical significance, the incremental class learning model was more data efficient, reaching a 
+target validation accuracy of 92\% with only 40\% of the training data, whereas the baseline model required 60\% of the training data
+ to reach the same target for the Fashion-MNIST dataset. The incremental class learning model was also more stable, with lower 
+ standard deviations across all metrics. The trade-off between the two models is between performance and training time. The
+ incremental class learning model took significantly longer to tune, train, and validate; however, it was able to achieve
+ acceptable performance on fewer data observations than the baseline model. \\
+
+ Further work could involve testing the models on larger and more complex datasets to better evaluate the performance of the incremental class learning model. The incremental class 
+ learning model for the assignment was limited due to computational constraints, where the model could not be made too complex. With more computational resources, the model could be made deeper and wider to better learn the relationships in the data.
+ The associated code for all the calculations
+\footnote{The code for this report is available on GitHub: \url{https://github.com/grantxxcoder/25849646rw441Assignment3}.} can be found in the footnote and the references on the last page.
+\appendix
+
+\section*{List of Acronyms}
+\begingroup
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.05}
+\noindent\begin{tabular}{@{}p{0.22\columnwidth}p{0.75\columnwidth}@{}}
+ReLU & Rectified Linear Unit \\
+Tanh & Hyperbolic Tangent \\
+$H_0$ & Null Hypothesis \\
+$H_1$ & Alternative Hypothesis 
+\end{tabular}
+\endgroup
+
+% References
+\bibliographystyle{apalike}
+\bibliography{references}
+
+\end{document}
