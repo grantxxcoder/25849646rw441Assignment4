@@ -142,11 +142,7 @@ class proportions across splits and guarantees identical partitions across runs.
  required as the synthetic data contain no missing values. No label encoding is needed as the labels are already integers.
 
 \textbf{Depth ranges for experimental control:} Per-dataset depth grids are predefined to bound sweeps and reflect expected capacity needs:
-\begin{itemize}
-  \item Simple: \{1, 2, 3, 4, 5, 6, 8, 10, 12\}
-  \item Medium: \{1, 3, 5, 7, 10, 12, 15, 18, 20, 25, 30\}
-  \item Complex: \{1, 3, 5, 7, 10, 12, 15, 20, 25, 30, 35, 40\}
-\end{itemize}
+
 
 \subsection{Random forest Model}
 
@@ -167,7 +163,7 @@ The model has the following characteristics:
 
 
 \subsection{Cross-validation procedure}
-Across all experiments, performance for each hyperparameter setting was estimated with 5-fold stratified cross-validation on the training split only using \texttt{StratifiedKFold} from \texttt{sklearn.model\_selection} \cite{scikit-learn}, 
+Across all experiments, performance for each hyperparameter setting was estimated with K-fold stratified cross-validation on the training split only using \texttt{StratifiedKFold} from \texttt{sklearn.model\_selection} \cite{scikit-learn}, 
 reporting the mean and standard deviation of accuracy. Concretely, for the tree-depth, feature-selection, and depth by trees grids, stratified folds for classification
 were used to compute cross-validated accuracy scores, and record \texttt{cv\_mean} and \texttt{cv\_std}. The held-out test split is evaluated separately to
 visualize train and test gaps and provide a single final generalization number, but not to select hyperparameters. Where an optimal depth is required to center 
@@ -176,507 +172,252 @@ visualize train and test gaps and provide a single final generalization number, 
 
 \section{Empirical Procedure}
 
-This section details the datasets, performance measures, control parameters, and the four experiments executed to answer the study goals. All experiments are fully reproducible given the seeds and grids below.
+The emperical procedure section details the datasets, performance measures, control parameters, and the four experiments executed to answer the study goals. All experiments are fully 
+reproducible given the seeds and grids below.
 
 \subsection{Benchmarks and Splitting}
-- Three synthetic tabular datasets were generated with \texttt{make\_classification} to control class separation, noise, dimensionality, and number of classes: 
-  Simple: 500 samples, 10 features (8 informative, 2 redundant), 2 classes, \texttt{class\_sep=2.0}, \texttt{flip\_y=0.0}; 
-  Medium: 2000 samples, 25 features (18 informative, 5 redundant), 3 classes, \texttt{class\_sep=1.0}, \texttt{flip\_y=0.2}; 
-  Complex: 6000 samples, 50 features (35 informative, 10 redundant), 4 classes, \texttt{class\_sep=0.7}, \texttt{flip\_y=0.3}. 
-- Data were split with a stratified 70/30 train/test split using \texttt{random\_state=42}. No scaling or imputation was required (decision-tree invariance; no missing values).
+The three datasets Simple, Medium, and Complex were generated as described in the Data Preparation section. Each dataset was split into a training set (70\%) and a held-out test set (30\%) using a stratified split to maintain class proportions.
 
 \subsection{Performance Measures and Validation}
-- Primary metric: accuracy. Reported for train, test, and 5-fold stratified cross-validation (CV) on the training split. 
-- For each configuration, the following are recorded: train accuracy, test accuracy, CV mean and standard deviation (\texttt{cv\_mean}, \texttt{cv\_std}), and an overfitting proxy (train–test gap).
-- The held-out test split is never used for selection; it is reported once per configuration for visualization and final generalization. CV drives selection.
+The primary metric used was accuracy and was reported for train, test, and 5-fold stratified cross-validation on the training split. For each configuration, the following are 
+recorded: train accuracy, test accuracy and CV mean and standard deviation.  The train-test gap is also computed to assess overfitting.  
 
 \subsection{Implementation and Controls}
-- Estimator: \texttt{RandomForestOverfit} (custom, sklearn-compatible) with \texttt{DecisionTreeClassifier} base learners.
-- Global seed: \texttt{random\_state=42}. Per-tree seeds are drawn from a generator seeded by this value to ensure determinism.
-- Unless varied explicitly, defaults are: \texttt{criterion='gini'}, \texttt{splitter='best'}, \texttt{min\_samples\_split=2}, \texttt{min\_samples\_leaf=1}, \texttt{ccp\_alpha=0.0}, \texttt{bootstrap=True}, and equal weighting across trees.
-- Depth grids per dataset reflect expected capacity: 
-  Simple: \{1, 2, 3, 4, 5, 6, 8, 10, 12\}; 
-  Medium: \{1, 3, 5, 7, 10, 12, 15, 18, 20, 25, 30\}; 
-  Complex: \{1, 3, 5, 7, 10, 12, 15, 20, 25, 30, 35, 40\}.
+A global seed of 42 was used. Per-tree seeds are drawn from a generator seeded by this value to ensure determinism. Unless varied explicitly, defaults for the 
+decision trees are:
+\begin{itemize}
+  \item Criterion for split quality is the \texttt{gini} impurity.
+  \item Minimum samples to split a node is two.
+  \item Minimum samples per leaf is one.
+  \item No pruning.
+  \item Bootstrap sampling.
+  \item Equal weighting across trees.
+\end{itemize}
+
+\textbf{Dataset-specific depth grids:} Each dataset has a predefined grid of maximum depths to explore, reflecting expected capacity needs:
+\begin{itemize}
+  \item Simple: \{1, 2, 3, 4, 5, 6, 8, 10, 12\}
+  \item Medium: \{1, 3, 5, 7, 10, 12, 15, 18, 20, 25, 30\}
+  \item Complex: \{1, 3, 5, 7, 10, 12, 15, 20, 25, 30, 35, 40\}
+\end{itemize}
+
+\subsection{Cross-validation for Experiments}
+All experiments use 5-fold stratified cross-validation on the training split (StratifiedKFold). For each hyperparameter configuration we report the cross-validation mean and standard deviation, and rebuild models or ensembles within each fold when applicable. The held-out test split is evaluated separately to report train and test accuracy and the train-test gap. The same reproducible controls (global random seed, per-tree seeds, stratified splits) apply across all experiments.
 
 \subsection{Experiment 1: Maximum Tree Depth}
-Objective: isolate the effect of maximum tree depth on generalization and overfitting.
-- Fixed controls: single tree (\texttt{n\_estimators=1}), no bagging (\texttt{bootstrap=False}), all features per split (\texttt{max\_features=None}) to strengthen each tree and expose depth effects.
-- Variable: \texttt{max\_depth} over the dataset-specific grids above.
-- Validation: 5-fold stratified CV on the training split; report train/test/CV and gap.
-- Motivation: removing bagging and feature subsampling isolates bias–variance behavior attributable to depth.
+The objective of Experiment 1 is to isolate the effect of maximum tree depth on generalization and overfitting. To this end, we sweep the maximum depth from 
+very shallow to very deep trees while holding other factors constant: a forest of decision trees is trained and all features are used at 
+each split so that each tree is as strong as possible. The variable is the maximum depth, swept over the dataset-specific grids defined above. Performance reporting includes training accuracy, held-out test accuracy and the train-test gap.
 
 \subsection{Experiment 2: Number of Features per Split}
-Objective: quantify the effect of feature subsampling with depth fixed near the knee from Experiment~1.
-- Fixed controls (per dataset): Simple: \texttt{n\_estimators=30}, \texttt{max\_depth=5}; Medium: \texttt{n\_estimators=60}, \texttt{max\_depth=8}; Complex: \texttt{n\_estimators=90}, \texttt{max\_depth=8}. \texttt{bootstrap=True}.
-- Variable: \texttt{max\_features} in \{1, 2, 3, 5, 7, 10, 15, 20, 25, 30, 35, 40, 45, 50\}, skipping values exceeding the dataset dimensionality.
-- Validation: 5-fold stratified CV; report train/test/CV and gap.
-- Motivation: increasing \texttt{max\_features} strengthens individual trees but increases inter-tree correlation; grids chosen to capture the diversity–strength trade-off and the plateau region.
+The objective is to quantify the effect of per-split feature subsampling while holding depth near the optimal values found in Experiment~1. The experiment fixes the maximum depth to 
+the CV optimal values (Simple: \texttt{max\_depth=8}, Medium: \texttt{max\_depth=15}, Complex: \texttt{max\_depth=20}), enables bagging with 30, 60, and 90 trees for the Simple, Medium, 
+and Complex datasets respectively to stabilise results, and sweeps the maximum number of features per split over \{1,2,3,5,7,10,15,20,25,30,35,40,45,50\}, skipping values that 
+exceed each dataset's dimensionality. Performance reporting includes training accuracy, held-out test accuracy and the train-test gap; cross-validation mean and standard deviation are reported as described above.
 
 \subsection{Experiment 3: Depth vs Number of Trees}
-Objective: study interaction between ensemble size and tree depth.
-- Fixed controls: \texttt{max\_features='sqrt'}, \texttt{bootstrap=True}.
-- Variables: 
-  Depth = dataset-specific grids; 
-  \texttt{n\_estimators} grid by dataset: Simple: \{1, 3, 5, ..., 29\}; Medium: \{1, 6, 11, ..., 56\}; Complex: \{1, 11, 21, ..., 141\}.
-- Validation: 5-fold stratified CV; report train/test/CV and gap; visualize heatmaps of test accuracy across the grid.
-- Motivation: increasing trees reduces variance up to a plateau; grids span the stabilization region and expose depth-dependent returns. 
+The objective is to study the interaction between ensemble size and tree depth. In this experiment the number of features considered per split is fixed
+ to \texttt{max\_features='sqrt'} to provide a moderate level of randomness and bagging is enabled. Tree depth is swept over the dataset-specific depth grids while the number of
+  trees is varied per dataset. Performance is reported as training accuracy, held-out test accuracy, and the train-test gap for each configuration. Results are visualized as heatmaps of test accuracy on the depth by number of trees grid to quantify how increasing the number of trees reduces variance up to a plateau and how the benefit of additional trees depends on tree depth. Cross-validation mean and standard deviation are reported as described above.
 
 \subsection{Experiment 4: Mixed-Depth Ensembles}
-Objective: evaluate ensembles explicitly mixing underfitting and overfitting trees.
-- Setup: build a weighted average over many single-tree forests (\texttt{n\_estimators=1} per forest) whose depths are sampled from three bands relative to an “optimal” depth \texttt{op\_d}. Five configurations per dataset:
-  Only Underfit; Majority Underfit; Balanced; Majority Overfit; Only Overfit.
-- Controls: \texttt{max\_features='sqrt'}, \texttt{bootstrap=True}. 
-  Ensemble sizes (per dataset) set to the near-plateau from Experiment~3: Simple \texttt{op\_n=31}, Medium \texttt{op\_n=60}, Complex \texttt{op\_n=130}. 
-  Depth centers: \texttt{op\_d} fixed per dataset (e.g., Simple 8, Medium 15, Complex 20) or inferred from Experiment~1 by maximizing CV mean.
-- Validation: 5-fold stratified CV with \texttt{StratifiedKFold(shuffle=True, random\_state=42)}; ensembles are rebuilt within each fold; report CV mean/std, train/test, and gap.
-- Motivation: test whether bias–variance blending via depth diversity improves generalization compared to single-mode ensembles.
+This experiment evaluates ensembles that mix underfitting and overfitting trees to probe bias-variance blending. Controls are fixed where the number of 
+features per split is set to the optimal values from Experiment 2, ensemble sizes and per-dataset maximum tree depths use the optima from Experiment 3, and bagging is enabled. 
+Five ensemble compositions are compared:
+\begin{itemize}
+  \item all underfitted;
+  \item majority underfitted (75\% underfitted, 25\% overfitted);
+  \item balanced (50/50);
+  \item majority overfitted (25\% underfitted, 75\% overfitted);
+  \item all overfitted. 
+\end{itemize}
+Underfitted depths are sampled from depths below the optimal and overfitted depths from just above the optimal up to the maximum.
+Performance metrics include training and held-out test accuracy and the train-test gap; cross-validation mean and standard deviation are reported as described above. The goal is to determine whether mixing tree capacities yields improved generalization or stability compared to homogeneous ensembles of the same size.
 
-\subsection{Independent Runs and Reproducibility}
-- Each configuration is evaluated once per dataset with deterministic seeds; the 5 CV folds serve as repeated resamples. 
-- Randomized components (bootstrap sampling, per-tree seeds, and depth sampling in mixed ensembles) are controlled by \texttt{random\_state=42} to allow identical replication.
-// ...existing code...
+
 
 \section{Research Results}
-The results of the models are presented in the following section. The results include the hyperparameter tuning, training, validation, and
- cross-validation results, and finally, the statistical tests to determine if there was a significant difference between the two models.
 
-\subsection{Iris dataset hyperparameter tuning results}
- The top configurations were found to have a single hidden layer with few neurons, a high learning rate of 0.1, and the ReLU activation function. To keep the model simple, the configuration with 4 neurons was chosen as the final model. 
- The configurations and their corresponding mean accuracy are shown in Table~\ref{tab:baseline_iris_best_configs}.
-\begin{table}[H]
+\label{sec:results}
+
+This section reports results for all four experiments. For each configuration the cross-validated accuracy mean and standard deviation over 5 folds on 
+the training split, the held-out test accuracy, and the train test gap are reported. 
+
+
+\subsection{Experiment 1: Maximum Tree Depth}
+\label{sec:results-exp1}
+
+\textbf{Figures:}
+\begin{figure}[H]
   \centering
-  \begin{minipage}{0.85\linewidth}
+  \begin{subfigure}[b]{\columnwidth}
     \centering
-    \caption{Best Baseline Model Hyperparameter Configurations for Iris}
-    \label{tab:baseline_iris_best_configs}
-    \scriptsize
-    \setlength{\tabcolsep}{4pt}
-    \begin{tabular}{@{}p{0.19\linewidth} p{0.31\linewidth} p{0.15\linewidth} p{0.15\linewidth} p{0.15\linewidth}@{}}
-      \toprule
-      \shortstack{Hidden\\Layers} &
-      \shortstack{Number of Neurons\\(layer 1, layer 2, \dots)} &
-      \shortstack{Learning\\Rate} &
-      \shortstack{Activation\\Function} &
-      \shortstack{Accuracy\\(mean)} \\
-      \midrule
- 1 & (8,)   & 0.10  & ReLU & 0.977 $\pm$ 0.000\\
- 1 & (4,)   & 0.10  & ReLU & 0.977 $\pm$ 0.000\\
- 2 & (1,1)  & 0.001 & ReLU & 0.622 $\pm$ 0.000\\
- 1 & (2,)   & 0.10  & ReLU & 0.611 $\pm$ 0.000\\
-      \bottomrule
-    \end{tabular}
-  \end{minipage}
-\end{table}
-The optimal hyperparameter values for the incremental class learning model can be found in Table~\ref{tab:icl_iris_best_configs}. 
-\begin{table}[H]
-  \centering
-  \caption{Best Incremental Class Learning Model Hyperparameter Configurations for Iris}
-  \label{tab:icl_iris_best_configs}
-  \scriptsize
-  \setlength{\tabcolsep}{6pt}
+    \includegraphics[width=\linewidth]{images/simple_depth_accuracy.pdf}
+    \caption{Simple: Max depth vs. test and CV accuracy.}
+    \label{fig:exp1-simple-acc}
+  \end{subfigure}\vspace{6pt}
 
-  % First sub-table: training thresholds
-  \begin{minipage}{\linewidth}
+  \begin{subfigure}[b]{\columnwidth}
     \centering
-    \begin{tabular}{@{}ccccc@{}}
-      \toprule
- Moving & Plateau & Underfit & Overfit (Training) & Overfit (Validation) \\
- Average & Threshold & Threshold & Threshold & Threshold \\
- Window & & & & \\
-      \midrule
- 3 & 0.004 & 0.4 & 0.2 & 0.2 \\
- 3 & 0.004 & 0.3 & 0.1 & 0.1 \\
- 3 & 0.004 & 0.4 & 0.2 & 0.1 \\
- 3 & 0.004 & 0.2 & 0.2 & 0.2 \\
-      \bottomrule
-    \end{tabular}
-  \end{minipage}
+    \includegraphics[width=\linewidth]{images/medium_depth_accuracy.pdf}
+    \caption{Medium: Max depth vs. test and CV accuracy.}
+    \label{fig:exp1-medium-acc}
+  \end{subfigure}\vspace{6pt}
 
-  \vspace{6pt}
-
-  % Second sub-table: architecture and results
-  \begin{minipage}{\linewidth}
+  \begin{subfigure}[b]{\columnwidth}
     \centering
-    \begin{tabular}{@{}cccc@{}}
-      \toprule
- Min Neurons & Learning Rate & Activation Function & Accuracy (mean) \\
-      \midrule
- 1 & 0.5 & ReLU & 0.9773 $\pm$ 0.0001\\
- 8 & 0.5 & Tanh & 0.9772 $\pm$ 0.0001\\
- 8 & 0.5 & ReLU & 0.9772 $\pm$ 0.0001\\
- 8 & 0.5 & Tanh & 0.9500 $\pm$ 0.0001\\
-      \bottomrule
-    \end{tabular}
-  \end{minipage}
-\end{table}
-A particular point to be made from looking at the results in Table~\ref{tab:icl_iris_best_configs} is the high learning rate of 0.5. 
-The high learning rate is likely due to the small size of the dataset and the simplicity of the model. The high learning rate allows the model to converge quickly to a good solution.
+    \includegraphics[width=\linewidth]{images/complex_depth_accuracy.pdf}
+    \caption{Complex: Max depth vs. test and CV accuracy.}
+    \label{fig:exp1-complex-acc}
+  \end{subfigure}
 
-\subsection{Fashion-MNIST dataset hyperparameter tuning results}
- The top configurations were found to have three or four hidden layers with many neurons, a low 
- learning rate of 0.001, and the ReLU activation function. The configurations and their 
- corresponding mean validation accuracy is shown in Table~\ref{tab:baseline_fashion_mnist_best_configs}. 
-\begin{table}[H]
-  \centering
-  \begin{minipage}{0.85\linewidth}
-    \centering
-    \caption{Best Baseline Model Hyperparameter Configurations for Fashion-MNIST}
-    \label{tab:baseline_fashion_mnist_best_configs}
-    \scriptsize
-    \setlength{\tabcolsep}{4pt}
-    \begin{tabular}{@{}p{0.19\linewidth} p{0.31\linewidth} p{0.15\linewidth} p{0.15\linewidth} p{0.15\linewidth}@{}}
-      \toprule
-      \shortstack{Hidden\\Layers} &
-      \shortstack{Number of Neurons\\(layer 1, layer 2, \dots)} &
-      \shortstack{Learning\\Rate} &
-      \shortstack{Activation\\Function} &
-      \shortstack{Accuracy\\(mean)} \\
-      \midrule
-      4 & (512, 256, 128, 64)   & 0.001  & ReLU & 0.8860 $\pm$ 0.0054 \\
-      4 & (300, 200, 100, 50)   & 0.001  & ReLU & 0.8833 $\pm$ 0.0067 \\
-      3 & (512, 512, 512)  & 0.001 & ReLU & 0.8817 $\pm$ 0.0075 \\
-      3 & (256, 128, 64)   & 0.001  & ReLU & 0.8816 $\pm$ 0.0076 \\
-      \bottomrule
-    \end{tabular}
-  \end{minipage}
-\end{table}
-The optimal parameter values for the incremental class learning model indicate that adding more complexity past three hidden layers to the model was 
-not very beneficial, with only a minimal increase in accuracy. The simplest model was thus chosen as the final model. 
-The optimal hyperparameter values for the incremental class learning model can be found in Table~\ref{tab:icl_fashion_best_configs}. 
-\begin{table}[H]
-  \centering
-  \caption{Best Incremental Class Learning Model Hyperparameter Configurations for Fashion-MNIST}
-  \label{tab:icl_fashion_best_configs}
-  \scriptsize
-  \setlength{\tabcolsep}{6pt}
+  \caption{Maximum tree depth vs. test and cross-validated accuracy for the three datasets.}
+  \label{fig:exp1-depth-acc}
+\end{figure}
 
-  % First sub-table: training thresholds
-  \begin{minipage}{\linewidth}
-    \centering
-    \begin{tabular}{@{}ccccc@{}}
-      \toprule
- Moving & Plateau & Underfit & Overfit (Training) & Overfit (Validation) \\
- Average & Threshold & Threshold & Threshold & Threshold \\
- Window & & & & \\
-      \midrule
- 10 & 0.001 & 0.5 & 0.1 & 0.15 \\
- 10 & 0.001 & 0.5 & 0.15 & 0.1 \\
- 10 & 0.001 & 0.5 & 0.15 & 0.15 \\
- 10 & 0.001 & 0.4 & 0.1 & 0.1 \\
-      \bottomrule
-    \end{tabular}
-  \end{minipage}
-
-  \vspace{6pt}
-
-  % Second sub-table: architecture and results
-  \begin{minipage}{\linewidth}
-    \centering
-    \begin{tabular}{@{}cccc@{}}
-      \toprule
- Min Neurons & Learning Rate & Activation Function & Accuracy (mean) \\
-      \midrule
- 16 & 0.01 & ReLU & 0.9374 $\pm$ 0.001\\
- 16 & 0.01 & ReLU & 0.9374 $\pm$ 0.001\\
- 16 & 0.01 & ReLU & 0.9374 $\pm$ 0.001\\
- 16 & 0.01 & ReLU & 0.9277 $\pm$ 0.002\\
-      \bottomrule
-    \end{tabular}
-  \end{minipage}
-\end{table}
-The best-performing incremental setup on Fashion-MNIST reached a mean accuracy of 0.9374 with 16 minimum neurons, 
-a 0.01 learning rate, and ReLU activations. The top-performing models had similar configurations for the 
-parameters, with the focus on the balance of underfitting and overfitting thresholds to ensure that the model was not 
-too complex or too simple.
-
-\subsection{Iris model training and validation results}
-The learning curves for the best run of the baseline and incremental class learning models are shown in Figure~\ref{fig:iris_baseline_learning_curves}. 
-The difference in the two loss curves highlights the difference in learning approaches, where the baseline 
-model's loss progressively decreases until stabilizing, whilst the incremental learner first stabilizes the 
-loss for the first two minority classes, and when adding the next class, there is a spike in loss, which is then smoothed and stabilized.
-From the below learning curves, it can be seen that the incremental class learning model had 
-sufficiently reduced the training and validation losses to a point where the model was not underfitting or overfitting. Although the final loss 
-appears to be quite low for both training and validation, keep in mind that the dataset is small and thus has limited 
-exposure to all the variability in the data.
-% \begin{figure}[H]
-%   \centering
-%   \begin{subfigure}[b]{\linewidth}
-%     \centering
-%     \includegraphics[width=\linewidth]{images/iris_baseline_learning_curves_loss.pdf}
-%     \caption{Training and validation loss for baseline Iris model}
-%     \label{fig:iris_baseline_loss}
-%   \end{subfigure}\hfill
-%   \begin{subfigure}[b]{\linewidth}
-%     \centering
-%     \includegraphics[width=\linewidth]{images/iris_dynamic_learning_curves_loss.pdf}
-%     \caption{Training and validation loss for dynamic Iris model}
-%     \label{fig:iris_dyn_loss}
-%   \end{subfigure}
-%   \caption{Iris baseline model learning curves for the best run.}
-%   \label{fig:iris_baseline_learning_curves}
-% \end{figure}
-
- The cross-validation and test results provide a better indication of the model's performance and can be seen in Table~\ref{tab:metric_means_iris}.
-The results below indicate that the baseline model outperformed the incremental class learning model on all metrics. The incremental class learning 
-model struggled with the small dataset and was unable to learn the relationships in the data. The incremental model's underwhelming performance is likely due 
-to the small size of the dataset. The baseline model performed better than the incremental class learning model, as it was able to consider the 
-entire dataset at once and thus could learn the more nuanced relationships between classes better. The incremental class learning model was at a disadvantage as it had to learn the classes
-progressively and thus had limited exposure to the data at any given time. Furthermore, since the validation set was small, the model 
-would not be able to compute reliable trends to determine when to add complexity or new classes. The incremental model evidently struggled to 
-improve its performance as it consistently predicted the same incorrect outputs as seen in the lack of variance in the results.
-
-\begin{table}[H]
-  \centering
-  \caption{Mean $\pm$ std.\ dev.\ for Baseline and Incremental models. Percentage metrics shown as mean $\pm$ std (percent); time shown in seconds.}
-  \label{tab:metric_means_iris}
-  \scriptsize
-  \setlength{\tabcolsep}{6pt}
-  \resizebox{\columnwidth}{!}{%
-  \begin{tabular}{@{}lcc@{}}
-    \toprule
- Metric & Baseline (Mean $\pm$ Std) & Incremental (Mean $\pm$ Std) \\
-    \midrule
- Accuracy (Test)        & 96.21\% $\pm$ 2.17\% & 44.07\% $\pm$ 0.00\% \\
- F1 (Test)              & 96.87\% $\pm$ 1.78\% & 20.39\% $\pm$ 0.00\% \\
- Precision (Test)       & 97.16\% $\pm$ 1.73\% & 14.69\% $\pm$ 0.00\% \\
- Recall (Test)          & 96.79\% $\pm$ 1.72\% & 33.33\% $\pm$ 0.00\% \\
- Training Time (s)      & 0.376 $\pm$ 0.008 s   & 0.271 $\pm$ 0.004 s \\
- Accuracy (Train)       & 98.58\% $\pm$ 2.05\% & 32.00\% $\pm$ 0.00\% \\
- F1 (Train)             & 96.58\% $\pm$ 2.07\% & 13.01\% $\pm$ 0.00\% \\
- Precision (Train)      & 96.64\% $\pm$ 2.01\% & 8.08\%  $\pm$ 0.00\% \\
- Recall (Train)         & 96.58\% $\pm$ 2.12\% & 33.33\% $\pm$ 0.00\% \\
- Accuracy (Validation)  & 98.00\% $\pm$ 2.52\% & 32.00\% $\pm$ 0.00\% \\
- F1 (Validation)        & 98.12\% $\pm$ 2.38\% & 16.16\% $\pm$ 0.00\% \\
- Precision (Validation) & 98.35\% $\pm$ 2.05\% & 10.67\% $\pm$ 0.00\% \\
- Recall (Validation)    & 98.14\% $\pm$ 2.37\% & 33.33\% $\pm$ 0.00\% \\
-      \bottomrule
-      \end{tabular}%
- }
-  \vspace{2pt}
-  \footnotesize Note: Percentage metrics: means and standard deviations computed from raw decimals, then multiplied by 100 and shown with two decimal places. Time reported in seconds.
-\end{table}
-
-\subsection{Fashion-MNIST training and validation results}
-Fortunately, the Fashion-MNIST dataset was large enough for the incremental class learning model to learn the relationships in the data. The results are thus more 
-promising than that of the Iris dataset.
-The learning curves for the best run of the baseline and incremental class learning models are shown in Figure~\ref{fig:fashion_baseline_learning_curves}. 
-The baseline model's loss curves in Figure~\ref{fig:fashion_baseline_loss} show a typical training pattern where the training loss decreases and stabilizes,
- while the validation loss decreases and stabilizes at a higher loss. The incremental class learning model's loss curves in Figure~\ref{fig:fashions_dyn_loss} show a more complex pattern due to 
- the dynamic nature of the model. The loss curves show spikes in loss, indicative of either a new class being added to the training and validation set 
-or a new hidden layer being added. Due to the strict thresholds for overfitting and underfitting, the loss curves for 
-the dynamic model seemingly lie on top of each other. The scale of the fluctuations is much smaller compared to the baseline model, where the difference in training and validation loss is not as pronounced. To better visualize the results of the training of the dynamic 
-Fashion-MNIST model, refer to the accuracies obtained as seen in Figure~\ref{fig:fashions_dyn_acc}.
-
-% \begin{figure}[H]
-%   \centering
-%   \begin{subfigure}[b]{\linewidth}
-%     \centering
-%     \includegraphics[width=\linewidth]{images/fashion-mnist_baseline_learning_curves_loss.pdf}
-%     \caption{Training and validation loss for baseline Fashion model}
-%     \label{fig:fashion_baseline_loss}
-%   \end{subfigure}\hfill
-%   \begin{subfigure}[b]{\linewidth}
-%     \centering
-%     \includegraphics[width=\linewidth]{images/fashion_dynamic_learning_curves_loss.pdf}
-%     \caption{Training and validation loss for the dynamic Fashion model}
-%     \label{fig:fashions_dyn_loss}
-%   \end{subfigure}
-%   \hfill
-%   \begin{subfigure}[b]{\linewidth}
-%     \centering
-%     \includegraphics[width=\linewidth]{images/fashion_dynamic_learning_curves_acc.pdf}
-%     \caption{Training and validation accuracy for the dynamic Fashion model}
-%     \label{fig:fashions_dyn_acc}
-%   \end{subfigure}
-%   \caption{Fashion baseline model learning curves for the best run.}
-%   \label{fig:fashion_baseline_learning_curves}
-% \end{figure}
-
-A particular point of interest is the first 100 epochs of Figure~\ref{fig:fashions_dyn_acc}, which highlight the initial learning dynamics. The validation accuracy oscillates 
-between extremes, achieving incredibly high and low accuracies. The oscillation is due to the following: The model initially being simple memorizes the 
-training data, achieves high training accuracy, and low validation accuracy. The model training process recognizes that result as overfitting, thus first tries 
-to add complexity if the minimum number of neurons was not reached. The model then adds complexity and improves the validation performance, and achieves very high validation results as the data is still small. The model then adds 
-a new class when a sufficiently low validation loss is reached. The process then repeats itself. The training only begins to stabilize when the model 
-is complex enough to start learning relationships instead of memorizing the data. \\
-
-The results of the cross validation and test results for the Fashion-MNIST dataset were more promising than that of the Iris dataset. 
-The results can be found in Table~\ref{tab:metric_means_fashion}. As is seen from the results in Table~\ref{tab:metric_means_fashion}, the incremental class learning model outperformed the baseline model on most metrics; however, the 
- test metrics were very similar. The incremental learner had more stable performance as the standard deviations were lower across all metrics. A particular point 
- of interest is the training times, where the incremental learner took significantly longer to train than the baseline model. The trade-off between the two models 
- is between performance and training time, as the incremental class learning model took significantly longer to tune, train, and validate; however, it achieved more stable performance. 
-
-\begin{table}[H]
-  \centering
-  \caption{Mean $\pm$ std.\ dev.\ for Baseline and Incremental models. Percentage metrics shown as mean $\pm$ std (percent); time shown in seconds.}
-  \label{tab:metric_means_fashion}
-  \scriptsize
-  \setlength{\tabcolsep}{6pt}
-  \resizebox{\columnwidth}{!}{%
-  \begin{tabular}{@{}lcc@{}}
-    \toprule
- Metric & Baseline (Mean $\pm$ Std) & Incremental (Mean $\pm$ Std) \\
-      \midrule
- Accuracy (Test)        & 83.59\% $\pm$ 7.04\% & 83.77\% $\pm$ 5.74\% \\
- F1 (Test)              & 82.96\% $\pm$ 8.18\% & 83.73\% $\pm$ 6.33\% \\
- Precision (Test)       & 83.87\% $\pm$ 7.70\% & 83.54\% $\pm$ 7.45\% \\
- Recall (Test)          & 83.55\% $\pm$ 6.93\% & 84.35\% $\pm$ 4.43\% \\
- Training Time (s)      & 9.65 $\pm$ 1.88 s    & 115.77 $\pm$ 12.70 s \\
- Accuracy (Train)       & 88.88\% $\pm$ 9.79\% & 93.94\% $\pm$ 8.26\% \\
- F1 (Train)             & 88.53\% $\pm$ 10.66\% & 94.29\% $\pm$ 7.93\% \\
- Precision (Train)      & 89.72\% $\pm$ 9.43\% & 93.84\% $\pm$ 9.27\% \\
- Recall (Train)         & 89.00\% $\pm$ 9.57\% & 95.25\% $\pm$ 5.36\% \\
- Accuracy (Validation)  & 86.89\% $\pm$ 8.81\% & 90.21\% $\pm$ 7.36\% \\
- F1 (Validation)        & 86.31\% $\pm$ 9.79\% & 90.29\% $\pm$ 7.42\% \\
- Precision (Validation) & 87.24\% $\pm$ 9.12\% & 89.98\% $\pm$ 8.71\% \\
- Recall (Validation)    & 86.76\% $\pm$ 8.66\% & 91.07\% $\pm$ 5.09\% \\
-        \bottomrule
-        \end{tabular}%
- }
-  \vspace{2pt}
-  \footnotesize Note: Percentage metrics: means and standard deviations computed from raw decimals, then multiplied by 100 and shown with two decimal places. Time reported in seconds.
-\end{table}
-The test metrics were very similar, thus requires further analysis to determine if the models were statistically different. 
-The box plots in Figure~\ref{fig:boxplots} show the distributions of the test accuracy and F1 metrics across the 30 cross-validation runs. The box plot was 
-used for the primary metrics of interest, accuracy and F1, as they provide a good visual representation of the distribution of the metrics.
-Both boxplot figures show the same outlier performance in the incremental model. The baseline model had a higher median 
-performance across both metrics and higher maximum values. The baseline performance is skewed to the left, where the 
-distribution of the values is gathered at the higher scores. The results suggest that the baseline model is 
-generally, a stronger performer than the incremental model; however, the baseline model had more variability in its performance. The statistical tests will confirm whether there 
-is any statistical difference between the two models. 
-% \begin{figure}[H]
-%   \centering
-%   \begin{subfigure}[b]{\linewidth}
-%     \centering
-%     \includegraphics[height=5cm,keepaspectratio]{images/test_acc.pdf}
-%     \caption{Test accuracy distributions (30 runs)}
-%     \label{fig:box_accuracy}
-%   \end{subfigure}\hfill
-%   \begin{subfigure}[b]{\linewidth}
-%     \centering
-%     \includegraphics[height=5cm,keepaspectratio]{images/test_f1.pdf}
-%     \caption{Test F1 distributions (30 runs)}
-%     \label{fig:box_f1}
-%   \end{subfigure}
-%   \caption{Box plots comparing the baseline and incremental models across cross-validation runs for Fashion-MNIST. Boxes show median, interquartile range, and outliers for each model.}
-%   \label{fig:boxplots}
-% \end{figure}
-
-
-\paragraph{Per-class breakdown (Fashion-MNIST test)}
-The per-class breakdown of the test results will better expose how the model performed on the minority classes on a particular run. The 
-class-level F1s in Table~\ref{tab:fashion_per_class_f1} show that the dynamic model's main gain appears on Class 3, rather than exclusively on the 
-minority classes in the training distribution. In other words, the incremental learner unfortunately did not simply “boost the small classes”. 
-
-\begin{table}[H]
-  \centering
-  \caption{Per-class F1 on Fashion-MNIST test. Delta is (Dynamic $-$ Baseline). The largest improvement is on Class 3.}
-  \label{tab:fashion_per_class_f1}
-  \scriptsize
-  \setlength{\tabcolsep}{6pt}
-  \begin{tabular}{@{}lccc@{}}
-    \toprule
- Class & F1 (Baseline) & F1 (Dynamic) & $\Delta$ \\
-    \midrule
- 0 & 0.93 & 0.94 & +0.01 \\
- 1 & 0.95 & 0.95 & +0.00 \\
- 2 & 0.92 & 0.94 & +0.02 \\
-    \textbf{3} & \textbf{0.62} & \textbf{0.65} & \textbf{+0.03} \\
- 4 & 0.94 & 0.95 & +0.01 \\
- 5 & 0.77 & 0.77 & +0.00 \\
- 6 & 0.87 & 0.86 & $-$0.01 \\
- 7 & 0.77 & 0.78 & +0.01 \\
- 8 & 0.97 & 0.97 & +0.00 \\
- 9 & 0.81 & 0.80 & $-$0.01 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\paragraph{Data-efficiency findings (Fashion-MNIST)}
- Using random seeds 42 to 46 and a target validation accuracy of 92\%, the incremental learner
- reached the threshold with a smaller fraction of the training data than the baseline network. In other words, as the data budget increased, 
- the incremental curve crossed 0.92 earlier, whereas the baseline required a higher percentage to meet the same criterion. The behaviour 
-matched the staged, trend-based training. By focusing capacity on the early classes and expanding only when losses plateau or change, the 
-incremental model learns useful patterns sooner. The data efficiency graph can be seen in Figure~\ref{fig:data_efficiency}.
-% \begin{figure}[H]
-%   \centering
-%     \includegraphics[width=\linewidth]{images/fashion-mnist:_baseline_vs_dynamic_accuracy_quick_plot.pdf}
-%     \caption{Data efficiency comparison for Fashion-MNIST. Each point is the maximum validation accuracy over four random seeds at that training percentage. The horizontal dashed line marks the 92\% target.}
-%     \label{fig:data_efficiency}
-% \end{figure}
-Over the four random seeds, both models dipped in performance at 50\% of the training data. The dip is likely due to the 
- particular samples chosen for that percentage, as the samples were stratified, but not guaranteed to be representative of the full dataset. 
- The incremental model reached the 92\% target at 40\% of the training data, whereas the baseline model required 60\% of the training data
- to reach the same target in the best run. The incremental model was thus more data efficient than the baseline model.
-\paragraph{Statistical Significance Testing}
-
-Shapiro-Wilk tests were used to assess the normality of the paired differences between the two models. The results
- for the tests were:
+\textbf{Discussion:}
 \begin{itemize}
-  \item Shapiro-Wilk p-value for accuracy difference equals 0.0195; Shapiro-Wilk p-value for F1 difference equals 0.0204.
-  \item Both p-values are less than 0.05, so the null hypothesis of normality is rejected for both differences.
+  \item The results in Figures~\ref{fig:exp1-simple-acc} show the relationship between maximum tree depth and both test and cross-validated 
+  accuracy. As expected, very shallow trees in the ensemble underfit the data, which results in low accuracy on both training and test sets. As depth 
+  increases, accuracy improves significantly, indicating that the model is capturing more complex patterns in the data. However, beyond a certain depth 
+  (e.g., depth 8 for Simple, 15 for Medium, and 20 for Complex), the test accuracy plateaus or slightly decreases while training accuracy 
+  continues to rise. This indicates overfitting, where the model learns noise in the training data rather than generalizable patterns. The optimal 
+  depths identified align with the complexity of each dataset, with more complex datasets requiring deeper trees to capture their structure.
+  \item These results occur due to the bias-variance trade-off inherent in decision trees. Shallow trees have high bias and low variance, leading to 
+  underfitting, while deep trees have low bias and high variance, leading to overfitting. The ensemble averages out some the variance of the overfitted individual 
+  trees. However, if there are not enough trees in the ensemble of overfitted trees, the variance does not average out sufficiently, leading to the seen 
+  degradation in test performance.
+    \item With more overfitted trees in the ensemble, the variance would average out more effectively, potentially allowing for deeper trees to be
+    used without overfitting. 
+  \end{itemize}
+
+\subsection{Experiment 2: Number of Features per Split}
+\label{sec:results-exp2}
+
+\textbf{Quantitative results:}
+\begin{table}[h]
+\centering
+\caption{Experiment 2: Accuracy vs. max\_features (CV mean $\pm$ std and test).}
+\label{tab:exp2-features}
+\begin{tabular}{lcccc}
+\toprule
+Dataset & MaxFeat & CV Acc & Test Acc & Gap \\
+\midrule
+Simple  & 1   & TBD $\pm$ TBD & TBD & TBD \\
+        & 2   & TBD $\pm$ TBD & TBD & TBD \\
+        & \dots & \dots & \dots & \dots \\
+Medium  & 1   & TBD $\pm$ TBD & TBD & TBD \\
+        & \dots & \dots & \dots & \dots \\
+Complex & 1   & TBD $\pm$ TBD & TBD & TBD \\
+        & \dots & \dots & \dots & \dots \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Figures (placeholders):}
+\begin{figure}[h]
+  \centering
+  % \includegraphics[width=\columnwidth]{figures/exp2_accuracy_vs_features_medium.png}
+  \caption{Medium: Test and CV accuracy vs. max\_features.}
+  \label{fig:exp2-medium-acc}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  % \includegraphics[width=\columnwidth]{figures/exp2_train_vs_test_complex.png}
+  \caption{Complex: Train vs. test accuracy across max\_features.}
+  \label{fig:exp2-complex-train-test}
+\end{figure}
+
+\textbf{Discussion:}
+\begin{itemize}
+  \item Expected? Moderate max\_features increases tree strength but raises inter-tree correlation; observe plateau.
+  \item Why? Diversity-strength trade-off in bagging; complex data benefits from larger candidate sets.
+  \item Different circumstances? With correlated features, smaller max\_features may help; with very high-dimensional sparse data, larger max\_features may overfit.
+\end{itemize}
+
+\subsection{Experiment 3: Depth vs Number of Trees}
+\label{sec:results-exp3}
+\textbf{Setup recap:} max\_features='sqrt', bootstrap=True; grid over depths and n\_estimators.
+
+\textbf{Figures:}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{\columnwidth}
+    \includegraphics[width=\linewidth]{images/simple_depth_vs_trees_heatmap.pdf}
+    \caption{Simple (run 1)}
+    \label{fig:exp3-simple-heatmap-a}
+  \end{subfigure}\hfill
+
+  \begin{subfigure}[b]{\columnwidth}
+    \includegraphics[width=\linewidth]{images/medium_depth_vs_trees_heatmap.pdf}
+    \caption{Medium}
+    \label{fig:exp3-medium-heatmap}
+  \end{subfigure}\hfill
+  \begin{subfigure}[b]{\columnwidth}
+    \includegraphics[width=\linewidth]{images/complex_depth_vs_trees_heatmap.pdf}
+    \caption{Complex}
+    \label{fig:exp3-complex-heatmap}
+  \end{subfigure}
+
+  \caption{Heatmaps of test accuracy over maximum tree depth vs.\ number of trees for each dataset.}
+  \label{fig:exp3-depth-trees-heatmaps}
+\end{figure}
+
+\textbf{Discussion:}
+\begin{itemize}
+  \item Expected? Variance reduction with more trees until a plateau; depth-dependent benefits.
+  \item Why? Law of large numbers in bagging; deeper trees have higher variance thus benefit more from larger ensembles.
+  \item Different circumstances? With stronger feature subsampling or more noise, plateau arrives earlier; with larger datasets, plateaus shift upward.
+\end{itemize}
+
+\subsection{Experiment 4: Mixed-Depth Ensembles}
+\label{sec:results-exp4}
+\textbf{Setup recap:} Five compositions mixing under/overfitted trees; features per split and ensemble sizes from Exp.~2--3 optima; bootstrap=True.
+
+\textbf{Quantitative results:}
+\begin{table}[h]
+\centering
+\caption{Experiment 4: Composition vs. accuracy (CV mean $\pm$ std and test).}
+\label{tab:exp4-mixed}
+\begin{tabular}{lcccc}
+\toprule
+Dataset & Composition & CV Acc & Test Acc & Gap \\
+\midrule
+Simple  & All Underfit      & TBD $\pm$ TBD & TBD & TBD \\
+        & Majority Underfit & TBD $\pm$ TBD & TBD & TBD \\
+        & Balanced          & TBD $\pm$ TBD & TBD & TBD \\
+        & Majority Overfit  & TBD $\pm$ TBD & TBD & TBD \\
+        & All Overfit       & TBD $\pm$ TBD & TBD & TBD \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Figures (placeholders):}
+\begin{figure}[h]
+  \centering
+  % \includegraphics[width=\columnwidth]{figures/exp4_test_accuracy_bars_medium.pdf}
+  \caption{Medium: Test accuracy by ensemble composition.}
+  \label{fig:exp4-medium-bars}
+\end{figure}
+
+\textbf{Discussion:}
+\begin{itemize}
+  \item Expected? Depth diversity may improve robustness by blending bias and variance; overfit-only may excel if bagging sufficiently de-correlates trees.
+  \item Why? Weighted averaging of high-variance learners; effect depends on class overlap/noise.
+  \item Different circumstances? With weaker bagging or fewer trees, mixtures may outperform overfit-only; with stronger feature subsampling, underfit proportions may help more.
+\end{itemize}
+
+\subsection{Ablations and Robustness Checks (Optional)}
+\label{sec:results-robustness}
+\begin{itemize}
+  \item Seed sensitivity: repeat CV with different seeds (TBD) and report variability (TBD).
+  \item Alternate metrics: macro-F1 or balanced accuracy on imbalanced settings (TBD).
+  \item Learning curves: test accuracy vs. train size to confirm data-limited vs. capacity-limited regimes (TBD).
 \end{itemize}
 
 
-Hypotheses (for each metric):
-$H_0$: no difference between models; $H_1$: difference between models.
-
-Because normality was rejected, Wilcoxon signed-rank tests were used:
-\begin{table}[H]
-  \centering
-  \caption{Normality and Wilcoxon test results}
-  \label{tab:stats_tests}
-  \begin{tabular}{@{}l c c@{}}
-    \toprule
- Test (metric) & Statistic & p-value \\
-    \midrule
- Shapiro-Wilk (Accuracy diff) & -- & 0.0195 (reject normality) \\
- Shapiro-Wilk (F1 diff)       & -- & 0.0204 (reject normality) \\
- Wilcoxon (Accuracy)          & 215.0000 & 0.7188 (fail to reject $H_0$) \\
- Wilcoxon (F1)                & 228.0000 & 0.9262 (fail to reject $H_0$) \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-Both paired differences deviate from normality, so nonparametric Wilcoxon tests were used, and in
- both cases fail to reject the null hypothesis, as no significant difference was detected between the models for
- accuracy or F1.
-
-  \paragraph{Discussion}
-The statistical tests indicate that there was no statistically significant difference between the two models for both accuracy and F1 metrics. Therefore, in the case of the Fashion-MNIST dataset, 
-the incremental class learning model does not provide a statistically significant improvement over the baseline model in pure evaluation metrics. However, despite the 
-lack of statistical significance, the incremental class learning model showed major improvement on the Fashion-MNIST dataset as compared to the Iris 
-dataset. The poor performance on the Iris dataset was due to the small size of the dataset, where inter-class relationships 
-could not be learned effectively. The architecture of the model favoured more aggressive learning, where the model would 
-quickly add complexity to learn the relationships in the data. The aggressive learning was not suitable for the small Iris 
-dataset, where the model would quickly overfit to the small amount of data. The incremental class learning model was more suited to the
- larger Fashion-MNIST dataset, where the model could learn the relationships in the data better. The incremental class learning model was 
- more stable, with lower standard deviations across all metrics. The improvement in stability was surprising as the incremental class learning model had more hyperparameters to tune, which would typically lead to more variability in the results.\\
- 
- The incremental class learning model was also more data efficient, reaching 
- a target validation accuracy of 92\% with only 40\% of the training data, whereas the baseline model required 60\% of the training data
- to reach the same target for the Fashion-MNIST dataset. The incremental model was not able to show significant improvement on the minority 
- classes, where the largest improvement was on Class 3, which was not a minority class. Despite the lack of significant improvement on the 
- minority classes, the ability of the model to be more data efficient is beneficial in scenarios where data is imbalanced, limited, or expensive to obtain.
- In such scenarios, the imbalanced data problem is often coupled with limited data, where the incremental class learning model could be beneficial.
-
- Overall, the incremental class learning model shows promise as a learning approach if data efficiency and stability are priorities. The challenge 
- with the dynamic model was the hyperparameter tuning, where the model had many more parameters to tune than the baseline. Secondly, the dynamic model required 
- significantly more time and resources to train and validate, as the model took over 12 times longer to train than the baseline model. However, due to the flexibility of the approach, 
- the model could be adapted to different datasets and learning scenarios. 
-
 \section{Conclusion}
-The intention of the report was to determine the benefit of making use of incremental learning in neural networks to combat imbalanced datasets. Two datasets were used to evaluate the performance of the incremental class learning model against a baseline model. The Iris dataset was too small for the incremental class learning model to be effective, where the baseline model outperformed it on all metrics. 
-The Fashion-MNIST dataset was more promising, where the incremental class learning model achieved higher scores on all metrics. Despite these metrics being higher, the models 
-did not have a statistically significant difference in the accuracy and F1 scores. Despite the lack of statistical significance, the incremental class learning model was more data efficient, reaching a 
-target validation accuracy of 92\% with only 40\% of the training data, whereas the baseline model required 60\% of the training data
- to reach the same target for the Fashion-MNIST dataset. The incremental class learning model was also more stable, with lower 
- standard deviations across all metrics. The trade-off between the two models is between performance and training time. The
- incremental class learning model took significantly longer to tune, train, and validate; however, it was able to achieve
- acceptable performance on fewer data observations than the baseline model. \\
-\cite{blackard1999forest}.
- Further work could involve testing the models on larger and more complex datasets to better evaluate the performance of the incremental class learning model. The incremental class 
- learning model for the assignment was limited due to computational constraints, where the model could not be made too complex. With more computational resources, the model could be made deeper and wider to better learn the relationships in the data.
+ With more computational resources, the model could be made deeper and wider to better learn the relationships in the data.
  The associated code for all the calculations
 \footnote{The code for this report is available on GitHub: \url{https://github.com/grantxxcoder/25849646rw441Assignment4}.} can be found in the footnote and the references on the last page.
 \appendix

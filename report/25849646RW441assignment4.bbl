@@ -1,38 +1,8 @@
 \begin{thebibliography}{}
 
-\bibitem[Fisher and Schlimmer, 1986]{fisher1986}
-Fisher, D.~H. and Schlimmer, J.~C. (1986).
-\newblock A case study of incremental concept induction.
-\newblock In {\em Proceedings of the Fifth National Conference on Artificial Intelligence (AAAI)}, page incremental learning section. AAAI Press.
-
-\bibitem[Fisher, 1936]{fisher1936iris}
-Fisher, R.~A. (1936).
-\newblock Iris [dataset].
-\newblock UCI Machine Learning Repository.
-\newblock \url{https://archive.ics.uci.edu/ml/datasets/iris}, accessed 2025-09-26.
-
-\bibitem[Kingma and Ba, 2015]{kingma2015adam}
-Kingma, D.~P. and Ba, J. (2015).
-\newblock Adam: A method for stochastic optimization.
-\newblock In {\em Proceedings of the 3rd International Conference on Learning Representations (ICLR)}.
-
-\bibitem[McKinney et~al., 2020]{reback2020pandas}
-McKinney, W., Reback, J.~F., Tratner, J., Augspurger, T., Cloud, P., Hawkins, S., gfyoung, Sinhrks, Klein, A., Petersen, T., She, C., Ayd, W., Garcia, M., Schendel, J., Hayden, A., Saxton, D., Dong, K., Overmeire, W., and Wang, P. (2020).
-\newblock pandas-dev/pandas: Pandas.
-
-\bibitem[Paszke et~al., 2019]{paszke2019pytorch}
-Paszke, A., Gross, S., Massa, F., Lerer, A., Bradbury, J., Chanan, G., Killeen, T., Lin, Z., Gimelshein, N., Antiga, L., Desmaison, A., Kopf, A., Yang, E., DeVito, Z., Raison, M., Tejani, A., Chilamkurthy, S., Steiner, B., Fang, L., Bai, J., and Chintala, S. (2019).
-\newblock Pytorch: An imperative style, high-performance deep learning library.
-\newblock In {\em Advances in Neural Information Processing Systems 32 (NeurIPS)}.
-
-\bibitem[Pedregosa et~al., 2011]{pedregosa2011scikit}
-Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., and Duchesnay, E. (2011).
-\newblock Scikit-learn: Machine learning in {P}ython.
+\bibitem[Pedregosa et~al., 2011]{scikit-learn}
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., and Duchesnay, {\'E}. (2011).
+\newblock Scikit-learn: Machine learning in python.
 \newblock {\em Journal of Machine Learning Research}, 12:2825--2830.
-
-\bibitem[Xiao et~al., 2017]{xiao2017fashionmnist}
-Xiao, H., Rasul, K., and Vollgraf, R. (2017).
-\newblock Fashion-mnist: a novel image dataset for benchmarking machine learning algorithms.
-\newblock {\em arXiv preprint arXiv:1708.07747}.
 
 \end{thebibliography}

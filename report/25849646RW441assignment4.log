@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.26)  10 OCT 2025 11:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.26)  12 OCT 2025 23:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -273,182 +273,42 @@ Package caption Info: New subtype `subfigure' on input line 238.
 \c@subfigure=\count292
 Package caption Info: New subtype `subtable' on input line 238.
 \c@subtable=\count293
-) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/base/glossaries.sty
-Package: glossaries 2023/09/29 v4.53 (NLCT)
- (/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
- (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks27
-\XKV@tempa@toks=\toks28
-)
-\XKV@depth=\count294
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-)) (/usr/share/texlive/texmf-dist/tex/latex/mfirstuc/mfirstuc.sty
-Package: mfirstuc 2022/10/14 v2.08 (NLCT)
- (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count295
-)
-\@glsmfirst=\toks29
-\@glsmrest=\toks30
-) (/usr/share/texlive/texmf-dist/tex/latex/xfor/xfor.sty
-Package: xfor 2009/02/05 v1.05 (NLCT)
-) (/usr/share/texlive/texmf-dist/tex/latex/datatool/datatool-base.sty
-Package: datatool-base 2019/09/27 v2.32 (NLCT)
- (/usr/share/texlive/texmf-dist/tex/latex/substr/substr.sty
-Package: substr 2009/10/20 v1.2 Handle substrings
-\c@su@anzahl=\count296
-) (/usr/share/texlive/texmf-dist/tex/latex/datatool/datatool-fp.sty
-Package: datatool-fp 2019/09/27 v2.32 (NLCT)
- (/usr/share/texlive/texmf-dist/tex/latex/fp/fp.sty
-Package: fp 1995/04/02
- `Fixed Point Package', Version 0.8, April 2, 1995 (C) Michael Mehlich (/usr/share/texlive/texmf-dist/tex/latex/fp/defpattern.sty
-Package: defpattern 1994/10/12
-\actioncount=\count297
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-basic.sty
-Package: fp-basic 1996/05/13
-\FP@xs=\count298
-\FP@xia=\count299
-\FP@xib=\count300
-\FP@xfa=\count301
-\FP@xfb=\count302
-\FP@rega=\count303
-\FP@regb=\count304
-\FP@regs=\count305
-\FP@times=\count306
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-addons.sty
-Package: fp-addons 1995/03/15
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-snap.sty
-Package: fp-snap 1995/04/05
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-exp.sty
-Package: fp-exp 1995/04/03
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-trigo.sty
-Package: fp-trigo 1995/04/14
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-pas.sty
-Package: fp-pas 1994/08/29
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-random.sty
-Package: fp-random 1995/02/23
-\FPseed=\count307
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-eqn.sty
-Package: fp-eqn 1995/04/03
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-upn.sty
-Package: fp-upn 1996/10/21
-) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-eval.sty
-Package: fp-eval 1995/04/03
-)))
-\@dtl@toks=\toks31
-\@dtl@tmpcount=\count308
-\dtl@tmplength=\skip56
-\dtl@sortresult=\count309
-\@dtl@numgrpsepcount=\count310
-\@dtl@datatype=\count311
-\dtl@codeA=\count312
-\dtl@codeB=\count313
-\@dtl@foreach@level=\count314
-)
-\gls@level=\count315
-\@gls@tmpb=\toks32
-\gls@tmplen=\skip57
-\glskeylisttok=\toks33
-\glslabeltok=\toks34
-\glsshorttok=\toks35
-\glslongtok=\toks36
- (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-hypernav.sty
-Package: glossary-hypernav 2023/09/29 v4.53 (NLCT)
-) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-list.sty
-Package: glossary-list 2023/09/29 v4.53 (NLCT)
-\glslistdottedwidth=\skip58
-) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-long.sty
-Package: glossary-long 2023/09/29 v4.53 (NLCT)
- (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
-\LTleft=\skip59
-\LTright=\skip60
-\LTpre=\skip61
-\LTpost=\skip62
-\LTchunksize=\count316
-\LTcapwidth=\dimen196
-\LT@head=\box57
-\LT@firsthead=\box58
-\LT@foot=\box59
-\LT@lastfoot=\box60
-\LT@gbox=\box61
-\LT@cols=\count317
-\LT@rows=\count318
-\c@LT@tables=\count319
-\c@LT@chunks=\count320
-\LT@p@ftn=\toks37
-)
-\glsdescwidth=\skip63
-\glspagelistwidth=\skip64
-) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-super.sty
-Package: glossary-super 2023/09/29 v4.53 (NLCT)
- (/usr/share/texlive/texmf-dist/tex/latex/supertabular/supertabular.sty
-Package: supertabular 2020/02/02 v4.1g the supertabular environment
-\c@tracingst=\count321
-\ST@wd=\dimen197
-\ST@rightskip=\skip65
-\ST@leftskip=\skip66
-\ST@parfillskip=\skip67
-\ST@pageleft=\dimen198
-\ST@headht=\dimen199
-\ST@tailht=\dimen256
-\ST@pagesofar=\dimen257
-\ST@pboxht=\dimen258
-\ST@lineht=\dimen259
-\ST@prevht=\dimen260
-\ST@toadd=\dimen261
-\ST@dimen=\dimen262
-\ST@pbox=\box62
-)) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-tree.sty
-Package: glossary-tree 2023/09/29 v4.53 (NLCT)
-\glstreeindent=\skip68
-))
-\glswrite=\write3
-\glo@main@file=\write4
-\openout4 = `25849646RW441assignment4.glo'.
-
-Package glossaries Info: Writing glossary file 25849646RW441assignment4.glo on input line 11.
-\glo@acronym@file=\write5
-\openout5 = `25849646RW441assignment4.acn'.
-
-Package glossaries Info: Writing glossary file 25849646RW441assignment4.acn on input line 11.
- (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count322
-\l__pdf_internal_box=\box63
+\l__color_backend_stack_int=\count294
+\l__pdf_internal_box=\box57
 ) (./25849646RW441assignment4.aux)
 \openout1 = `25849646RW441assignment4.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
 
 -- Lines per column: 56 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count323
-\scratchdimen=\dimen263
-\scratchbox=\box64
-\nofMPsegments=\count324
-\nofMParguments=\count325
-\everyMPshowfont=\toks38
-\MPscratchCnt=\count326
-\MPscratchDim=\dimen264
-\MPnumerator=\count327
-\makeMPintoPDFobject=\count328
-\everyMPtoPDFconversion=\toks39
+\scratchcounter=\count295
+\scratchdimen=\dimen196
+\scratchbox=\box58
+\nofMPsegments=\count296
+\nofMParguments=\count297
+\everyMPshowfont=\toks27
+\MPscratchCnt=\count298
+\MPscratchDim=\dimen197
+\MPnumerator=\count299
+\makeMPintoPDFobject=\count300
+\everyMPtoPDFconversion=\toks28
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
@@ -456,189 +316,137 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: longtable package is loaded.
- (/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
-Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
-)
-Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 63.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 63.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Underfull \hbox (badness 10000) in paragraph at lines 62--72
-
- []
-
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 95.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-Underfull \hbox (badness 1831) in paragraph at lines 95--100
-[]\OT1/ptm/m/n/10 A prac-ti-cal ex-am-ple of in-cre-men-tal class learn-ing is
- []
-
-
-Underfull \hbox (badness 2600) in paragraph at lines 102--114
- \OT1/ptm/m/it/10 b) Re-lated Work: [][] \OT1/ptm/m/n/10 A key chal-lenge in in-cre-men-tal
- []
-
-
-Underfull \hbox (badness 1721) in paragraph at lines 102--114
-\OT1/ptm/m/n/10 in-di-cat-ing that re-li-able gen-er-al-iza-tion could be ob-tained
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 102--114
-
- []
-
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
-
-\openout3 = `25849646RW441assignment4.ist'.
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 200.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 111.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 111.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Underfull \hbox (badness 1755) in paragraph at lines 111--112
+[] []\OT1/ptm/m/n/10 Training data $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X; y\OT1/cmr/m/n/10 )$\OT1/ptm/m/n/10 , n[]estimators, max[]depth,
+ []
+
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 127.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \hbox (badness 3068) in paragraph at lines 126--129
+[]\OT1/ptm/m/n/10 Three syn-thetic, tab-u-lar clas-si-fi-ca-tion datasets of in-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--153
+[]\OT1/ptm/m/n/10 A cus-tom scikit-learn com-pat-i-ble es-ti-ma-tor was
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--153
+\OT1/ptm/m/n/10 im-ple-mented by ex-tend-ing \OT1/pcr/m/n/10 BaseEstimator \OT1/ptm/m/n/10 and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--153
+\OT1/pcr/m/n/10 ClassifierMixin\OT1/ptm/m/n/10 . Each base learner is a
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--153
+\OT1/pcr/m/n/10 DecisionTreeClassifier\OT1/ptm/m/n/10 . The en-sem-ble ex-poses
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--153
+\OT1/ptm/m/n/10 the hy-per-pa-ram-e-ters: \OT1/pcr/m/n/10 n_estimators\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 max_depth\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 1888) in paragraph at lines 149--153
+\OT1/pcr/m/n/10 ccp_alpha\OT1/ptm/m/n/10 . These pa-ram-e-ters al-low con-trol over tree
+ []
+
+[2]
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 199.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 200.
- [2] [3] [4]
-Underfull \hbox (badness 6445) in paragraph at lines 333--335
- \OT1/ptm/m/it/10 b) Fashion-MNIST model train-ing: [][] \OT1/ptm/m/n/10 Each Fashion-
- []
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 199.
+ [3]
+<images/simple_depth_accuracy.pdf, id=21, 578.16pt x 433.62pt>
+File: images/simple_depth_accuracy.pdf Graphic file (type pdf)
+<use images/simple_depth_accuracy.pdf>
+Package pdftex.def Info: images/simple_depth_accuracy.pdf  used on input line 255.
+(pdftex.def)             Requested size: 252.0pt x 189.00032pt.
+<images/medium_depth_accuracy.pdf, id=22, 578.16pt x 433.62pt>
+File: images/medium_depth_accuracy.pdf Graphic file (type pdf)
+<use images/medium_depth_accuracy.pdf>
+Package pdftex.def Info: images/medium_depth_accuracy.pdf  used on input line 262.
+(pdftex.def)             Requested size: 252.0pt x 189.00032pt.
+<images/complex_depth_accuracy.pdf, id=23, 578.16pt x 433.62pt>
+File: images/complex_depth_accuracy.pdf Graphic file (type pdf)
+<use images/complex_depth_accuracy.pdf>
+Package pdftex.def Info: images/complex_depth_accuracy.pdf  used on input line 269.
+(pdftex.def)             Requested size: 252.0pt x 189.00032pt.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 376--377
-[]\OT1/ptm/m/n/7 0.977 $\OMS/cmsy/m/n/7 ^^F$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 377--378
-[]\OT1/ptm/m/n/7 0.977 $\OMS/cmsy/m/n/7 ^^F$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 378--379
-[]\OT1/ptm/m/n/7 0.622 $\OMS/cmsy/m/n/7 ^^F$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 379--380
-[]\OT1/ptm/m/n/7 0.611 $\OMS/cmsy/m/n/7 ^^F$
- []
-
-
-Overfull \hbox (21.28598pt too wide) in paragraph at lines 368--382
- [][] 
- []
-
-
-Underfull \hbox (badness 6300) in paragraph at lines 449--450
-[]\OT1/ptm/m/n/7 0.8860 $\OMS/cmsy/m/n/7 ^^F$
- []
-
-
-Underfull \hbox (badness 6300) in paragraph at lines 450--451
-[]\OT1/ptm/m/n/7 0.8833 $\OMS/cmsy/m/n/7 ^^F$
- []
-
-
-Underfull \hbox (badness 6300) in paragraph at lines 451--452
-[]\OT1/ptm/m/n/7 0.8817 $\OMS/cmsy/m/n/7 ^^F$
- []
-
-
-Underfull \hbox (badness 6300) in paragraph at lines 452--453
-[]\OT1/ptm/m/n/7 0.8816 $\OMS/cmsy/m/n/7 ^^F$
- []
-
-
-Overfull \hbox (21.28598pt too wide) in paragraph at lines 441--455
- [][] 
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [4 <./images/simple_depth_accuracy.pdf> <./images/medium_depth_accuracy.pdf> <./images/complex_depth_accuracy.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 335--336
+[]\OT1/ptm/m/n/10 Different cir-cum-stances? With cor-re-lated fea-tures,
+ []
+
+
+Underfull \hbox (badness 5316) in paragraph at lines 335--336
+\OT1/ptm/m/n/10 smaller max[]features may help; with very high-
+ []
+
+
+Underfull \hbox (badness 4726) in paragraph at lines 335--336
+\OT1/ptm/m/n/10 dimensional sparse data, larger max[]features may
+ []
+
+<images/simple_depth_vs_trees_heatmap.pdf, id=75, 537.16977pt x 425.80896pt>
+File: images/simple_depth_vs_trees_heatmap.pdf Graphic file (type pdf)
+<use images/simple_depth_vs_trees_heatmap.pdf>
+Package pdftex.def Info: images/simple_depth_vs_trees_heatmap.pdf  used on input line 346.
+(pdftex.def)             Requested size: 252.0pt x 199.75989pt.
+<images/medium_depth_vs_trees_heatmap.pdf, id=76, 537.16977pt x 425.80896pt>
+File: images/medium_depth_vs_trees_heatmap.pdf Graphic file (type pdf)
+<use images/medium_depth_vs_trees_heatmap.pdf>
+Package pdftex.def Info: images/medium_depth_vs_trees_heatmap.pdf  used on input line 352.
+(pdftex.def)             Requested size: 252.0pt x 199.75989pt.
+<images/complex_depth_vs_trees_heatmap.pdf, id=77, 537.16977pt x 425.80896pt>
+File: images/complex_depth_vs_trees_heatmap.pdf Graphic file (type pdf)
+<use images/complex_depth_vs_trees_heatmap.pdf>
+Package pdftex.def Info: images/complex_depth_vs_trees_heatmap.pdf  used on input line 357.
+(pdftex.def)             Requested size: 252.0pt x 199.75989pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [5]
-
-LaTeX Warning: Reference `fig:iris_baseline_learning_curves' on page 6 undefined on input line 507.
-
-
-LaTeX Warning: Reference `fig:fashion_baseline_learning_curves' on page 6 undefined on input line 576.
+Overfull \vbox (5.8797pt too high) has occurred while \output is active []
 
 
-LaTeX Warning: Reference `fig:fashion_baseline_loss' on page 6 undefined on input line 577.
-
-
-LaTeX Warning: Reference `fig:fashions_dyn_loss' on page 6 undefined on input line 578.
-
-
-LaTeX Warning: Reference `fig:fashions_dyn_acc' on page 6 undefined on input line 582.
-
-[6]
-
-LaTeX Warning: Reference `fig:fashions_dyn_acc' on page 7 undefined on input line 609.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 609--615
-
+Underfull \hbox (badness 5189) in paragraph at lines 407--408
+[]\OT1/ptm/m/n/10 Different cir-cum-stances? With weaker bag-ging or
  []
 
 
-LaTeX Warning: Reference `fig:boxplots' on page 7 undefined on input line 653.
-
-
-LaTeX Warning: Reference `fig:data_efficiency' on page 7 undefined on input line 713.
-
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 759--768
-
- []
-
-
-Underfull \hbox (badness 2781) in paragraph at lines 776--780
-[]\OT1/ptm/m/n/10 Overall, the in-cre-men-tal class learn-ing model shows
- []
-
-
-Underfull \hbox (badness 2990) in paragraph at lines 782--790
-\OT1/ptm/m/n/10 Fashion-MNIST dataset. The in-cre-men-tal class learn-ing
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 782--790
-
- []
-
-
-Overfull \hbox (4.4403pt too wide) in paragraph at lines 801--808
+Overfull \hbox (4.4403pt too wide) in paragraph at lines 429--435
 [] 
  []
 
-(./25849646RW441assignment4.bbl [8]
-Underfull \hbox (badness 10000) in paragraph at lines 20--22
-[]\OT1/ptm/m/n/8 McKinney, W., Re-back, J. F., Trat-ner, J.,
- []
-
-
-Underfull \hbox (badness 2726) in paragraph at lines 20--22
-\OT1/ptm/m/n/8 Augspurger, T., Cloud, P., Hawkins, S., gfy-oung, Sinhrks, Klein,
- []
-
-
-Underfull \hbox (badness 1990) in paragraph at lines 20--22
-\OT1/ptm/m/n/8 A., Sax-ton, D., Dong, K., Over-meire, W., and Wang, P. (2020).
- []
-
-)
+(./25849646RW441assignment4.bbl [6 <./images/simple_depth_vs_trees_heatmap.pdf> <./images/medium_depth_vs_trees_heatmap.pdf> <./images/complex_depth_vs_trees_heatmap.pdf>])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -650,36 +458,27 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-
-Package glossaries Warning: No \printglossary or \printglossaries found. 
-(Remove \makeglossaries if you don't want any glossaries.) 
-This document will not have a glossary.
-
-[9
+[7
 
 ] (./25849646RW441assignment4.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 10129 strings out of 474222
- 166801 string characters out of 5748733
- 1953975 words of memory out of 5000000
- 32220 multiletter control sequences out of 15000+600000
- 598763 words of font info for 112 fonts, out of 8000000 for 9000
+ 5558 strings out of 474222
+ 94547 string characters out of 5748733
+ 1941975 words of memory out of 5000000
+ 27753 multiletter control sequences out of 15000+600000
+ 597656 words of font info for 111 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,17n,93p,2463b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on 25849646RW441assignment4.pdf (9 pages, 199624 bytes).
+ 67i,10n,77p,637b,498s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/ztmr.pfb>
+Output written on 25849646RW441assignment4.pdf (7 pages, 569863 bytes).
 PDF statistics:
- 110 PDF objects out of 1000 (max. 8388607)
- 68 compressed objects within 1 object stream
+ 245 PDF objects out of 1000 (max. 8388607)
+ 103 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
