@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex 25849646RW441assignment4"] 1760023340.44176 "25849646RW441assignment4.aux" "25849646RW441assignment4.bbl" "25849646RW441assignment4" 1760023341.6214 0
+["bibtex 25849646RW441assignment4"] 1760090015.80024 "25849646RW441assignment4.aux" "25849646RW441assignment4.bbl" "25849646RW441assignment4" 1760093232.57639 0
   "./references.bib" 1760023229.66818 3397 7fd7999b11eeb87d52eba93bf13e5d94 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "25849646RW441assignment4.aux" 1760023341.35672 8307 d13bb8ab25a974778d09d064d8600c4c "pdflatex"
+  "25849646RW441assignment4.aux" 1760093231.85391 8162 dbe2cf7bd401ee238c69ff4f532878e8 "pdflatex"
   (generated)
   "25849646RW441assignment4.bbl"
   "25849646RW441assignment4.blg"
   (rewritten before read)
-["pdflatex"] 1760023340.56049 "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" "25849646RW441assignment4.pdf" "25849646RW441assignment4" 1760023341.62158 0
+["pdflatex"] 1760093230.64053 "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" "25849646RW441assignment4.pdf" "25849646RW441assignment4" 1760093232.57688 0
   "/etc/texmf/web2c/texmf.cnf" 1740837277.30025 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" 1760023338.78464 59933 80c0409b7fbaf7f0b54dd9bd86015548 ""
+  "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" 1760093230.26291 55567 1309785dbf2444e3afdf93e878e3c499 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -125,9 +125,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1748261859.07033 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1748261891 8213243 5926d5c6c4dff910a22829e70d707a80 ""
-  "25849646RW441assignment4.aux" 1760023341.35672 8307 d13bb8ab25a974778d09d064d8600c4c "pdflatex"
-  "25849646RW441assignment4.bbl" 1760023340.55572 2251 540d7d5e01fecf1436d6c35fec8a95ed "bibtex 25849646RW441assignment4"
-  "25849646RW441assignment4.tex" 1760023338.78464 59933 80c0409b7fbaf7f0b54dd9bd86015548 ""
+  "25849646RW441assignment4.aux" 1760093231.85391 8162 dbe2cf7bd401ee238c69ff4f532878e8 "pdflatex"
+  "25849646RW441assignment4.bbl" 1760090016.02191 2251 540d7d5e01fecf1436d6c35fec8a95ed "bibtex 25849646RW441assignment4"
+  "25849646RW441assignment4.tex" 1760093230.26291 55567 1309785dbf2444e3afdf93e878e3c499 ""
   (generated)
   "25849646RW441assignment4.acn"
   "25849646RW441assignment4.aux"

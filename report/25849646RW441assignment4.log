@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.26)  9 OCT 2025 16:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.26)  10 OCT 2025 11:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -462,61 +462,38 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
-
-Underfull \hbox (badness 2334) in paragraph at lines 55--62
-\OT1/ptm/m/n/10 de-tec-tion, med-i-cal di-ag-no-sis, and im-age recog-ni-tion. A
- []
-
-
-Underfull \hbox (badness 1460) in paragraph at lines 55--62
-\OT1/ptm/m/n/10 ma-jor-ity classes. The bias in the model leads to poor
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 55--62
+LaTeX Font Info:    Trying to load font information for U+msa on input line 63.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 63.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Underfull \hbox (badness 10000) in paragraph at lines 62--72
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 63--69
-
- []
-
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 70.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 95.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 2318) in paragraph at lines 70--73
-\OT1/ptm/m/n/10 from scratch to en-sure a fair com-par-i-son of the two
+Underfull \hbox (badness 1831) in paragraph at lines 95--100
+[]\OT1/ptm/m/n/10 A prac-ti-cal ex-am-ple of in-cre-men-tal class learn-ing is
  []
 
 
-Underfull \hbox (badness 1509) in paragraph at lines 70--73
-\OT1/ptm/m/n/10 ap-proaches. Sec-ondly, the in-cre-men-tal model re-quired a
+Underfull \hbox (badness 2600) in paragraph at lines 102--114
+ \OT1/ptm/m/it/10 b) Re-lated Work: [][] \OT1/ptm/m/n/10 A key chal-lenge in in-cre-men-tal
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 70--73
-
+Underfull \hbox (badness 1721) in paragraph at lines 102--114
+\OT1/ptm/m/n/10 in-di-cat-ing that re-li-able gen-er-al-iza-tion could be ob-tained
  []
 
 
-Underfull \hbox (badness 5862) in paragraph at lines 74--77
-[]\OT1/ptm/m/n/10 The pri-mary met-rics used to eval-u-ate the mod-els
- []
-
-
-Underfull \hbox (badness 2591) in paragraph at lines 74--77
-\OT1/ptm/m/n/10 were ac-cu-racy and F1-score. The ac-cu-racy pro-vides a
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 74--77
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 78--81
+Underfull \hbox (badness 10000) in paragraph at lines 102--114
 
  []
 
@@ -526,163 +503,127 @@ Underfull \hbox (badness 10000) in paragraph at lines 78--81
 
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 87.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 87.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Underfull \hbox (badness 10000) in paragraph at lines 86--96
-
- []
-
-
-Underfull \hbox (badness 1831) in paragraph at lines 119--124
-[]\OT1/ptm/m/n/10 A prac-ti-cal ex-am-ple of in-cre-men-tal class learn-ing is
- []
-
-
-Underfull \hbox (badness 2600) in paragraph at lines 126--138
- \OT1/ptm/m/it/10 b) Re-lated Work: [][] \OT1/ptm/m/n/10 A key chal-lenge in in-cre-men-tal
- []
-
-
-Underfull \hbox (badness 1721) in paragraph at lines 126--138
-\OT1/ptm/m/n/10 in-di-cat-ing that re-li-able gen-er-al-iza-tion could be ob-tained
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 126--138
-
- []
-
-[2]
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 224.
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 200.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 224.
- [3]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4]
-Underfull \hbox (badness 6445) in paragraph at lines 357--359
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 200.
+ [2] [3] [4]
+Underfull \hbox (badness 6445) in paragraph at lines 333--335
  \OT1/ptm/m/it/10 b) Fashion-MNIST model train-ing: [][] \OT1/ptm/m/n/10 Each Fashion-
  []
 
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 400--401
+
+Underfull \hbox (badness 10000) in paragraph at lines 376--377
 []\OT1/ptm/m/n/7 0.977 $\OMS/cmsy/m/n/7 ^^F$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 401--402
+Underfull \hbox (badness 10000) in paragraph at lines 377--378
 []\OT1/ptm/m/n/7 0.977 $\OMS/cmsy/m/n/7 ^^F$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 402--403
+Underfull \hbox (badness 10000) in paragraph at lines 378--379
 []\OT1/ptm/m/n/7 0.622 $\OMS/cmsy/m/n/7 ^^F$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 403--404
+Underfull \hbox (badness 10000) in paragraph at lines 379--380
 []\OT1/ptm/m/n/7 0.611 $\OMS/cmsy/m/n/7 ^^F$
  []
 
 
-Overfull \hbox (21.28598pt too wide) in paragraph at lines 392--406
+Overfull \hbox (21.28598pt too wide) in paragraph at lines 368--382
  [][] 
  []
 
 
-Underfull \hbox (badness 6300) in paragraph at lines 473--474
+Underfull \hbox (badness 6300) in paragraph at lines 449--450
 []\OT1/ptm/m/n/7 0.8860 $\OMS/cmsy/m/n/7 ^^F$
  []
 
 
-Underfull \hbox (badness 6300) in paragraph at lines 474--475
+Underfull \hbox (badness 6300) in paragraph at lines 450--451
 []\OT1/ptm/m/n/7 0.8833 $\OMS/cmsy/m/n/7 ^^F$
  []
 
 
-Underfull \hbox (badness 6300) in paragraph at lines 475--476
+Underfull \hbox (badness 6300) in paragraph at lines 451--452
 []\OT1/ptm/m/n/7 0.8817 $\OMS/cmsy/m/n/7 ^^F$
  []
 
 
-Underfull \hbox (badness 6300) in paragraph at lines 476--477
+Underfull \hbox (badness 6300) in paragraph at lines 452--453
 []\OT1/ptm/m/n/7 0.8816 $\OMS/cmsy/m/n/7 ^^F$
  []
 
 
-Overfull \hbox (21.28598pt too wide) in paragraph at lines 465--479
+Overfull \hbox (21.28598pt too wide) in paragraph at lines 441--455
  [][] 
- []
-
-
-LaTeX Warning: Reference `fig:iris_baseline_learning_curves' on page 6 undefined on input line 531.
-
-[6]
-
-LaTeX Warning: Reference `fig:fashion_baseline_learning_curves' on page 7 undefined on input line 600.
-
-
-LaTeX Warning: Reference `fig:fashion_baseline_loss' on page 7 undefined on input line 601.
-
-
-LaTeX Warning: Reference `fig:fashions_dyn_loss' on page 7 undefined on input line 602.
-
-
-LaTeX Warning: Reference `fig:fashions_dyn_acc' on page 7 undefined on input line 606.
-
-
-LaTeX Warning: Reference `fig:fashions_dyn_acc' on page 7 undefined on input line 633.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 633--639
-
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7]
+ [5]
 
-LaTeX Warning: Reference `fig:boxplots' on page 8 undefined on input line 677.
-
-
-LaTeX Warning: Reference `fig:data_efficiency' on page 8 undefined on input line 737.
+LaTeX Warning: Reference `fig:iris_baseline_learning_curves' on page 6 undefined on input line 507.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 783--792
+LaTeX Warning: Reference `fig:fashion_baseline_learning_curves' on page 6 undefined on input line 576.
+
+
+LaTeX Warning: Reference `fig:fashion_baseline_loss' on page 6 undefined on input line 577.
+
+
+LaTeX Warning: Reference `fig:fashions_dyn_loss' on page 6 undefined on input line 578.
+
+
+LaTeX Warning: Reference `fig:fashions_dyn_acc' on page 6 undefined on input line 582.
+
+[6]
+
+LaTeX Warning: Reference `fig:fashions_dyn_acc' on page 7 undefined on input line 609.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 609--615
 
  []
 
-[8]
-Underfull \hbox (badness 2781) in paragraph at lines 800--804
+
+LaTeX Warning: Reference `fig:boxplots' on page 7 undefined on input line 653.
+
+
+LaTeX Warning: Reference `fig:data_efficiency' on page 7 undefined on input line 713.
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 759--768
+
+ []
+
+
+Underfull \hbox (badness 2781) in paragraph at lines 776--780
 []\OT1/ptm/m/n/10 Overall, the in-cre-men-tal class learn-ing model shows
  []
 
 
-Underfull \hbox (badness 2990) in paragraph at lines 806--814
+Underfull \hbox (badness 2990) in paragraph at lines 782--790
 \OT1/ptm/m/n/10 Fashion-MNIST dataset. The in-cre-men-tal class learn-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 806--814
+Underfull \hbox (badness 10000) in paragraph at lines 782--790
 
  []
 
 
-Overfull \hbox (4.4403pt too wide) in paragraph at lines 825--832
+Overfull \hbox (4.4403pt too wide) in paragraph at lines 801--808
 [] 
  []
 
-(./25849646RW441assignment4.bbl
+(./25849646RW441assignment4.bbl [8]
 Underfull \hbox (badness 10000) in paragraph at lines 20--22
 []\OT1/ptm/m/n/8 McKinney, W., Re-back, J. F., Trat-ner, J.,
  []
@@ -714,7 +655,9 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
 
-[9] (./25849646RW441assignment4.aux)
+[9
+
+] (./25849646RW441assignment4.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -727,13 +670,13 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  10129 strings out of 474222
  166801 string characters out of 5748733
- 1959975 words of memory out of 5000000
+ 1953975 words of memory out of 5000000
  32220 multiletter control sequences out of 15000+600000
  598763 words of font info for 112 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,17n,93p,2463b,558s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on 25849646RW441assignment4.pdf (9 pages, 205252 bytes).
+Output written on 25849646RW441assignment4.pdf (9 pages, 199624 bytes).
 PDF statistics:
  110 PDF objects out of 1000 (max. 8388607)
  68 compressed objects within 1 object stream

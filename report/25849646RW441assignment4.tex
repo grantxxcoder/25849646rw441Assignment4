@@ -25,7 +25,7 @@
 \begin{document}
 
 % Title Section
-\title{Assignment 4: Incremental Class Learning}
+\title{Assignment 4: Random Forest Analysis of Tree Size}
 
 \author{
 \IEEEauthorblockN{Grant Booysen 25849646}
@@ -36,48 +36,24 @@
 
 % Abstract
 \begin{abstract}
-The report follows the evaluation of an incremental class learning approach with neural networks, specifically applied to imbalanced classification tasks. An incremental class neural network architecture 
-was built to progressively train minority classes until all the classes were covered in the training set. The architecture was applied to a modified Iris dataset \cite{fisher1936iris} and a modified Fashion-MNIST dataset \cite{xiao2017fashionmnist}. 
-The goal is to determine in imbalanced class learning scenarios if a neural network with incremental learning will outperform a static neural network model. The task was achieved by constructing each model architecture, tuning the hyperparameters for each dataset, and evaluating the models on accuracy and F1-score. 
-In the case of the report, the incremental class learner demonstrated strong performance on the Fashion-MNIST dataset, achieving high cross-validated test accuracy and F1-scores of 83.77\% and 83.73\%, respectively. The incremental model did not have a statistically
-significant difference in the metrics compared to the baseline model and had no clear advantage in terms of improving the evaluation metrics of smaller classes. Despite the lack of improvement in smaller classes, the incremental model was more stable and significantly more data efficient, where it 
-achieved 92\% validation accuracy with only 40\% of the original training data, whereas the baseline model 
-required 60\% to achieve the same performance.
+The report follows the analysis of Random Forests as an architecture for classification. The aim is to determine 
+the effect of the different configurable parameters of the Random Forest to determine the effect that each has on 
+the performance of the model. Specifically, the number of trees in the forest and the maximum depth of each tree
+examined. The analysis is done for three datasets of varying complexity to ensure that the results are not 
+specific to a particular dataset. The results indicate that increasing the tree depth only improves the performance 
+up until a certain point, after which the test performance stagnates for a fixed number of features considered at each split.
+Secondly, after fixing the maximum depth of the trees to the optimal value found in the first analysis, the number of 
+amount of features considered at each split was varied. The results indicate that increasing the 
+number of features considered at each split did not improve the performance of the model.  
 \end{abstract}
 
 % Keywords (optional)
 \begin{IEEEkeywords}
-Incremental Class Learning, Neural Networks, Imbalanced Classification
+Random Forest, Ensemble learning
 \end{IEEEkeywords}
 
 % 1. Introduction
 \section{Introduction}
-Classification tasks are a core component of machine learning, where the objective is to predict, given input data, a discrete label from a set of possible classes. Classification 
-problems are present in various domains, including fraud detection, medical diagnosis, and image recognition. A significant challenge in classification tasks is the presence of 
-imbalanced datasets where certain classes have more representative samples than other minority classes. These imbalances can lead to biased models that would favour majority classes. The bias 
-in the model leads to poor performance in the minority classes, where metrics such as accuracy can be misleading. Various techniques are adopted to mitigate the effects of class imbalance, such as 
-resampling, synthetic data generation, and cost-sensitive learning. The approach taken by incremental class learning is to train a model progressively, exposing the model to 
-classes with the poorer representation first, and then slowly introducing the larger classes. The training of the incremental class learner allows for the model to 
-learn the underlying signal of the minority classes first and then build on that knowledge as more classes are introduced.\\
-
-The report explores the performance of an implemented incremental class learning approach using neural networks and compares it to a baseline neural network model. The models 
-are evaluated on two datasets: a modified Fashion-MNIST dataset \cite{xiao2017fashionmnist}, and a modified Iris dataset \cite{fisher1936iris}. The two datasets 
-provide different scenarios to evaluate the models in order to provide a comprehensive understanding of the strengths and weaknesses of the incremental class learning approach. The Iris dataset was 
-used to determine whether the incremental class learning approach would effectively learn from imbalanced classes with limited data. The 
-Fashion-MNIST dataset was used to evaluate the model's performance on a more complex and high-dimensional dataset. Each dataset 
-was explored, preprocessed, and the models were tuned to ensure optimal performance. \\
-
-The baseline model and the incremental class learning model were implemented using the \texttt{PyTorch} library in Python \cite{paszke2019pytorch}. The models were implemented from scratch to ensure a fair 
-comparison of the two approaches. Secondly, the incremental model required a custom implementation of the training procedure with a means to 
-dynamically adjust the model architecture as new classes were introduced. The custom architecture allowed for the model to adapt to the changing training data and learn the underlying signal of the classes effectively. Each model was tuned using grid search with cross-validation to ensure optimal hyperparameter values were selected. The models were evaluated using stratified K-fold cross-validation to ensure robust performance estimates and reported the mean and standard deviation of the metrics across the folds.\\
-
-The primary metrics used to evaluate the models were accuracy and F1-score. The accuracy provides a straightforward measure of overall correctness, but since in imbalanced learning tasks, 
-accuracy is misleading as a metric, the F1-score was also used to provide a more balanced view of performance. The F1-score is the harmonic mean of precision and recall, which provides a better 
-measure of a model's ability to correctly identify minority class instances.\\
-
-The incremental learner matched the baseline on Fashion-MNIST in test accuracy and F1-score, with paired Wilcoxon tests 
-detecting no statistically significant difference, yet it was notably more data-efficient. On the small Iris dataset, the baseline outperformed the 
-incremental class learning approach. Sequential exposure and very limited samples made the incremental procedure unsuccessful.\\
 
 The remainder of this report is organized as follows: Section~2 describes the background of the topic, 
 Section~3 presents the methods, Section~4 explains the empirical procedure, Section~5 reports the results and Section~6 ends with the conclusion and future directions.
