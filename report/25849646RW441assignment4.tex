@@ -7,20 +7,7 @@
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage[font=footnotesize]{subcaption}
-\usepackage[acronym]{glossaries}
-\makeglossaries
-\newacronym{ml}{ML}{Machine Learning}
-\newacronym{knn}{kNN}{k-Nearest Neighbours}
-\newacronym{dt}{DT}{Decision Tree}
-\newacronym{cv}{CV}{Cross-validation}
-\newacronym{smt}{SMOTE}{Synthetic Minority Over-Sampling Technique}
-\newacronym{TP}{TP}{True Positive}
-\newacronym{FP}{FP}{False Positive}
-\newacronym{TN}{TN}{True Negative}
-\newacronym{FN}{FN}{False Negative}
-\newacronym{rocauc}{ROC AUC}{Receiver Operating Characteristic Area Under the Curve}
-\newacronym{kde}{KDE}{Kernel Density Estimation}
-\newacronym{mcc}{MCC}{Matthews Correlation Coefficient}
+
 % *** START DOCUMENT ***
 \begin{document}
 
@@ -35,245 +22,139 @@
 \maketitle
 
 % Abstract
+
 \begin{abstract}
-The report follows the analysis of Random Forests as an architecture for classification. The aim is to determine 
-the effect of the different configurable parameters of the Random Forest to determine the effect that each has on 
-the performance of the model. Specifically, the number of trees in the forest and the maximum depth of each tree
-examined. The analysis is done for three datasets of varying complexity to ensure that the results are not 
-specific to a particular dataset. The results indicate that increasing the tree depth only improves the performance 
-up until a certain point, after which the test performance stagnates for a fixed number of features considered at each split.
-Secondly, after fixing the maximum depth of the trees to the optimal value found in the first analysis, the number of 
-amount of features considered at each split was varied. The results indicate that increasing the 
-number of features considered at each split did not improve the performance of the model.  
+The report investigates how random forest performance varies with decision-tree depth, the number of randomly selected features per 
+split, and ensemble size across three classification datasets of increasing complexity. The goal is to track the performance from 
+underfitting with very shallow trees and few features to overfitting with deep trees and many features, identify points 
+that maximize generalization, and characterize interactions among these hyperparameters. Experiments with (i) maximum depth from minimal to deep trees, (ii) number of features to 
+split on with depth fixed at the best value from (i), and (iii) the balance number of trees with depth were conducted. A final experiment 
+creates ensembles that mix under- and overfitting trees. Models are evaluated with train/test accuracy and 5-fold cross-validation. Findings 
+are consistent: increased depth improves test accuracy up to a point, after which overfitting degrades or stagnates 
+performance and the optimal depth increases with problem complexity. With depth fixed, increased number of features per split
+ improves performance up to a plateau where medium complexity favors moderate feature subsets, while complex data benefits from larger subsets. 
+ The inclusion of more trees in the ensemble improves stability and accuracy up to a plateau, with gains moderated by tree depth. 
+ Bagging with only overfitted trees proved to have either the best stability, cross validation accuracy or test accuracy across all three datasets. 
+
+  Overall, the best configurations balance depth, feature subsampling, and ensemble size where larger values are generally preferred as 
+  task complexity rises. 
 \end{abstract}
+
 
 % Keywords (optional)
 \begin{IEEEkeywords}
-Random Forest, Ensemble learning
+Random Forest, Ensemble learning, Bagging, Decision Trees
 \end{IEEEkeywords}
 
-% 1. Introduction
+
 \section{Introduction}
 
-The remainder of this report is organized as follows: Section~2 describes the background of the topic, 
-Section~3 presents the methods, Section~4 explains the empirical procedure, Section~5 reports the results and Section~6 ends with the conclusion and future directions.
+Random forests are widely used for classification due to strong generalization, robustness, and modest tuning requirements. The random forest model's  
+performance is controlled by key hyperparameters that trade off bias and variance such as: maximum decision-tree depth, the number of 
+randomly selected features per split, and ensemble size. The report aims to provide understanding for how these controls move the model to better 
+performance. The idea is to identify configurations that generalize across problem complexities.
+
+The goal of this study is to characterize how tree depth and feature subsampling influence random forest performance, and to identify 
+configurations that maximize test accuracy and cross-validated performance across datasets of increasing difficulty. The analysis is achieved by: 
+(i) exploring maximum depth from minimal to deep trees at fixed ensemble size, number of random features per split, and bagging; (ii) fixing 
+depth at the best value from (i) and exploring the optimal number of features to split on per node; (iii) exploring depth and ensemble-size 
+interactions; and (iv) composing ensembles that intentionally mix underfitted and overfitted trees. Evaluation uses train/test accuracy and 
+5-fold cross-validation to better assess generalization and stability
+
+The report aims to provide a reproducible behaviour for the bias-variance trade-off for random forests, and to extract 
+generalizations for hyperparameter selection that adapts to dataset complexity. The design follows controlled experiments to reveal 
+how each hyperparameter influences performance, and how they interact. The analysis spans three synthetic datasets of increasing complexity to
+assess how optimal configurations shift with task difficulty.
+
+The main observations are consistent with the bias-variance expectations:
+- Increasing the depth of the trees in the ensemble improves test accuracy up to a point, after which gains stagnate or degrade; the optimal 
+depth increases with complexity, for example, approximately 8, 15, and 20 on the simple, medium, and complex datasets respectively.
+- With depth fixed, increasing the number of features to split on improves performance then plateaus; moderate subsets suit medium complexity,
+ while larger subsets benefit complex data.
+- Adding trees improves stability and accuracy up to a plateau, where the number of trees needed to reach the plateau is dependent on the depth 
+of the trees.
+- Mixed-depth and overfit-only ensembles: on the simple dataset, majority underfitted trees achieved the highest test accuracy of 0.967 while 
+only overfitted attained the best cross-validated score of 0.966; on the medium dataset, a balanced mix yielded the highest test accuracy 
+of 0.683 while only overfitted achieved the best cross-validated score of 0.691; on the complex dataset, only overfitted trees achieved the highest test
+ accuracy of 0.582 and the most stable cross-validation (CV), with majority overfitted marginally higher CV mean of 0.548.
+
+The remainder of the report is organized as follows: Section~2 provides background; Section~3 details the methodology and implementation; 
+Section~4 describes the empirical procedure; Section~5 presents results and discussion; Section~6 concludes with implications and future directions.
 
 \section{Background}
-The problem domain is \textit{multi-class classification}. Multi-class classification is the process of predicting one class label from a set of available classes.
-Multi-class classification seeks to map inputs from a continuous space \(\mathcal{X} \subseteq \mathbb{R}^d\) 
-to categorical outputs in \(\mathcal{Y} = \{1,2,\dots,K\}\). 
-Given training data \(\mathcal{D} = \{(x_i, y_i)\}_{i=1}^n\) 
-with feature representations \(x_i \in \mathcal{X}\) 
-and class assignments \(y_i \in \mathcal{Y}\), 
-the task involves learning a classifier 
-\(\phi: \mathcal{X} \to \mathcal{Y}\) 
-that generalizes to predict labels for novel inputs. Neural network approaches are powerful frameworks for approximating the mapping function and were the foundational architecture for the 
-models that were implemented in the report.\\
+The background section discusses the fundamental concepts and algorithms used in the report, including decision trees, ensemble learning, and 
+random forests.
 
-\paragraph{Incremental Class Learning}
-Incremental class learning is a technique used to address class imbalance challenges in classification tasks. If a classification model is 
-trained on the entire dataset containing class imbalances at once, the model potentially biases towards the majority classes to reduce the overall loss whilst training. 
-The bias towards the majority classes leads to the model struggling to learn the underlying signal of the minority classes and hence does not generalize well to unseen data. The aim 
-of incremental class learning is to expose the model to the minority classes first, which will allow the model to focus on learning the distinguishing features 
-of the minority classes. Larger classes are added progressively, by first allowing the model to fully learn the minority classes before introducing the larger classes. The main algorithm 
-for incremental class learning is as follows:
+\subsection{Decision Trees}
+The decision tree is a supervised learning algorithm used for classification and regression tasks. The decision tree works by recursively 
+splitting the data into subsets based on feature values, creating a tree-like model of decisions. Each internal node represents a condition on a 
+feature, each branch represents the outcome of the test, and each leaf node represents a class label in classification or a continuous value 
+in regression. Decision trees are easy to interpret and visualize, but they can be prone to overfitting, especially with deep trees.
+
+\subsection{Ensemble Learning: Bagging}
+Bagging, or Bootstrap Aggregating, is an ensemble learning technique that aims to improve the stability and accuracy of machine learning algorithms.
+ The algorithm works by training multiple models on different subsets of the training data, which are created by randomly sampling with 
+ replacement known as bootstrapping. The final prediction is made by aggregating the predictions of all individual models, typically by 
+ averaging for regression or majority voting for classification. Bagging helps reduce variance and combat overfitting, making the approach 
+ particularly effective for high-variance models like decision trees.
+
+\subsection{Random Forests}
+
+Random forests are an ensemble learning method that combines multiple decision trees to improve predictive performance and control 
+overfitting. The key idea is to leverage the diversity of individual trees by training them on different subsets of the data and features. Traditionally,
+random forests use bagging to create diverse training sets for each tree. In random forests, it is expected that each tree should be grown
+to the maximum depth and overfit. The high variance of each tree is then averaged out by the ensemble, leading to a final model that generalizes well.
 
 \begin{algorithm}[H]
-\caption{Incremental Class Learning}
+\caption{Random Forest (high-level pseudocode)}
 \begin{algorithmic}[1]
-\REQUIRE Training data $\mathcal{D}$ with features $X$ and labels $Y$
-\ENSURE A trained classifier $\phi$
-\STATE Initialize $\phi$ with a model capable of multi-class classification
-\FOR{each class $c \in \mathcal{Y}$}
-    \STATE Expose $\phi$ to the training samples of class $c$
-    \STATE Train $\phi$ on the current class while freezing the weights for previously learned classes
+\REQUIRE Training data $(X, y)$, n\_estimators, max\_depth, max\_features, bootstrap size
+\FOR{each tree $t = 1 \dots$ n\_estimators}
+  \STATE Draw a bootstrap sample from $(X, y)$  % bagging
+  \STATE Grow a decision tree with depth limit max\_depth
+  \STATE At each node, consider max\_features randomly selected features
 \ENDFOR
-\RETURN $\phi$
+\STATE For prediction, average class probabilities (or majority vote) across trees
 \end{algorithmic}
 \end{algorithm}
 
-A practical example of incremental class learning is available in the \texttt{SGDClassifier} implementation of the \texttt{scikit-learn} library. 
-The \texttt{partial\_fit} method allows the classifier to be trained incrementally on batches of data, enabling new classes to be introduced progressively during training. 
-In the context of incremental class learning, the functionality makes it possible to expose the classifier to minority classes first, thereby strengthening its ability to capture 
-the underlying decision boundaries for underrepresented data before the introduction of majority classes. The incremental training interface provided by \texttt{SGDClassifier} has become one of the most widely used 
-tools for implementing online and incremental learning in practice \cite{pedregosa2011scikit}.
 
-\paragraph{Related Work}
-A key challenge in incremental decision tree induction is that each new training observation is incorporated into the growing structure, leading to
- large memory requirements and slower training times. Fisher and Schlimmer \cite{fisher1986} demonstrate that this is not strictly necessary. Those 
- objects that actively influence the formation of the decision tree need to be retained. By selectively incorporating examples that alter entropy measures or 
- decision boundaries, and discarding those that contribute no new information, the learner can substantially reduce the number of stored instances. Their 
- analysis, supported by empirical results, shows that this reduction in object incorporation yields little to no decrease in the overall quality of 
- the derived decision trees. In their empirical evaluation, Fisher and Schlimmer demonstrate that both the batch learner with incremental 
- updates \(\widehat{\mathrm{ID3}}\) and its counterpart ID4 were able to achieve effective classification accuracy of approximately 90\%. Remarkably, 
- this level of accuracy was observed after as few as 100 training instances, 
- indicating that reliable generalization could be obtained well before the learners had processed the full dataset. The incremental version of
- ID4 took longer to reach the same level of accuracy and needed 750 observations to reach 90\% accuracy. The cost of building 
- ID3 was significantly larger than that of \(\widehat{\mathrm{ID3}}\) despite both having the same upper bound of computational cost of 
-  $\mathcal{O}(|I|\,|A|^2)$ where \(|I|\) is the number of training instances and \(|A|\) is the number of attributes.\\
+\section{Implementation}
+The implementation section describes the datasets, data preparation, and the random forest model used in the experiments.
 
-Fisher and Schlimmer's selective incorporation idea carries directly to the neural network setting. Rather than 
-retaining all past data, the neural network can keep a compact rehearsal buffer of informative boundary cases that change the decision boundary. The rehearsal buffer allows the model to focus on the most relevant examples, reducing memory and training cost without sacrificing generalization. 
-The rehearsal buffer is relevant to the incremental class learning approach as it allows the model to retain knowledge of previously learned classes while learning new classes. 
-Secondly, the implementation of the incremental class learning model in the assignment validates how the incremental learning 
-approach is data efficient, as the model can achieve high performance with fewer training samples.
-% 3. Methodology
+\subsection{Data preparation}
+Three synthetic, tabular classification datasets of increasing complexity were programmatically generated using 
+\texttt{make\_classification} from \texttt{sklearn.datasets} (\cite{scikit-learn}) to enable controlled bias-variance studies and
+ avoid confounds from missing values or categorical encoding. A single \texttt{random\_state} ensured reproducibility for generation and splitting.
 
-\section{Methodology}
-The manner in which the baseline and incremental learner models were constructed, tuned and evaluated is discussed in the following section. 
-
-\subsection{Preprocessing dataset steps}
-Each dataset was preprocessed to ensure that the data was in a suitable format for the models. The datasets each had unique characteristics 
-that would highlight the strengths and weaknesses of the incremental class learning approach. 
-\paragraph{Iris dataset}
-The Iris dataset \cite{fisher1936iris} is a classic dataset in machine learning and statistics. It consists of a limited 150 samples from 
-three species of iris flowers. Each sample has four features: sepal length, sepal width, petal length, and petal width. The dataset is balanced with 50 samples per class. 
- The training data was modified to create class imbalances, where the excess points were assigned to the test set. The final class 
-distribution for the sets is seen in Table~\ref{tab:iris_class_dist}.
-\begin{table}[H]
-  \centering
-  \resizebox{\columnwidth}{!}{%
-  \begin{tabular}{|c|c|c|c|}
-    \hline
- Class & Training Samples & Validation Samples & Test Samples \\
-    \hline
- Iris-setosa (0) & 37    & 8 & 5  \\
- Iris-versicolor (1) & 21 & 7 & 22 \\
- Iris-virginica (2) & 19 & 3 & 23 \\
-    \hline
-  \end{tabular}%
- }
-  \caption{Class distribution of the modified Iris dataset}
-  \label{tab:iris_class_dist}
-\end{table}
-
-
-\paragraph{Fashion-MNIST dataset}
-The Fashion-MNIST dataset \cite{xiao2017fashionmnist} is a dataset of 70000 grayscale images of 10 different fashion items. Each image is 28x28 pixels, and the 
-dataset is split into a training set of 60000 images and a test set of 10000 images. The dataset is balanced with 6000 images per class in 
-the training set and 1000 images per class in the test set. The training data was modified to create class imbalances by removing samples from 
-several classes. The training set was further separated into a validation set using 30\% of the training data. The validation set was used in the training process to monitor 
-the performance of the models and to prevent overfitting. The test set was kept separate and only used for the final evaluation of the models. The features for the 
-Fashion-MNIST dataset are all numerical and have values between 0 and 1. 
-The final class distribution for the training, validation, and test set is seen in Table~\ref{tab:fashion_mnist_class_dist}.
-\begin{table}[H]
-  \centering
-  \begin{tabular}{|c|c|c|c|c|}
-    \hline
- Class & Training Samples & Validation Samples & Test Samples \\
-    \hline
- 0 & 6000 & 1779 & 1000\\
- 1 & 5500 & 1640 & 1000\\
- 2 & 5000 & 1522 & 1000\\
- 3 & 4500 & 1340 & 1000\\
- 4 & 4000 & 1174 & 1000\\
- 5 & 3500 & 1064 & 1000\\
- 6 & 3000 & 885 & 1000\\
- 7 & 2500 & 763 & 1000\\
- 8 & 2000 & 630 & 1000\\
- 9 & 1500 & 453 & 1000\\
-    \hline
-  \end{tabular}
-  \caption{Class distribution of the modified Fashion-MNIST training dataset}
-  \label{tab:fashion_mnist_class_dist}
-\end{table}
-
-\paragraph{Data preparation}
-Each training and validation dataset was separated into multiple pandas DataFrames \cite{reback2020pandas}, one for each class. The DataFrames were sorted by class size in ascending order to ensure that the minority classes were
-exposed to the model first. The list of sorted DataFrames was then used in the training process to progressively introduce classes to the model. Each class label had to be mapped to a new label indicating the order in which the class 
-would be introduced to the model. The mapping was done as PyTorch \cite{paszke2019pytorch} requires that the class labels are in the range [0, K-1] where K is the number of classes that is currently being trained. For example, in the Fashion-MNIST dataset, the 
-class label 9 would be mapped to 0, class label 8 to 1, and so on.
-
-\paragraph{Baseline model}
-The baseline model is a feedforward multilayer perceptron implemented in PyTorch, with a configurable list of hidden layers and selectable Rectified Linear Unit (ReLU) or hyperbolic tangent (Tanh) activations for the hidden layers. It produces raw logits from a 
-final linear layer (suitable for cross‑entropy loss) and enforces seeded, deterministic settings to ensure reproducible training runs.
-
-\paragraph{Incremental class learning model}
-The dynamic incremental class learning model is also a feedforward multilayer perceptron implemented in PyTorch. The model starts with a single identity layer (no neurons) and one linear output layer to predict between the original two classes. The architecture of 
-the model allows for the progressive addition of neurons to the hidden layers and to update the output layer to accommodate the new classes. Each hidden layer is limited to 512 neurons for computational reasons and as a mechanism to 
-help combat overfitting. The dynamic addition of neurons is done by replacing the existing layer with a new layer that has the same weights as the previous layer, but with additional neurons initialized to zero. The model adds new 
-neurons in base-2 (powers-of-two) increments. The model keeps an internal expansion counter $k$ and, on each expansion, adds $2^k$ neurons (starting with $2^0=1$); $k$ is incremented after every addition. If the next expansion would exceed 512 neurons, the counter is reset to $k=0$, a new layer is added, and the cycle restarts until the maximum number of layers is reached. The algorithm for the expansion of the model is as follows:
-\begin{algorithm}[H]
-\caption{Dynamic Expansion of Neural Network}
-\begin{algorithmic}[1]
-\REQUIRE Current model $\phi$ with hidden layers $H$, output layer $O$, expansion counter $k$
-\STATE $n \gets 2^k$ \COMMENT{Number of neurons to add}
-\IF{$\text{last}(H).\text{out\_features} + n \leq 512$}
-    \STATE Add $n$ neurons to the last hidden layer in $H$
-    \STATE $k \gets k+1$
-\ELSE
-    \STATE Reset $k \gets 0$
-    \STATE Create a new hidden layer with $2^k = 1$ neuron
-    \STATE Append new hidden layer to $H$
-    \STATE $k \gets k+1$
-\ENDIF
-\STATE Update output layer $O$ to match new hidden dimension
-\end{algorithmic}
-\end{algorithm}
-The incremental class learning model exposes the following parameters to control the training process and help avoid under- or overfitting. The parameters are described as follows:
+\textbf{Datasets (generation intent and parameters):}
 \begin{itemize}
-\item \textbf{Moving average window size} \textemdash\ how many recent epochs that are included when smoothing the training/validation losses. Larger windows give smoother but slower-to-react curves; smaller windows react faster but can be noisy. The smoothing is used to judge trends rather than single-epoch noise.
-\item \textbf{Plateau threshold} \textemdash\ a tolerance on the absolute slope of the \emph{smoothed} loss trends. In the implementation, the slope magnitude is treated on a 0--1 scale: values near zero mean very strict flatness, while larger values up to one would be very lenient. When both slopes are below the threshold, training is considered plateaued, and the procedure may take action.
-\item \textbf{Underfit threshold} \textemdash\ an upper bound on the \emph{smoothed training loss}, chosen on a 0--1 scale in the implementation. Lower values closer to zero demand very low training loss before declaring the model adequately fit; higher values closer to one tolerate higher loss. For example, setting 0.5 means: if the smoothed training loss stays above 0.5 and is not meaningfully decreasing, increase complexity.
-\item \textbf{Overfit threshold (training)} \textemdash\ a requirement on how strongly the training loss must be trending downward, expressed as a normalized slope magnitude in 0--1. Smaller values near zero make the detector sensitive to even tiny decreases; larger values require a clearly negative trend before triggering. The condition, combined with the validation trend below, flags overfitting.
-\item \textbf{Overfit threshold (validation)} \textemdash\ a requirement on how strongly the validation loss must be trending upward, also on a 0--1 slope scale. Smaller values near zero react to slight increases; larger values only react to clear worsening. When training improves past its threshold while validation worsens past the threshold, the model is considered to be overfitting, and the procedure reacts.
-\item \textbf{Minimum number of neurons} \textemdash\ the least number of neurons that are added on the first expansion of the first hidden layer. A larger minimum accelerates early capacity growth; a smaller one grows the network more cautiously.
-\item \textbf{Learning rate} \textemdash\ the optimizer step size. Because the architecture can change during training by adding neurons or outputs, the optimizer is reinitialized with this rate after structural updates to maintain stable training.
-\item \textbf{Activation function} \textemdash\ the hidden-layer nonlinearity.
-\item \textbf{Maximum hidden layers} \textemdash\ the maximum number of hidden layers that can be added to the model architecture. Once the limit is reached, no further layers are added.
+  \item Simple: binary classification, low noise, no overlap between classes, \texttt{n\_samples=500}, \texttt{n\_features=10} where eight are informative and two are redundant, \texttt{class\_sep=2.0}, \texttt{flip\_y=0.0}. Designed to saturate quickly with shallow trees and show limited overfitting.
+  \item Medium: three classes, moderate overlap, mild noise, \texttt{n\_samples=2000}, \texttt{n\_features=25} where 18 are informative and five are redundant, \texttt{class\_sep=1.0}, \texttt{flip\_y=0.2}. Targets visible bias-variance trade-offs at medium depths.
+  \item Complex: four classes, many features, higher noise, \texttt{n\_samples=6000}, \texttt{n\_features=50} where 35 are informative and ten are redundant, \texttt{class\_sep=0.7}, \texttt{flip\_y=0.3}. Encourages deeper trees and progressive overfitting.
 \end{itemize}
 
-\paragraph{Data-efficiency protocol}
-To quantify data efficiency, the validation accuracy was evaluated as a function of the fraction of training data available. For each 
-percentage, a \emph{stratified} subset was drawn to preserve class proportions, trained with the same optimization settings, and  
-run over a small set of random seeds from 42 to 46. The \emph{maximum} validation accuracy was kept across those seeds at that 
-percentage. The max-over-seeds view intentionally reflected a best-case outcome for the data available and was applied identically to 
-the baseline and incremental learners. An acceptable validation goal threshold was chosen where the \emph{data-efficiency point} 
-for a model is the smallest percentage at which its best-seed accuracy first reached or exceeded the goal threshold.
+\textbf{Train/test split:} A stratified split with \texttt{test\_size=0.30} and fixed \texttt{random\_state} preserves 
+class proportions across splits and guarantees identical partitions across runs.
 
-\subsection{Training procedure}
-The training procedure for each model was different. Both models use the Adam optimizer \cite{kingma2015adam} with a tuned learning rate and use cross-entropy loss. The training procedure for each model is described below.
-\paragraph{Baseline model training}
-The model was trained for a specified 
-number of epochs with early stopping based on the validation loss. 
 
-\paragraph{Incremental class learning model training}
-The model was trained for a specified number of epochs; however, unlike the baseline model, the plateau, underfit, and overfit thresholds were used to determine how the 
-model would progress through the classes. The thresholds were thus used to determine when to stop training on the current class set and to add the next class to the set. 
-The incremental model was trained in stages, starting with the two smallest classes and gradually 
-introduced the remaining classes as the learning curves stabilized. At each epoch, training and validation 
-losses/accuracies were computed, smoothed the losses with a moving-average window, and fitted a simple linear trend 
-to the smoothed series. The slopes drive three decisions:
+\textbf{Preprocessing:} No scaling or normalization is applied as decision trees are insensitive to monotonic feature transforms. No imputation is
+ required as the synthetic data contain no missing values. No label encoding is needed as the labels are already integers.
+
+\textbf{Depth ranges for experimental control:} Per-dataset depth grids are predefined to bound sweeps and reflect expected capacity needs:
 \begin{itemize}
-  \item \textbf{Plateau detection} \textemdash\ if both smoothed losses have slopes below the plateau threshold, training is considered plateaued and the next class can be added.
-  \item \textbf{Underfitting detection} \textemdash\ if the smoothed training loss is above the underfit threshold and not meaningfully decreasing, the model is considered underfit and neurons are added to the last hidden layer.
-  \item \textbf{Overfitting detection} \textemdash\ if the smoothed training loss is meaningfully decreasing while the smoothed validation loss is not improving, the model is considered overfit and the training for the current class set is stopped. 
- If the model has not yet reached the minimum number of neurons, neurons are added to the last hidden layer; otherwise, the next class is added. The choice to add 
- neurons in the seemingly overfit condition was to prevent the model from memorizing the training data and never growing in complexity as more classes are added. 
+  \item Simple: \{1, 2, 3, 4, 5, 6, 8, 10, 12\}
+  \item Medium: \{1, 3, 5, 7, 10, 12, 15, 18, 20, 25, 30\}
+  \item Complex: \{1, 3, 5, 7, 10, 12, 15, 20, 25, 30, 35, 40\}
 \end{itemize}
 
-The trend-based control loop prioritizes signal over per-epoch noise, letting the model grow only when needed and advance through classes when learning has
-saturated. Training stops early if a target validation accuracy is reached when all classes have been introduced or when the epoch budget is exhausted.
+\subsection{Random forest model}
 
-\subsection{Comparison of models}
-The models were compared using the training, cross-validation, and test results using different metrics. The final confirmation of model performance was concluded using statistical tests to have 
-reasonable confidence in the results. In the process of cross-validation, the following metrics were recorded:
- Training time, accuracy, precision, recall, and F1-score for the training, validation, and test sets. The metrics are 
-defined as follows:
-\begin{itemize}
-  \item Accuracy - the proportion of all examples that the model classified correctly.
-  \item Precision - the fraction of instances predicted as positive that are truly positive.
-  \item Recall - the fraction of true positive instances that the model successfully detected.
-  \item F1-score - the harmonic mean of precision and recall, giving a single measure that balances both.
-\end{itemize}
 
-\paragraph{Statistical tests of models}
-The normality of the test F1 and accuracy distributions was determined using Shapiro-Wilk ($\alpha{=}0.05$) to determine the appropriate statistical tests to use.
- The null hypothesis of the Shapiro-Wilk test states that the data is normally distributed. If the p-value is less than the significance level, the null hypothesis is rejected, and it is concluded that the data is not normally distributed. The Shapiro-Wilk test results indicate whether the metrics 
- for both models were normally distributed. The following statistical test was used:
-\begin{itemize}
-\item Wilcoxon signed-rank test - a nonparametric test for comparing two related samples when distributional assumptions (such as normality) do not hold. The null hypothesis is that there is no difference between the models.
-\end{itemize}
+\subsection{Training and cross-validation procedure}
+
+
+
 
 % 4. Empirical Procedure
 
@@ -787,11 +668,11 @@ target validation accuracy of 92\% with only 40\% of the training data, whereas 
  standard deviations across all metrics. The trade-off between the two models is between performance and training time. The
  incremental class learning model took significantly longer to tune, train, and validate; however, it was able to achieve
  acceptable performance on fewer data observations than the baseline model. \\
-
+\cite{blackard1999forest}.
  Further work could involve testing the models on larger and more complex datasets to better evaluate the performance of the incremental class learning model. The incremental class 
  learning model for the assignment was limited due to computational constraints, where the model could not be made too complex. With more computational resources, the model could be made deeper and wider to better learn the relationships in the data.
  The associated code for all the calculations
-\footnote{The code for this report is available on GitHub: \url{https://github.com/grantxxcoder/25849646rw441Assignment3}.} can be found in the footnote and the references on the last page.
+\footnote{The code for this report is available on GitHub: \url{https://github.com/grantxxcoder/25849646rw441Assignment4}.} can be found in the footnote and the references on the last page.
 \appendix
 
 \section*{List of Acronyms}
@@ -799,10 +680,9 @@ target validation accuracy of 92\% with only 40\% of the training data, whereas 
 \setlength{\tabcolsep}{6pt}
 \renewcommand{\arraystretch}{1.05}
 \noindent\begin{tabular}{@{}p{0.22\columnwidth}p{0.75\columnwidth}@{}}
-ReLU & Rectified Linear Unit \\
-Tanh & Hyperbolic Tangent \\
-$H_0$ & Null Hypothesis \\
-$H_1$ & Alternative Hypothesis 
+\textbf{Acronym} & \textbf{Definition} \\
+\midrule
+CV & Cross-validation \\
 \end{tabular}
 \endgroup
 
