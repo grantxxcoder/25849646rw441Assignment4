@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex 25849646RW441assignment4"] 1760308054.78964 "25849646RW441assignment4.aux" "25849646RW441assignment4.bbl" "25849646RW441assignment4" 1760308088.93109 0
+["bibtex 25849646RW441assignment4"] 1760309265.69132 "25849646RW441assignment4.aux" "25849646RW441assignment4.bbl" "25849646RW441assignment4" 1760309452.0456 0
   "./references.bib" 1760277060.88311 3687 010687734b66845ee2005c938e599b24 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "25849646RW441assignment4.aux" 1760308087.88308 6088 167ba2dd7a89b877984fbbf37ec7560b "pdflatex"
+  "25849646RW441assignment4.aux" 1760309451.75599 5481 f3cf115b068d69c770362944c76a21e0 "pdflatex"
   (generated)
   "25849646RW441assignment4.bbl"
   "25849646RW441assignment4.blg"
   (rewritten before read)
-["pdflatex"] 1760308086.91007 "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" "25849646RW441assignment4.pdf" "25849646RW441assignment4" 1760308088.93158 0
+["pdflatex"] 1760309451.13266 "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" "25849646RW441assignment4.pdf" "25849646RW441assignment4" 1760309452.04578 0
   "/etc/texmf/web2c/texmf.cnf" 1740837277.30025 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" 1760308086.50808 26890 3244bea16ab3ed24a0059bcb0077045f ""
+  "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" 1760309450.90999 25582 72a75caac02492ba214b5252b5543714 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -43,6 +43,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1248133631 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb" 1572128992 32409 1452fa0ce4fabfb48acd5d077e296f6d ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/newtx/NewTXMI7.pfb" 1572128992 34733 61fa3c01fac511e451670c1b454ff211 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pfb" 1699567298 45943 7899c7ea4fdd83f3625178689816dcee ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/newtx/ztmr.pfb" 1698694482 286816 82db2bfe6920054b1a43661c07078412 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb" 1136849748 45758 19968a0990191524e34e1994d4a31cb6 ""
@@ -93,14 +94,13 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1748261859.07033 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1748261891 8213243 5926d5c6c4dff910a22829e70d707a80 ""
-  "25849646RW441assignment4.aux" 1760308087.88308 6088 167ba2dd7a89b877984fbbf37ec7560b "pdflatex"
-  "25849646RW441assignment4.bbl" 1760308054.93708 453 c8992d3f9b5cd5c7cc39a0fea6e5dc8e "bibtex 25849646RW441assignment4"
-  "25849646RW441assignment4.tex" 1760308086.50808 26890 3244bea16ab3ed24a0059bcb0077045f ""
-  "images/complex_depth_accuracy.pdf" 1760307809.9581 368104 0c8dce96fe4dbefbe3e13653b596ac3a ""
+  "25849646RW441assignment4.aux" 1760309451.75599 5481 f3cf115b068d69c770362944c76a21e0 "pdflatex"
+  "25849646RW441assignment4.bbl" 1760309265.826 453 c8992d3f9b5cd5c7cc39a0fea6e5dc8e "bibtex 25849646RW441assignment4"
+  "25849646RW441assignment4.tex" 1760309450.90999 25582 72a75caac02492ba214b5252b5543714 ""
+  "images/all_datasets_accuracy_vs_features.png" 1760309441.28499 102485 84e398eb5f376cab4acf82e646af4c81 ""
+  "images/all_datasets_depth_accuracy.pdf" 1760309320.424 405034 db51c72e8b5a5b4418dd43de164c4463 ""
   "images/complex_depth_vs_trees_heatmap.pdf" 1760294567.40997 22998 dacbc2695c683ce242e3d728a874bcbf ""
-  "images/medium_depth_accuracy.pdf" 1760307809.35365 368018 2b1e5d4045c747c44d089acd3fd9f6d5 ""
   "images/medium_depth_vs_trees_heatmap.pdf" 1760294601.12376 22698 1084810e8e2f4313b9b8e1552b845a0e ""
-  "images/simple_depth_accuracy.pdf" 1760307808.68584 367834 1a2f5d1f910232ceb3f603ed0a1b9661 ""
   "images/simple_depth_vs_trees_heatmap.pdf" 1760294614.23495 22250 fbda6d227b3589e9cdbd42a347b3d426 ""
   (generated)
   "25849646RW441assignment4.aux"

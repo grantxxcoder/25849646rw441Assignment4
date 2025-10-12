@@ -250,27 +250,7 @@ the training split, the held-out test accuracy, and the train test gap are repor
 \textbf{Figures:}
 \begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{\columnwidth}
-    \centering
-    \includegraphics[width=\linewidth]{images/simple_depth_accuracy.pdf}
-    \caption{Simple: Max depth vs. test and CV accuracy.}
-    \label{fig:exp1-simple-acc}
-  \end{subfigure}\vspace{6pt}
-
-  \begin{subfigure}[b]{\columnwidth}
-    \centering
-    \includegraphics[width=\linewidth]{images/medium_depth_accuracy.pdf}
-    \caption{Medium: Max depth vs. test and CV accuracy.}
-    \label{fig:exp1-medium-acc}
-  \end{subfigure}\vspace{6pt}
-
-  \begin{subfigure}[b]{\columnwidth}
-    \centering
-    \includegraphics[width=\linewidth]{images/complex_depth_accuracy.pdf}
-    \caption{Complex: Max depth vs. test and CV accuracy.}
-    \label{fig:exp1-complex-acc}
-  \end{subfigure}
-
+  \includegraphics[width=\linewidth]{images/all_datasets_depth_accuracy.pdf}
   \caption{Maximum tree depth vs. test and cross-validated accuracy for the three datasets.}
   \label{fig:exp1-depth-acc}
 \end{figure}
@@ -294,39 +274,19 @@ the training split, the held-out test accuracy, and the train test gap are repor
 \subsection{Experiment 2: Number of Features per Split}
 \label{sec:results-exp2}
 
-\textbf{Quantitative results:}
-\begin{table}[h]
-\centering
-\caption{Experiment 2: Accuracy vs. max\_features (CV mean $\pm$ std and test).}
-\label{tab:exp2-features}
-\begin{tabular}{lcccc}
-\toprule
-Dataset & MaxFeat & CV Acc & Test Acc & Gap \\
-\midrule
-Simple  & 1   & TBD $\pm$ TBD & TBD & TBD \\
-        & 2   & TBD $\pm$ TBD & TBD & TBD \\
-        & \dots & \dots & \dots & \dots \\
-Medium  & 1   & TBD $\pm$ TBD & TBD & TBD \\
-        & \dots & \dots & \dots & \dots \\
-Complex & 1   & TBD $\pm$ TBD & TBD & TBD \\
-        & \dots & \dots & \dots & \dots \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \textbf{Figures (placeholders):}
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  % \includegraphics[width=\columnwidth]{figures/exp2_accuracy_vs_features_medium.png}
-  \caption{Medium: Test and CV accuracy vs. max\_features.}
-  \label{fig:exp2-medium-acc}
+  \begin{subfigure}[b]{\columnwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/all_datasets_accuracy_vs_features.png}
+    \caption{Medium: Test and CV accuracy vs. max\_features.}
+    \label{fig:exp2-medium-acc}
+  \end{subfigure}
+  \caption{Number of features per split vs.\ accuracy (example).}
+  \label{fig:exp2-accuracy-features}
 \end{figure}
-\begin{figure}[h]
-  \centering
-  % \includegraphics[width=\columnwidth]{figures/exp2_train_vs_test_complex.png}
-  \caption{Complex: Train vs. test accuracy across max\_features.}
-  \label{fig:exp2-complex-train-test}
-\end{figure}
+
 
 \textbf{Discussion:}
 \begin{itemize}
