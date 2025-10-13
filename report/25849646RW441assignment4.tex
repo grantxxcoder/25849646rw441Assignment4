@@ -247,6 +247,8 @@ the training split, the held-out test accuracy, and the train test gap are repor
 \subsection{Experiment 1: Maximum Tree Depth}
 \label{sec:results-exp1}
 
+Across datasets, increasing maximum depth initially raises both CV and test accuracy as shallow ensembles underfit. Beyond dataset-specific optima (Simple $\approx$ 8, Medium $\approx$ 15, Complex $\approx$ 20), test/CV curves plateau or dip while train accuracy continues rising, widening the train--test gap. The figures highlight this bias--variance trade-off and localize the depth that maximizes generalization for each dataset.
+
 \textbf{Figures:}
 \begin{figure}[H]
   \centering
@@ -273,8 +275,9 @@ the training split, the held-out test accuracy, and the train test gap are repor
 
 \subsection{Experiment 2: Number of Features per Split}
 \label{sec:results-exp2}
+Varying the number of features per split yields modest gains that plateau: allowing more features strengthens individual trees but increases inter-tree correlation, limiting bagging’s variance reduction. Accuracy typically improves up to a mid-range (often near $\sqrt{d}$) and then remains flat or slightly declines; CV and test trends align, indicating limited sensitivity once depth is near-optimal.
 
-\textbf{Figures (placeholders):}
+\textbf{Figures:}
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{\columnwidth}
@@ -289,15 +292,16 @@ the training split, the held-out test accuracy, and the train test gap are repor
 
 
 \textbf{Discussion:}
-\begin{itemize}
-  \item Expected? Moderate max\_features increases tree strength but raises inter-tree correlation; observe plateau.
-  \item Why? Diversity-strength trade-off in bagging; complex data benefits from larger candidate sets.
-  \item Different circumstances? With correlated features, smaller max\_features may help; with very high-dimensional sparse data, larger max\_features may overfit.
-\end{itemize}
+The results in Figure~\ref{fig:exp2-medium-acc} illustrate how varying the number of features considered at each split affects test and cross-validated 
+  accuracy. As the number of features increase, there is only a slight improvement in accuracy up to a point, after which the performance does not show any clear signs 
+  of improvement. Since each individual tree was allowed to grow deep, the benefit of considering more features at each split gets mitigated by the increased correlation 
+  between trees. The correlation reduces the effectiveness of bagging, as the ensemble relies on diverse predictions from its members to reduce variance. Therefore, 
+  while increasing the number of features per split can enhance the strength of individual trees, it also increases their similarity, which can limit the ensemble's
+  overall performance.
 
 \subsection{Experiment 3: Depth vs Number of Trees}
 \label{sec:results-exp3}
-\textbf{Setup recap:} max\_features='sqrt', bootstrap=True; grid over depths and n\_estimators.
+The heatmaps show a clear interaction between depth and ensemble size: deeper trees require more trees to stabilize variance, while extra trees deliver diminishing returns once variance is averaged out. Accuracy concentrates along a ridge where both parameters are sufficient; increasing one without the other beyond this region offers little benefit, marking natural plateaus.
 
 \textbf{Figures:}
 \begin{figure}[H]
@@ -324,56 +328,88 @@ the training split, the held-out test accuracy, and the train test gap are repor
 \end{figure}
 
 \textbf{Discussion:}
-\begin{itemize}
-  \item Expected? Variance reduction with more trees until a plateau; depth-dependent benefits.
-  \item Why? Law of large numbers in bagging; deeper trees have higher variance thus benefit more from larger ensembles.
-  \item Different circumstances? With stronger feature subsampling or more noise, plateau arrives earlier; with larger datasets, plateaus shift upward.
-\end{itemize}
+
+  Each heatmap in Figure~\ref{fig:exp3-depth-trees-heatmaps} has the same pattern - there is a clear relationship between the number of trees in the ensemble 
+  and the maximum depth of the trees in the forest. Each heatmap shows a convergence to an optimal configuration where after increasing the number of trees or the depth of 
+  the trees, the accuracy only improves when the other parameter is also increased. A general trend shows that more trees in the ensemble and deeper trees both 
+  contribute to higher accuracy, which is expected in the case of bagging. The improvement in accuracy with more and deeper trees is due to the overall reduction 
+  in variance that bagging provides where, although individual trees may overfit, the ensemble averages out their errors.  
+
+
 
 \subsection{Experiment 4: Mixed-Depth Ensembles}
 \label{sec:results-exp4}
-\textbf{Setup recap:} Five compositions mixing under/overfitted trees; features per split and ensemble sizes from Exp.~2--3 optima; bootstrap=True.
+The tables compare ensembles mixing underfitted and overfitted trees. Across Simple, Medium, and Complex, the overfit-only composition attains the best test and CV accuracy with comparable or smaller train--test gaps, indicating that under strong bagging, averaging many high-variance trees outperforms mixing capacities. Mixtures show no advantage here but could help with fewer trees or weaker bagging.
 
 \textbf{Quantitative results:}
+
 \begin{table}[h]
 \centering
-\caption{Experiment 4: Composition vs. accuracy (CV mean $\pm$ std and test).}
-\label{tab:exp4-mixed}
+\caption{Experiment 4 (Simple): Composition vs.\ accuracy.}
+\label{tab:exp4-simple}
 \begin{tabular}{lcccc}
 \toprule
-Dataset & Composition & CV Acc & Test Acc & Gap \\
+Composition & Train Acc & Test Acc & Gap & CV Acc \\
 \midrule
-Simple  & All Underfit      & TBD $\pm$ TBD & TBD & TBD \\
-        & Majority Underfit & TBD $\pm$ TBD & TBD & TBD \\
-        & Balanced          & TBD $\pm$ TBD & TBD & TBD \\
-        & Majority Overfit  & TBD $\pm$ TBD & TBD & TBD \\
-        & All Overfit       & TBD $\pm$ TBD & TBD & TBD \\
+Only Underfit      & 0.991 & 0.940 & 0.051 & $0.943 \pm 0.016$ \\
+Majority Underfit  & 0.991 & 0.933 & 0.058 & $0.954 \pm 0.028$ \\
+Balanced           & 1.000 & 0.960 & 0.040 & $0.946 \pm 0.031$ \\
+Majority Overfit   & 1.000 & 0.940 & 0.060 & $0.963 \pm 0.021$ \\
+\textbf{Only Overfit}      & \textbf{1.000} & \textbf{0.960} & \textbf{0.040} & $\mathbf{0.966 \pm 0.025}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Figures (placeholders):}
-\begin{figure}[h]
-  \centering
-  % \includegraphics[width=\columnwidth]{figures/exp4_test_accuracy_bars_medium.pdf}
-  \caption{Medium: Test accuracy by ensemble composition.}
-  \label{fig:exp4-medium-bars}
-\end{figure}
+\begin{table}[h]
+\centering
+\caption{Experiment 4 (Medium): Composition vs.\ accuracy.}
+\label{tab:exp4-medium}
+\begin{tabular}{lcccc}
+\toprule
+Composition & Train Acc & Test Acc & Gap & CV Acc \\
+\midrule
+Only Underfit      & 0.969 & 0.655 & 0.314 & $0.669 \pm 0.025$ \\
+Majority Underfit  & 0.984 & 0.677 & 0.307 & $0.661 \pm 0.028$ \\
+Balanced           & 1.000 & 0.660 & 0.340 & $0.677 \pm 0.019$ \\
+Majority Overfit   & 1.000 & 0.652 & 0.348 & $0.672 \pm 0.026$ \\
+\textbf{Only Overfit}      & \textbf{1.000} & \textbf{0.685} & \textbf{0.315} & $\mathbf{0.691 \pm 0.021}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Experiment 4 (Complex): Composition vs.\ accuracy.}
+\label{tab:exp4-complex}
+\begin{tabular}{lcccc}
+\toprule
+Composition & Train Acc & Test Acc & Gap & CV Acc \\
+\midrule
+Only Underfit      & 1.000 & 0.576 & 0.424 & $0.541 \pm 0.013$ \\
+Majority Underfit  & 1.000 & 0.583 & 0.417 & $0.550 \pm 0.015$ \\
+Balanced           & 1.000 & 0.595 & 0.405 & $0.550 \pm 0.026$ \\
+Majority Overfit   & 1.000 & 0.597 & 0.403 & $0.564 \pm 0.021$ \\
+\textbf{Only Overfit}      & \textbf{1.000} & \textbf{0.610} & \textbf{0.390} & $\mathbf{0.563 \pm 0.008}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 
 \textbf{Discussion:}
 \begin{itemize}
-  \item Expected? Depth diversity may improve robustness by blending bias and variance; overfit-only may excel if bagging sufficiently de-correlates trees.
-  \item Why? Weighted averaging of high-variance learners; effect depends on class overlap/noise.
-  \item Different circumstances? With weaker bagging or fewer trees, mixtures may outperform overfit-only; with stronger feature subsampling, underfit proportions may help more.
+  \item The results in Tables~\ref{tab:exp4-simple}, \ref{tab:exp4-medium}, and \ref{tab:exp4-complex} show the performance of ensembles with different
+   compositions of underfitted and overfitted trees across the three datasets. A clear trend emerges where ensembles composed entirely of overfitted trees
+    consistently achieve the highest test accuracy and cross-validated accuracy, along with the smallest train-test gap. This suggests that, in the context 
+    of bagging, the high variance of overfitted trees is effectively averaged out by the ensemble, leading to better generalization. Mixed compositions
+     do not outperform the all-overfit configuration, indicating that the benefits of averaging high-variance learners outweigh the potential advantages 
+     of bias-variance blending through mixed depths.
+  \item The results are somewhat surprising, as one might expect that a mix of underfitted and overfitted trees would provide a better balance of bias and variance,
+   leading to improved generalization. However, the effectiveness of bagging in reducing variance appears to be sufficient to allow overfitted trees to perform best.
+  \item With weaker bagging or fewer trees, mixtures may outperform overfit-only. Therefore it becomes essential to ensure that there are enough trees within the ensemble
+  to ensure robustness. In another approach, weaker learners could be used exclusively, such as shallow trees, and follow the boosting approach of 
+  sequentially correcting errors. However, this would be a different ensemble method and not bagging.
 \end{itemize}
 
-\subsection{Ablations and Robustness Checks (Optional)}
-\label{sec:results-robustness}
-\begin{itemize}
-  \item Seed sensitivity: repeat CV with different seeds (TBD) and report variability (TBD).
-  \item Alternate metrics: macro-F1 or balanced accuracy on imbalanced settings (TBD).
-  \item Learning curves: test accuracy vs. train size to confirm data-limited vs. capacity-limited regimes (TBD).
-\end{itemize}
 
 
 \section{Conclusion}
