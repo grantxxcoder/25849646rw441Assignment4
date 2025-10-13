@@ -180,7 +180,7 @@ The three datasets Simple, Medium, and Complex were generated as described in th
 
 \subsection{Performance Measures and Validation}
 The primary metric used was accuracy and was reported for train, test, and 5-fold stratified cross-validation on the training split. For each configuration, the following are 
-recorded: train accuracy, test accuracy and CV mean and standard deviation.  The train-test gap is also computed to assess overfitting.  
+recorded: train accuracy, test accuracy and CV mean and standard deviation. 
 
 \subsection{Implementation and Controls}
 A global seed of 42 was used. Per-tree seeds are drawn from a generator seeded by this value to ensure determinism. Unless varied explicitly, defaults for the 
@@ -202,23 +202,22 @@ decision trees are:
 \end{itemize}
 
 \subsection{Cross-validation for Experiments}
-All experiments use 5-fold stratified cross-validation on the training split (StratifiedKFold). For each hyperparameter configuration we report the cross-validation mean and standard deviation, and rebuild models or ensembles within each fold when applicable. The held-out test split is evaluated separately to report train and test accuracy and the train-test gap. The same reproducible controls (global random seed, per-tree seeds, stratified splits) apply across all experiments.
+All experiments use 5-fold stratified cross-validation on the training split (StratifiedKFold). For each hyperparameter configuration we report the cross-validation mean and standard deviation, and rebuild models or ensembles within each fold when applicable. The held-out test split is evaluated separately to report train and test accuracy. The same reproducible controls (global random seed, per-tree seeds, stratified splits) apply across all experiments.
 
 \subsection{Experiment 1: Maximum Tree Depth}
 The objective of Experiment 1 is to isolate the effect of maximum tree depth on generalization and overfitting. To this end, we sweep the maximum depth from 
 very shallow to very deep trees while holding other factors constant: a forest of decision trees is trained and all features are used at 
-each split so that each tree is as strong as possible. The variable is the maximum depth, swept over the dataset-specific grids defined above. Performance reporting includes training accuracy, held-out test accuracy and the train-test gap.
+each split so that each tree is as strong as possible. The variable is the maximum depth, swept over the dataset-specific grids defined above.
 
 \subsection{Experiment 2: Number of Features per Split}
 The objective is to quantify the effect of per-split feature subsampling while holding depth near the optimal values found in Experiment~1. The experiment fixes the maximum depth to 
 the CV optimal values (Simple: \texttt{max\_depth=8}, Medium: \texttt{max\_depth=15}, Complex: \texttt{max\_depth=20}), enables bagging with 30, 60, and 90 trees for the Simple, Medium, 
 and Complex datasets respectively to stabilise results, and sweeps the maximum number of features per split over \{1,2,3,5,7,10,15,20,25,30,35,40,45,50\}, skipping values that 
-exceed each dataset's dimensionality. Performance reporting includes training accuracy, held-out test accuracy and the train-test gap; cross-validation mean and standard deviation are reported as described above.
-
+exceed each dataset's dimensionality.
 \subsection{Experiment 3: Depth vs Number of Trees}
 The objective is to study the interaction between ensemble size and tree depth. In this experiment the number of features considered per split is fixed
  to \texttt{max\_features='sqrt'} to provide a moderate level of randomness and bagging is enabled. Tree depth is swept over the dataset-specific depth grids while the number of
-  trees is varied per dataset. Performance is reported as training accuracy, held-out test accuracy, and the train-test gap for each configuration. Results are visualized as heatmaps of test accuracy on the depth by number of trees grid to quantify how increasing the number of trees reduces variance up to a plateau and how the benefit of additional trees depends on tree depth. Cross-validation mean and standard deviation are reported as described above.
+  trees is varied per dataset. Results are visualized as heatmaps of test accuracy on the depth by number of trees grid to quantify how increasing the number of trees reduces variance up to a plateau and how the benefit of additional trees depends on tree depth. Cross-validation mean and standard deviation are reported as described above.
 
 \subsection{Experiment 4: Mixed-Depth Ensembles}
 This experiment evaluates ensembles that mix underfitting and overfitting trees to probe bias-variance blending. Controls are fixed where the number of 
@@ -231,8 +230,7 @@ Five ensemble compositions are compared:
   \item majority overfitted (25\% underfitted, 75\% overfitted);
   \item all overfitted. 
 \end{itemize}
-Underfitted depths are sampled from depths below the optimal and overfitted depths from just above the optimal up to the maximum.
-Performance metrics include training and held-out test accuracy and the train-test gap; cross-validation mean and standard deviation are reported as described above. The goal is to determine whether mixing tree capacities yields improved generalization or stability compared to homogeneous ensembles of the same size.
+Underfitted depths are sampled from depths below the optimal and overfitted depths from just above the optimal up to the maximum. The goal is to determine whether mixing tree capacities yields improved generalization or stability compared to homogeneous ensembles of the same size.
 
 
 
@@ -247,9 +245,8 @@ the training split, the held-out test accuracy, and the train test gap are repor
 \subsection{Experiment 1: Maximum Tree Depth}
 \label{sec:results-exp1}
 
-Across datasets, increasing maximum depth initially raises both CV and test accuracy as shallow ensembles underfit. Beyond dataset-specific optima (Simple $\approx$ 8, Medium $\approx$ 15, Complex $\approx$ 20), test/CV curves plateau or dip while train accuracy continues rising, widening the train--test gap. The figures highlight this bias--variance trade-off and localize the depth that maximizes generalization for each dataset.
+Across datasets, increasing maximum depth initially raises both CV and test accuracy as shallow ensembles underfit. Beyond dataset-specific optima (Simple $\approx$ 8, Medium $\approx$ 15, Complex $\approx$ 20), test/CV curves plateau. The figures highlight this bias-variance trade-off and localize the depth that maximizes generalization for each dataset.
 
-\textbf{Figures:}
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth]{images/all_datasets_depth_accuracy.pdf}
@@ -258,26 +255,21 @@ Across datasets, increasing maximum depth initially raises both CV and test accu
 \end{figure}
 
 \textbf{Discussion:}
-\begin{itemize}
-  \item The results in Figures~\ref{fig:exp1-simple-acc} show the relationship between maximum tree depth and both test and cross-validated 
+ The results in Figures~\ref{fig:exp1-depth-acc} show the relationship between maximum tree depth and both test and cross-validated 
   accuracy. As expected, very shallow trees in the ensemble underfit the data, which results in low accuracy on both training and test sets. As depth 
   increases, accuracy improves significantly, indicating that the model is capturing more complex patterns in the data. However, beyond a certain depth 
   (e.g., depth 8 for Simple, 15 for Medium, and 20 for Complex), the test accuracy plateaus or slightly decreases while training accuracy 
   continues to rise. This indicates overfitting, where the model learns noise in the training data rather than generalizable patterns. The optimal 
-  depths identified align with the complexity of each dataset, with more complex datasets requiring deeper trees to capture their structure.
-  \item These results occur due to the bias-variance trade-off inherent in decision trees. Shallow trees have high bias and low variance, leading to 
+  depths identified align with the complexity of each dataset, with more complex datasets requiring deeper trees to capture their structure. These results occur due to the bias-variance trade-off inherent in decision trees. Shallow trees have high bias and low variance, leading to 
   underfitting, while deep trees have low bias and high variance, leading to overfitting. The ensemble averages out some the variance of the overfitted individual 
   trees. However, if there are not enough trees in the ensemble of overfitted trees, the variance does not average out sufficiently, leading to the seen 
-  degradation in test performance.
-    \item With more overfitted trees in the ensemble, the variance would average out more effectively, potentially allowing for deeper trees to be
+  degradation in test performance. With more overfitted trees in the ensemble, the variance would average out more effectively, potentially allowing for deeper trees to be
     used without overfitting. 
-  \end{itemize}
 
 \subsection{Experiment 2: Number of Features per Split}
 \label{sec:results-exp2}
-Varying the number of features per split yields modest gains that plateau: allowing more features strengthens individual trees but increases inter-tree correlation, limiting bagging’s variance reduction. Accuracy typically improves up to a mid-range (often near $\sqrt{d}$) and then remains flat or slightly declines; CV and test trends align, indicating limited sensitivity once depth is near-optimal.
+Varying the number of features per split yields modest gains that plateau: allowing more features strengthens individual trees but increases inter-tree correlation, limiting bagging’s variance reduction. Accuracy typically improves up to a mid-range (often near $\sqrt{d}$) and then remains flat or slightly declines. CV and test trends align, indicating limited sensitivity once depth is near-optimal.
 
-\textbf{Figures:}
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{\columnwidth}
@@ -295,20 +287,19 @@ Varying the number of features per split yields modest gains that plateau: allow
 The results in Figure~\ref{fig:exp2-medium-acc} illustrate how varying the number of features considered at each split affects test and cross-validated 
   accuracy. As the number of features increase, there is only a slight improvement in accuracy up to a point, after which the performance does not show any clear signs 
   of improvement. Since each individual tree was allowed to grow deep, the benefit of considering more features at each split gets mitigated by the increased correlation 
-  between trees. The correlation reduces the effectiveness of bagging, as the ensemble relies on diverse predictions from its members to reduce variance. Therefore, 
-  while increasing the number of features per split can enhance the strength of individual trees, it also increases their similarity, which can limit the ensemble's
-  overall performance.
+  between trees. The correlation reduces the effectiveness of bagging, as the ensemble relies on diverse predictions from its members to reduce variance. Therefore, while increasing the number of features per split can enhance the strength of individual trees, it also increases their similarity, which can limit the ensemble's overall performance. \\
+  Secondly, for each maximum number of features considered at each depth, the CV indicates limited variation in results, which 
+  shows stability for the model. 
 
 \subsection{Experiment 3: Depth vs Number of Trees}
 \label{sec:results-exp3}
 The heatmaps show a clear interaction between depth and ensemble size: deeper trees require more trees to stabilize variance, while extra trees deliver diminishing returns once variance is averaged out. Accuracy concentrates along a ridge where both parameters are sufficient; increasing one without the other beyond this region offers little benefit, marking natural plateaus.
 
-\textbf{Figures:}
 \begin{figure}[H]
   \centering
   \begin{subfigure}[b]{\columnwidth}
     \includegraphics[width=\linewidth]{images/simple_depth_vs_trees_heatmap.pdf}
-    \caption{Simple (run 1)}
+    \caption{Simple}
     \label{fig:exp3-simple-heatmap-a}
   \end{subfigure}\hfill
 
@@ -339,9 +330,7 @@ The heatmaps show a clear interaction between depth and ensemble size: deeper tr
 
 \subsection{Experiment 4: Mixed-Depth Ensembles}
 \label{sec:results-exp4}
-The tables compare ensembles mixing underfitted and overfitted trees. Across Simple, Medium, and Complex, the overfit-only composition attains the best test and CV accuracy with comparable or smaller train--test gaps, indicating that under strong bagging, averaging many high-variance trees outperforms mixing capacities. Mixtures show no advantage here but could help with fewer trees or weaker bagging.
-
-\textbf{Quantitative results:}
+The tables compare ensembles mixing underfitted and overfitted trees. Across Simple, Medium, and Complex, the overfit-only composition attains the best test and CV accuracy with comparable or train-test gaps, indicating that under strong bagging, averaging many high-variance trees outperforms mixing capacities. 
 
 \begin{table}[h]
 \centering
@@ -413,9 +402,25 @@ Majority Overfit   & 1.000 & 0.597 & 0.403 & $0.564 \pm 0.021$ \\
 
 
 \section{Conclusion}
- With more computational resources, the model could be made deeper and wider to better learn the relationships in the data.
- The associated code for all the calculations
-\footnote{The code for this report is available on GitHub: \url{https://github.com/grantxxcoder/25849646rw441Assignment4}.} can be found in the footnote and the references on the last page.
+
+The assignment investigated how random forest performance is controlled by maximum tree depth, the number of features considered per split, and ensemble size across three datasets of increasing complexity. A reproducible pipeline was implemented with stratified splits, per-tree seeding, and 5-fold cross-validation, and four experiments were conducted: (i) depth sweeps, (ii) feature-subsampling per split sweeps at near-optimal depth, (iii) depth-by-trees interaction grids, and (iv) ensembles mixing under- and overfitting trees.
+
+The main findings are consistent with bias-variance theory and answer the following:
+\begin{itemize}
+  \item Maximum depth: Test and cross-validated accuracy increase from shallow to moderate depths, then plateau or decline as overfitting emerges. The depth that maximizes generalization increases with task complexity. With sufficiently many trees, deeper models become more viable because bagging reduces variance.
+  \item Features per split: Allowing more features strengthens individual trees but raises inter-tree correlation. Accuracy improves to a plateau, after which gains are marginal or flat.
+  \item Depth vs.\ ensemble size: There is a trend for better performance where both depth and number of trees are sufficiently large enough and tuned to the dataset complexity. Deeper trees require more trees to stabilize variance. The parameters are limited by each other, where increasing one without the other beyond a certain point yields little benefit.
+  \item Mixed-depth ensembles: Under strong bagging, ensembles composed solely of overfitted trees matched or outperformed mixed-capacity ensembles on test and CV accuracy, with comparable or smaller gaps. When ensembles are small or bagging is weak, mixing capacities may be more beneficial.
+\end{itemize}
+
+The following practical suggestions emerges from these results: (i) pick depth by maximizing CV performance; (ii) grow the number of trees until CV mean stabilizes and its variance shrinks, noting that deeper forests require more trees; and (iii) when using sufficiently many trees with bagging, homogeneous deep ensembles are a strong baseline.
+
+Limitations and future work: the study used synthetic, balanced datasets and focused on accuracy where if extending to real-world datasets, additional metrics, and class imbalance would broaden conclusions. Secondly, exploring other ensemble methods like boosting or stacking could reveal different dynamics. Finally, investigating interactions with other hyperparameters such as minimum samples per leaf or pruning would provide a more comprehensive understanding of random forest tuning.
+Overall, the best configurations balance depth, feature subsampling, and ensemble size, with preferred values growing with task complexity. Under strong bagging, larger ensembles of deeper trees generally deliver the most stable and accurate performance.
+
+
+ The associated code for all the calculations.
+\footnote{The code for this report is available on GitHub: \url{https://github.com/grantxxcoder/25849646rw441Assignment4}.}.
 \appendix
 
 \section*{List of Acronyms}

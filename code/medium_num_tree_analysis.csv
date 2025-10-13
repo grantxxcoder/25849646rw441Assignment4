@@ -1,0 +1,221 @@
+model,train_accuracy,test_accuracy,cv_mean,cv_std,overfitting,params,mean_nodes,mean_depth,mean_leaves,total_nodes,total_leaves,max_depth,n_estimator
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=1,
+                    random_state=42)",0.4228571428571429,0.3933333333333333,0.42000000000000004,0.03561414532090831,0.029523809523809563,"{'n_estimators': 1, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,3,2,1,1
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=11,
+                    random_state=42)",0.49714285714285716,0.44666666666666666,0.4557142857142857,0.023430313524081047,0.05047619047619051,"{'n_estimators': 11, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,33,22,1,11
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=21,
+                    random_state=42)",0.5657142857142857,0.515,0.47071428571428575,0.02887340418772535,0.05071428571428571,"{'n_estimators': 21, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,63,42,1,21
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=31,
+                    random_state=42)",0.5764285714285714,0.5233333333333333,0.48142857142857143,0.03124948979175337,0.053095238095238084,"{'n_estimators': 31, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,93,62,1,31
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=41,
+                    random_state=42)",0.5842857142857143,0.5383333333333333,0.495,0.02716164763118792,0.04595238095238097,"{'n_estimators': 41, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,123,82,1,41
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=51,
+                    random_state=42)",0.5907142857142857,0.5333333333333333,0.5085714285714286,0.027534764667709124,0.05738095238095242,"{'n_estimators': 51, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,153,102,1,51
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=61,
+                    random_state=42)",0.5814285714285714,0.5333333333333333,0.495,0.020025493955537436,0.04809523809523808,"{'n_estimators': 61, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,183,122,1,61
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=71,
+                    random_state=42)",0.585,0.5333333333333333,0.5014285714285714,0.02480536479169334,0.05166666666666664,"{'n_estimators': 71, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,213,142,1,71
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=81,
+                    random_state=42)",0.5757142857142857,0.525,0.505,0.016842608746502268,0.05071428571428571,"{'n_estimators': 81, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,243,162,1,81
+"RandomForestOverfit(max_depth=1, max_features=2, n_estimators=91,
+                    random_state=42)",0.5814285714285714,0.5433333333333333,0.5092857142857142,0.019509286119639507,0.03809523809523807,"{'n_estimators': 91, 'max_depth': 1, 'max_features': 2, 'bootstrap': True}",3.0,1.0,2.0,273,182,1,91
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=1,
+                    random_state=42)",0.48714285714285716,0.45166666666666666,0.43428571428571433,0.06113718264723045,0.035476190476190494,"{'n_estimators': 1, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",15.0,3.0,8.0,15,8,3,1
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=11,
+                    random_state=42)",0.6307142857142857,0.5666666666666667,0.5442857142857143,0.026399598017966174,0.06404761904761902,"{'n_estimators': 11, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.818181818181818,3.0,7.909090909090909,163,87,3,11
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=21,
+                    random_state=42)",0.6671428571428571,0.5933333333333334,0.5650000000000001,0.026859422395661664,0.07380952380952377,"{'n_estimators': 21, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.904761904761905,3.0,7.9523809523809526,313,167,3,21
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=31,
+                    random_state=42)",0.665,0.59,0.5735714285714286,0.02521337513531829,0.07500000000000007,"{'n_estimators': 31, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.870967741935484,3.0,7.935483870967742,461,246,3,31
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=41,
+                    random_state=42)",0.67,0.5933333333333334,0.5814285714285715,0.012037356818823364,0.07666666666666666,"{'n_estimators': 41, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.902439024390244,3.0,7.951219512195122,611,326,3,41
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=51,
+                    random_state=42)",0.67,0.5933333333333334,0.5892857142857143,0.009313146293146609,0.07666666666666666,"{'n_estimators': 51, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.882352941176471,3.0,7.9411764705882355,759,405,3,51
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=61,
+                    random_state=42)",0.6714285714285714,0.585,0.5871428571428572,0.007693092581620728,0.08642857142857141,"{'n_estimators': 61, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.868852459016393,3.0,7.934426229508197,907,484,3,61
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=71,
+                    random_state=42)",0.6771428571428572,0.5933333333333334,0.5885714285714286,0.006925256939166159,0.08380952380952378,"{'n_estimators': 71, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.830985915492958,3.0,7.915492957746479,1053,562,3,71
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=81,
+                    random_state=42)",0.6914285714285714,0.5866666666666667,0.5850000000000001,0.010202040612204071,0.10476190476190472,"{'n_estimators': 81, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.851851851851851,3.0,7.925925925925926,1203,642,3,81
+"RandomForestOverfit(max_depth=3, max_features=2, n_estimators=91,
+                    random_state=42)",0.6857142857142857,0.5933333333333334,0.5842857142857143,0.010497813183356467,0.09238095238095234,"{'n_estimators': 91, 'max_depth': 3, 'max_features': 2, 'bootstrap': True}",14.868131868131869,3.0,7.934065934065934,1353,722,3,91
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=1,
+                    random_state=42)",0.54,0.475,0.4614285714285714,0.02887340418772532,0.06500000000000006,"{'n_estimators': 1, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",49.0,5.0,25.0,49,25,5,1
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=11,
+                    random_state=42)",0.725,0.565,0.5864285714285715,0.01895214165917371,0.16000000000000003,"{'n_estimators': 11, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",56.09090909090909,5.0,28.545454545454547,617,314,5,11
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=21,
+                    random_state=42)",0.7521428571428571,0.5883333333333334,0.6114285714285714,0.012657175104763817,0.16380952380952374,"{'n_estimators': 21, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",56.333333333333336,5.0,28.666666666666668,1183,602,5,21
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=31,
+                    random_state=42)",0.76,0.6033333333333334,0.6142857142857143,0.014463183379511847,0.15666666666666662,"{'n_estimators': 31, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",56.096774193548384,5.0,28.548387096774192,1739,885,5,31
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=41,
+                    random_state=42)",0.7714285714285715,0.62,0.615,0.009948848769417236,0.15142857142857147,"{'n_estimators': 41, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",56.36585365853659,5.0,28.682926829268293,2311,1176,5,41
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=51,
+                    random_state=42)",0.7778571428571428,0.6266666666666667,0.6278571428571429,0.013054047773212169,0.1511904761904761,"{'n_estimators': 51, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",55.509803921568626,5.0,28.254901960784313,2831,1441,5,51
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=61,
+                    random_state=42)",0.7842857142857143,0.6333333333333333,0.6221428571428571,0.02012714686229339,0.15095238095238095,"{'n_estimators': 61, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",55.75409836065574,5.0,28.37704918032787,3401,1731,5,61
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=71,
+                    random_state=42)",0.7807142857142857,0.6366666666666667,0.6285714285714286,0.0182107839771171,0.14404761904761898,"{'n_estimators': 71, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",55.7887323943662,5.0,28.3943661971831,3961,2016,5,71
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=81,
+                    random_state=42)",0.785,0.6383333333333333,0.6321428571428571,0.010832679205787926,0.14666666666666672,"{'n_estimators': 81, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",55.98765432098765,5.0,28.493827160493826,4535,2308,5,81
+"RandomForestOverfit(max_depth=5, max_features=2, n_estimators=91,
+                    random_state=42)",0.7907142857142857,0.6333333333333333,0.6378571428571428,0.007354021529276439,0.1573809523809524,"{'n_estimators': 91, 'max_depth': 5, 'max_features': 2, 'bootstrap': True}",56.16483516483517,5.0,28.582417582417584,5111,2601,5,91
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=1,
+                    random_state=42)",0.6021428571428571,0.45166666666666666,0.47928571428571426,0.03581414610491908,0.15047619047619043,"{'n_estimators': 1, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",159.0,7.0,80.0,159,80,7,1
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=11,
+                    random_state=42)",0.8342857142857143,0.605,0.5864285714285715,0.02685942239566168,0.22928571428571431,"{'n_estimators': 11, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",151.9090909090909,7.0,76.45454545454545,1671,841,7,11
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=21,
+                    random_state=42)",0.865,0.6116666666666667,0.6214285714285714,0.016444092047459048,0.2533333333333333,"{'n_estimators': 21, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",154.52380952380952,7.0,77.76190476190476,3245,1633,7,21
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=31,
+                    random_state=42)",0.8728571428571429,0.645,0.6285714285714286,0.020824828195876076,0.22785714285714287,"{'n_estimators': 31, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",152.3548387096774,7.0,76.6774193548387,4723,2377,7,31
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=41,
+                    random_state=42)",0.8807142857142857,0.6466666666666666,0.6378571428571428,0.022429026383010833,0.23404761904761906,"{'n_estimators': 41, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",155.1951219512195,7.0,78.09756097560975,6363,3202,7,41
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=51,
+                    random_state=42)",0.8814285714285715,0.6433333333333333,0.6385714285714286,0.01470804305855285,0.23809523809523814,"{'n_estimators': 51, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",154.52941176470588,7.0,77.76470588235294,7881,3966,7,51
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=61,
+                    random_state=42)",0.8857142857142857,0.6416666666666667,0.6414285714285713,0.018708286933869722,0.24404761904761896,"{'n_estimators': 61, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",154.24590163934425,7.0,77.62295081967213,9409,4735,7,61
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=71,
+                    random_state=42)",0.8842857142857142,0.645,0.6399999999999999,0.01711306935815847,0.2392857142857142,"{'n_estimators': 71, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",154.83098591549296,7.0,77.91549295774648,10993,5532,7,71
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=81,
+                    random_state=42)",0.8871428571428571,0.6483333333333333,0.6499999999999999,0.019561519910898762,0.2388095238095238,"{'n_estimators': 81, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",154.1604938271605,7.0,77.58024691358025,12487,6284,7,81
+"RandomForestOverfit(max_depth=7, max_features=2, n_estimators=91,
+                    random_state=42)",0.8857142857142857,0.6483333333333333,0.6514285714285714,0.015746719775034702,0.23738095238095236,"{'n_estimators': 91, 'max_depth': 7, 'max_features': 2, 'bootstrap': True}",153.57142857142858,7.0,77.28571428571429,13975,7033,7,91
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=1,
+                    random_state=42)",0.68,0.44333333333333336,0.4714285714285714,0.029709477632979164,0.2366666666666667,"{'n_estimators': 1, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",355.0,10.0,178.0,355,178,10,1
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=11,
+                    random_state=42)",0.9521428571428572,0.6083333333333333,0.5942857142857142,0.02265535932450528,0.3438095238095239,"{'n_estimators': 11, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",387.0,10.0,194.0,4257,2134,10,11
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=21,
+                    random_state=42)",0.9664285714285714,0.6233333333333333,0.635,0.02685942239566168,0.3430952380952381,"{'n_estimators': 21, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",384.7142857142857,10.0,192.85714285714286,8079,4050,10,21
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=31,
+                    random_state=42)",0.975,0.6366666666666667,0.6564285714285714,0.02362547915505891,0.33833333333333326,"{'n_estimators': 31, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",378.741935483871,10.0,189.8709677419355,11741,5886,10,31
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=41,
+                    random_state=42)",0.9807142857142858,0.665,0.6621428571428571,0.02364706479606696,0.3157142857142857,"{'n_estimators': 41, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",384.4634146341463,10.0,192.73170731707316,15763,7902,10,41
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=51,
+                    random_state=42)",0.9821428571428571,0.68,0.6657142857142857,0.021969366427471004,0.30214285714285705,"{'n_estimators': 51, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",383.5098039215686,10.0,192.2549019607843,19559,9805,10,51
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=61,
+                    random_state=42)",0.9871428571428571,0.6783333333333333,0.6642857142857143,0.019298937265866116,0.30880952380952376,"{'n_estimators': 61, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",384.344262295082,10.0,192.672131147541,23445,11753,10,61
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=71,
+                    random_state=42)",0.985,0.69,0.6649999999999999,0.009422075684480663,0.29500000000000004,"{'n_estimators': 71, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",383.19718309859155,10.0,192.09859154929578,27207,13639,10,71
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=81,
+                    random_state=42)",0.9871428571428571,0.6833333333333333,0.6699999999999999,0.017728105208558387,0.30380952380952375,"{'n_estimators': 81, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",381.12345679012344,10.0,191.06172839506172,30871,15476,10,81
+"RandomForestOverfit(max_depth=10, max_features=2, n_estimators=91,
+                    random_state=42)",0.9864285714285714,0.69,0.6678571428571428,0.019032732277820343,0.2964285714285715,"{'n_estimators': 91, 'max_depth': 10, 'max_features': 2, 'bootstrap': True}",382.7802197802198,10.0,191.8901098901099,34833,17462,10,91
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=1,
+                    random_state=42)",0.7635714285714286,0.48833333333333334,0.4692857142857143,0.03729364994916176,0.2752380952380952,"{'n_estimators': 1, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",549.0,12.0,275.0,549,275,12,1
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=11,
+                    random_state=42)",0.9764285714285714,0.5916666666666667,0.5878571428571429,0.033926691677251195,0.38476190476190475,"{'n_estimators': 11, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",540.4545454545455,12.0,270.72727272727275,5945,2978,12,11
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=21,
+                    random_state=42)",0.995,0.6033333333333334,0.6364285714285713,0.02318954725821133,0.3916666666666666,"{'n_estimators': 21, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",529.2857142857143,12.0,265.14285714285717,11115,5568,12,21
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=31,
+                    random_state=42)",0.9978571428571429,0.6366666666666667,0.6478571428571428,0.023211538298959885,0.3611904761904762,"{'n_estimators': 31, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",513.5806451612904,12.0,257.2903225806452,15921,7976,12,31
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=41,
+                    random_state=42)",0.9985714285714286,0.6416666666666667,0.6564285714285714,0.016506028583273352,0.35690476190476184,"{'n_estimators': 41, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",523.0487804878048,12.0,262.0243902439024,21445,10743,12,41
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=51,
+                    random_state=42)",1.0,0.6533333333333333,0.6664285714285715,0.016536909861128886,0.3466666666666667,"{'n_estimators': 51, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",524.8039215686274,12.0,262.9019607843137,26765,13408,12,51
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=61,
+                    random_state=42)",1.0,0.6583333333333333,0.6599999999999999,0.015219482680473235,0.3416666666666667,"{'n_estimators': 61, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",518.2786885245902,12.0,259.6393442622951,31615,15838,12,61
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=71,
+                    random_state=42)",1.0,0.665,0.6685714285714285,0.013813628289866934,0.33499999999999996,"{'n_estimators': 71, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",518.4929577464789,12.0,259.7464788732394,36813,18442,12,71
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=81,
+                    random_state=42)",1.0,0.6933333333333334,0.6742857142857142,0.012857142857142864,0.30666666666666664,"{'n_estimators': 81, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",517.1728395061729,12.0,259.08641975308643,41891,20986,12,81
+"RandomForestOverfit(max_depth=12, max_features=2, n_estimators=91,
+                    random_state=42)",1.0,0.6883333333333334,0.6728571428571428,0.010738068841694938,0.31166666666666665,"{'n_estimators': 91, 'max_depth': 12, 'max_features': 2, 'bootstrap': True}",519.065934065934,12.0,260.032967032967,47235,23663,12,91
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=1,
+                    random_state=42)",0.7878571428571428,0.475,0.47714285714285715,0.02149988134756057,0.31285714285714283,"{'n_estimators': 1, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",619.0,15.0,310.0,619,310,15,1
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=11,
+                    random_state=42)",0.9857142857142858,0.595,0.5964285714285714,0.015811388300841906,0.3907142857142858,"{'n_estimators': 11, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",620.6363636363636,15.0,310.8181818181818,6827,3419,15,11
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=21,
+                    random_state=42)",0.9957142857142857,0.635,0.6292857142857142,0.022519832529192093,0.36071428571428565,"{'n_estimators': 21, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",611.4761904761905,15.0,306.23809523809524,12841,6431,15,21
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=31,
+                    random_state=42)",0.9992857142857143,0.6583333333333333,0.6642857142857144,0.01564921592871905,0.340952380952381,"{'n_estimators': 31, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",615.4516129032259,15.0,308.2258064516129,19079,9555,15,31
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=41,
+                    random_state=42)",1.0,0.6616666666666666,0.675,0.005976143046671986,0.3383333333333334,"{'n_estimators': 41, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",619.780487804878,15.0,310.390243902439,25411,12726,15,41
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=51,
+                    random_state=42)",1.0,0.675,0.6792857142857143,0.008268454930564448,0.32499999999999996,"{'n_estimators': 51, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",621.9019607843137,15.0,311.45098039215685,31717,15884,15,51
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=61,
+                    random_state=42)",1.0,0.675,0.6857142857142857,0.01548534527762772,0.32499999999999996,"{'n_estimators': 61, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",622.344262295082,15.0,311.672131147541,37963,19012,15,61
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=71,
+                    random_state=42)",1.0,0.68,0.6850000000000002,0.017408653724219937,0.31999999999999995,"{'n_estimators': 71, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",622.3521126760563,15.0,311.67605633802816,44187,22129,15,71
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=81,
+                    random_state=42)",1.0,0.6816666666666666,0.6821428571428572,0.013739560044050981,0.31833333333333336,"{'n_estimators': 81, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",621.7654320987655,15.0,311.38271604938274,50363,25222,15,81
+"RandomForestOverfit(max_depth=15, max_features=2, n_estimators=91,
+                    random_state=42)",1.0,0.6833333333333333,0.6828571428571429,0.009689042833036106,0.31666666666666665,"{'n_estimators': 91, 'max_depth': 15, 'max_features': 2, 'bootstrap': True}",621.6153846153846,15.0,311.3076923076923,56567,28329,15,91
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=1,
+                    random_state=42)",0.7864285714285715,0.4766666666666667,0.4764285714285714,0.03993617356712673,0.3097619047619048,"{'n_estimators': 1, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",621.0,18.0,311.0,621,311,18,1
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=11,
+                    random_state=42)",0.9914285714285714,0.5933333333333334,0.6028571428571429,0.024989793835051302,0.39809523809523806,"{'n_estimators': 11, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",642.2727272727273,17.636363636363637,321.6363636363636,7065,3538,18,11
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=21,
+                    random_state=42)",0.9978571428571429,0.6333333333333333,0.6371428571428571,0.02835633320182742,0.3645238095238096,"{'n_estimators': 21, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",648.4285714285714,17.761904761904763,324.7142857142857,13617,6819,18,21
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=31,
+                    random_state=42)",1.0,0.645,0.6614285714285714,0.018405855323893067,0.355,"{'n_estimators': 31, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",650.8709677419355,17.774193548387096,325.93548387096774,20177,10104,18,31
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=41,
+                    random_state=42)",1.0,0.655,0.6578571428571428,0.015386185163241453,0.345,"{'n_estimators': 41, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",653.3414634146342,17.73170731707317,327.1707317073171,26787,13414,18,41
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=51,
+                    random_state=42)",1.0,0.6616666666666666,0.6735714285714285,0.021261251523053203,0.3383333333333334,"{'n_estimators': 51, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",653.3529411764706,17.745098039215687,327.1764705882353,33321,16686,18,51
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=61,
+                    random_state=42)",1.0,0.675,0.6792857142857143,0.017985254731448793,0.32499999999999996,"{'n_estimators': 61, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",650.7049180327868,17.639344262295083,325.8524590163934,39693,19877,18,61
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=71,
+                    random_state=42)",1.0,0.675,0.675,0.00931314629314665,0.32499999999999996,"{'n_estimators': 71, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",651.6197183098592,17.676056338028168,326.3098591549296,46265,23168,18,71
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=81,
+                    random_state=42)",1.0,0.6733333333333333,0.6857142857142857,0.011293848786315664,0.32666666666666666,"{'n_estimators': 81, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",651.1975308641976,17.641975308641975,326.0987654320988,52747,26414,18,81
+"RandomForestOverfit(max_depth=18, max_features=2, n_estimators=91,
+                    random_state=42)",1.0,0.6733333333333333,0.6921428571428571,0.015875793407780628,0.32666666666666666,"{'n_estimators': 91, 'max_depth': 18, 'max_features': 2, 'bootstrap': True}",651.3076923076923,17.604395604395606,326.15384615384613,59269,29680,18,91
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=1,
+                    random_state=42)",0.81,0.475,0.4742857142857143,0.04228185310556782,0.3350000000000001,"{'n_estimators': 1, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",627.0,20.0,314.0,627,314,20,1
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=11,
+                    random_state=42)",0.9942857142857143,0.6133333333333333,0.6007142857142858,0.0238404560975409,0.38095238095238104,"{'n_estimators': 11, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",653.3636363636364,18.818181818181817,327.1818181818182,7187,3599,20,11
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=21,
+                    random_state=42)",0.9971428571428571,0.6483333333333333,0.6407142857142857,0.018013600304169295,0.3488095238095238,"{'n_estimators': 21, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",655.3809523809524,19.047619047619047,328.1904761904762,13763,6892,20,21
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=31,
+                    random_state=42)",1.0,0.6383333333333333,0.66,0.015219482680473219,0.3616666666666667,"{'n_estimators': 31, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",656.8709677419355,18.967741935483872,328.93548387096774,20363,10197,20,31
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=41,
+                    random_state=42)",1.0,0.6583333333333333,0.6649999999999999,0.016506028583273363,0.3416666666666667,"{'n_estimators': 41, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",658.0243902439024,18.78048780487805,329.5121951219512,26979,13510,20,41
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=51,
+                    random_state=42)",1.0,0.67,0.675,0.021428571428571432,0.32999999999999996,"{'n_estimators': 51, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",659.6666666666666,18.84313725490196,330.3333333333333,33643,16847,20,51
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=61,
+                    random_state=42)",1.0,0.6816666666666666,0.6785714285714286,0.0170533376947333,0.31833333333333336,"{'n_estimators': 61, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",657.2622950819672,18.721311475409838,329.1311475409836,40093,20077,20,61
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=71,
+                    random_state=42)",1.0,0.6766666666666666,0.6792857142857144,0.014708043058552858,0.32333333333333336,"{'n_estimators': 71, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",656.9154929577464,18.746478873239436,328.9577464788732,46641,23356,20,71
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=81,
+                    random_state=42)",1.0,0.6816666666666666,0.6849999999999999,0.022632827882506954,0.31833333333333336,"{'n_estimators': 81, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",656.358024691358,18.679012345679013,328.679012345679,53165,26623,20,81
+"RandomForestOverfit(max_depth=20, max_features=2, n_estimators=91,
+                    random_state=42)",1.0,0.6766666666666666,0.6871428571428572,0.02015247997095127,0.32333333333333336,"{'n_estimators': 91, 'max_depth': 20, 'max_features': 2, 'bootstrap': True}",656.934065934066,18.604395604395606,328.967032967033,59781,29936,20,91
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=1,
+                    random_state=42)",0.81,0.475,0.4742857142857143,0.04228185310556782,0.3350000000000001,"{'n_estimators': 1, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",627.0,20.0,314.0,627,314,25,1
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=11,
+                    random_state=42)",0.9942857142857143,0.6133333333333333,0.5978571428571429,0.028356333201827417,0.38095238095238104,"{'n_estimators': 11, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",653.3636363636364,18.818181818181817,327.1818181818182,7187,3599,25,11
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=21,
+                    random_state=42)",0.9985714285714286,0.6333333333333333,0.6378571428571428,0.02480536479169333,0.36523809523809525,"{'n_estimators': 21, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",656.6190476190476,19.38095238095238,328.8095238095238,13789,6905,25,21
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=31,
+                    random_state=42)",1.0,0.63,0.6542857142857141,0.015551100755055199,0.37,"{'n_estimators': 31, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",657.516129032258,19.29032258064516,329.258064516129,20383,10207,25,31
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=41,
+                    random_state=42)",1.0,0.6583333333333333,0.6585714285714286,0.024074713637646763,0.3416666666666667,"{'n_estimators': 41, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",658.3658536585366,19.048780487804876,329.6829268292683,26993,13517,25,41
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=51,
+                    random_state=42)",1.0,0.6616666666666666,0.6692857142857143,0.026010202080047336,0.3383333333333334,"{'n_estimators': 51, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",661.5098039215686,19.313725490196077,331.2549019607843,33737,16894,25,51
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=61,
+                    random_state=42)",1.0,0.6816666666666666,0.675,0.01720227796970326,0.31833333333333336,"{'n_estimators': 61, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",659.2295081967213,19.18032786885246,330.11475409836066,40213,20137,25,61
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=71,
+                    random_state=42)",1.0,0.6816666666666666,0.6707142857142856,0.013248026422136716,0.31833333333333336,"{'n_estimators': 71, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",659.0,19.197183098591548,330.0,46789,23430,25,71
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=81,
+                    random_state=42)",1.0,0.68,0.6842857142857144,0.01897904322226631,0.31999999999999995,"{'n_estimators': 81, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",658.1851851851852,19.123456790123456,329.5925925925926,53313,26697,25,81
+"RandomForestOverfit(max_depth=25, max_features=2, n_estimators=91,
+                    random_state=42)",1.0,0.665,0.6828571428571429,0.021116779284420715,0.33499999999999996,"{'n_estimators': 91, 'max_depth': 25, 'max_features': 2, 'bootstrap': True}",658.6703296703297,19.076923076923077,329.83516483516485,59939,30015,25,91
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=1,
+                    random_state=42)",0.81,0.475,0.4742857142857143,0.04228185310556782,0.3350000000000001,"{'n_estimators': 1, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",627.0,20.0,314.0,627,314,30,1
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=11,
+                    random_state=42)",0.9942857142857143,0.6133333333333333,0.5978571428571429,0.028356333201827417,0.38095238095238104,"{'n_estimators': 11, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",653.3636363636364,18.818181818181817,327.1818181818182,7187,3599,30,11
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=21,
+                    random_state=42)",0.9985714285714286,0.6333333333333333,0.6378571428571428,0.02480536479169333,0.36523809523809525,"{'n_estimators': 21, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",656.6190476190476,19.38095238095238,328.8095238095238,13789,6905,30,21
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=31,
+                    random_state=42)",1.0,0.63,0.655,0.016690459207925626,0.37,"{'n_estimators': 31, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",657.516129032258,19.29032258064516,329.258064516129,20383,10207,30,31
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=41,
+                    random_state=42)",1.0,0.6583333333333333,0.6592857142857143,0.025414924106653154,0.3416666666666667,"{'n_estimators': 41, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",658.3658536585366,19.048780487804876,329.6829268292683,26993,13517,30,41
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=51,
+                    random_state=42)",1.0,0.6616666666666666,0.6692857142857143,0.026010202080047336,0.3383333333333334,"{'n_estimators': 51, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",661.5098039215686,19.313725490196077,331.2549019607843,33737,16894,30,51
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=61,
+                    random_state=42)",1.0,0.6816666666666666,0.6757142857142856,0.017699302419091217,0.31833333333333336,"{'n_estimators': 61, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",659.2295081967213,19.18032786885246,330.11475409836066,40213,20137,30,61
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=71,
+                    random_state=42)",1.0,0.6816666666666666,0.6707142857142856,0.013248026422136716,0.31833333333333336,"{'n_estimators': 71, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",659.0,19.197183098591548,330.0,46789,23430,30,71
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=81,
+                    random_state=42)",1.0,0.68,0.6828571428571429,0.019872039633205087,0.31999999999999995,"{'n_estimators': 81, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",658.1851851851852,19.123456790123456,329.5925925925926,53313,26697,30,81
+"RandomForestOverfit(max_depth=30, max_features=2, n_estimators=91,
+                    random_state=42)",1.0,0.665,0.6828571428571429,0.021116779284420715,0.33499999999999996,"{'n_estimators': 91, 'max_depth': 30, 'max_features': 2, 'bootstrap': True}",658.6703296703297,19.076923076923077,329.83516483516485,59939,30015,30,91
