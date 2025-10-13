@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex 25849646RW441assignment4"] 1760375855.0613 "25849646RW441assignment4.aux" "25849646RW441assignment4.bbl" "25849646RW441assignment4" 1760379762.33328 0
+["bibtex 25849646RW441assignment4"] 1760389477.2537 "25849646RW441assignment4.aux" "25849646RW441assignment4.bbl" "25849646RW441assignment4" 1760389478.59983 0
   "./references.bib" 1760277060.88311 3687 010687734b66845ee2005c938e599b24 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "25849646RW441assignment4.aux" 1760379761.61527 5456 ea86b4db5aa1548903b15261a39c9043 "pdflatex"
+  "25849646RW441assignment4.aux" 1760389478.17497 7025 1a3bcf6e514a688a4b4075a19818815b "pdflatex"
   (generated)
   "25849646RW441assignment4.bbl"
   "25849646RW441assignment4.blg"
   (rewritten before read)
-["pdflatex"] 1760379760.76501 "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" "25849646RW441assignment4.pdf" "25849646RW441assignment4" 1760379762.33399 0
+["pdflatex"] 1760389477.41993 "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" "25849646RW441assignment4.pdf" "25849646RW441assignment4" 1760389478.60005 0
   "/etc/texmf/web2c/texmf.cnf" 1740837277.30025 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" 1760379510.49829 31459 e5d0d4f6ee15ee900adbcb184a470c5e ""
+  "/home/grant/Documents/University/MachineLearning/Assignments/Assignment4/25849646rw441Assignment4/report/25849646RW441assignment4.tex" 1760389475.11464 37273 fb662d6f0ac004d8d1a86d9436468b7c ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -46,6 +46,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1248133631 35469 70d41d2b9ea31d5d813066df7c99281c ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
@@ -101,9 +102,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1748261859.07033 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1748261891 8213243 5926d5c6c4dff910a22829e70d707a80 ""
-  "25849646RW441assignment4.aux" 1760379761.61527 5456 ea86b4db5aa1548903b15261a39c9043 "pdflatex"
-  "25849646RW441assignment4.bbl" 1760375855.41153 453 c8992d3f9b5cd5c7cc39a0fea6e5dc8e "bibtex 25849646RW441assignment4"
-  "25849646RW441assignment4.tex" 1760379510.49829 31459 e5d0d4f6ee15ee900adbcb184a470c5e ""
+  "25849646RW441assignment4.aux" 1760389478.17497 7025 1a3bcf6e514a688a4b4075a19818815b "pdflatex"
+  "25849646RW441assignment4.bbl" 1760389477.41564 453 c8992d3f9b5cd5c7cc39a0fea6e5dc8e "bibtex 25849646RW441assignment4"
+  "25849646RW441assignment4.tex" 1760389475.11464 37273 fb662d6f0ac004d8d1a86d9436468b7c ""
   "images/all_datasets_accuracy_vs_features.png" 1760310186.46294 150030 be1f0771f2e7ecaa4d33e3b8ac62d73c ""
   "images/all_datasets_depth_accuracy.pdf" 1760310144.55394 372097 a19372ca618f6d6810686220894b60a7 ""
   "images/complex_depth_vs_trees_heatmap.pdf" 1760379653.0562 297139 32bac4f438a0dc21e6fb5fbadeedfe85 ""
