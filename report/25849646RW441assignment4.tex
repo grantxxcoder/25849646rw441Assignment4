@@ -4,7 +4,6 @@
 \usepackage{amsmath,amssymb}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-\usepackage{url}
 \usepackage{booktabs}
 \usepackage[font=footnotesize]{subcaption}
 
@@ -24,9 +23,9 @@
 % Abstract
 
 \begin{abstract}
-The report investigates how Random Forest performance varies with decision-tree depth, the number of randomly selected features per split, and ensemble size across three classification datasets of increasing complexity. The goal is to track the performance from underfitting with very shallow trees and few features to overfitting with deep trees and many features, identify points that maximize generalization, and characterize interactions among these hyperparameters. Experiments with (i) maximum depth from minimal to deep trees, (ii) number of features to split on with depth fixed at the best value from (i), and (iii) the balance number of trees with depth were conducted. A final experiment created ensembles that mix under- and overfitting trees. Models were evaluated with train/test accuracy and five-fold cross-validation. Findings were consistent: increased depth improved test accuracy up to a point, after which performance stagnated, and the optimal depth increased with problem complexity. With depth fixed, increased number of features per split slightly improved performance up to a plateau where medium complexity favored moderate feature subsets, while complex data benefited from larger subsets. The inclusion of more trees in the ensemble improved stability and accuracy up to a plateau, with gains moderated by tree depth. Bagging with only overfitted trees proved to have either the best stability, cross-validation accuracy, test accuracy, or a combination of the three across all datasets.
+The report investigated how random forest performance varies with decision-tree depth, the number of randomly selected features per split, and ensemble size across three classification datasets of increasing complexity. The goal was to track performance from underfitting with very shallow trees and few features to overfitting with deep trees and many features, identify points that maximize generalization, and characterize interactions among these hyperparameters. Experiments were conducted on (i) maximum depth from minimal to deep trees, (ii) the number of features to split on with depth fixed at the best value from (i), and (iii) the balance between the number of trees and depth. A final experiment created ensembles that mixed underfitted and overfitted trees. Models were evaluated with train/test accuracy and five-fold cross-validation. Findings were consistent: increased depth improved test accuracy up to a point, after which performance stagnated, and the optimal depth increased with problem complexity. With depth fixed, increasing the number of features per split slightly improved performance up to a plateau where medium complexity favored moderate feature subsets, while complex data benefited from larger subsets. The inclusion of more trees in the ensemble improved stability and accuracy up to a plateau, with gains moderated by tree depth. Bagging with only overfitted trees yielded either the best stability, cross-validated accuracy, test accuracy, or a combination of these across all datasets.
 
-  Overall, the best configurations balance depth and ensemble size where larger values of both are generally preferred as task complexity rises. The number of random features considered at each split did not significantly affect performance once depth was near-optimal.
+ Overall, the best configurations balanced depth and ensemble size, with larger values of both generally preferred as task complexity increased. The number of random features considered at each split did not significantly affect performance once depth was near optimal.
 \end{abstract}
 
 
@@ -38,13 +37,13 @@ Random Forest, Ensemble learning, Bagging, Decision Trees
 
 \section{Introduction}
 
-Random forests are widely used for classification due to strong generalization, robustness, and modest tuning requirements. The performance of the model is controlled by key hyperparameters that trade off bias and variance such as: maximum decision-tree depth, the number of randomly selected features per split and ensemble size. The report aims to provide understanding for how these controls move the model to better performance. The idea is to identify configurations that generalize across problem complexities.\\
+Random forests are widely used for classification due to strong generalization, robustness, and modest tuning requirements. The performance of the model is controlled by key hyperparameters that trade off bias and variance, such as maximum decision-tree depth, the number of randomly selected features per split, and ensemble size. The report aims to provide an understanding of how these controls move the model to better performance. The idea is to identify configurations that generalize across problem complexities.\\
 
 The first goal of the study is to characterize how tree depth and feature subsampling influence random forest performance, and to identify configurations that maximize test accuracy and cross-validated performance across datasets of increasing difficulty. The analysis is achieved by exploring: (i) maximum depth from minimal to deep trees at fixed ensemble size, number of random features per split, and bagging; (ii) fixing depth at the best value from (i) and exploring the optimal number of features to split on per node; (iii) depth and ensemble-size interactions; and (iv) composing ensembles that intentionally mix underfitted and overfitted trees. Evaluation uses train/test accuracy and five-fold cross-validation to better assess generalization and stability.\\
 
-The report aims to provide a reproducible behavior for the bias-variance trade-off for random forests, and to extract generalizations for hyperparameter selection that adapts to dataset complexity. The design follows controlled experiments to reveal how each hyperparameter influences performance, and how the parameters interact. The analysis spans three synthetic datasets of increasing complexity to assess how optimal configurations shift with task difficulty.\\
+The report aims to provide a reproducible behavior for the bias-variance trade-off for random forests, and to extract generalizations for hyperparameter selection that adapt to dataset complexity. The design follows controlled experiments to reveal how each hyperparameter influences performance, and how the parameters interact. The analysis spans three synthetic datasets of increasing complexity to assess how optimal configurations shift with task difficulty.\\
 
-The main observations are consistent with the bias-variance expectations. Increasing the depth of the trees in the ensemble improves test accuracy up to a point, after which gains stagnate; the optimal depth increases with complexity, for example, approximately 8, 15, and 20 on the simple, medium, and complex datasets respectively. With depth fixed, increasing the number of features to split on did not drastically improve performance. The inclusion of more trees in the ensemble improves stability and accuracy up to a plateau, where the number of trees needed to reach the plateau is dependent on the depth of the trees. For mixed-depth and only overfitted ensembles, on the simple dataset, the highest test accuracy was 0.960 with a tie between the balanced and only overfitted compositions, while only overfitted attained the best cross-validated score of 0.966; on the medium dataset, the only-overfit composition achieved both the highest test accuracy of 0.685 and the best cross-validated score of 0.691; on the complex dataset, only overfitted trees achieved the highest test accuracy of 0.610 and the most stable cross-validation, with majority overfitted exhibiting a marginally higher cross-validation (CV) mean of 0.564 versus 0.563 for only overfitted.\\
+The main observations are consistent with the bias-variance expectations. Increasing the depth of the trees in the ensemble improves test accuracy up to a point, after which gains stagnate; the optimal depth increases with complexity, for example, approximately 8, 15, and 20 on the simple, medium, and complex datasets, respectively. With depth fixed, increasing the number of features to split on did not drastically improve performance. The inclusion of more trees in the ensemble improves stability and accuracy up to a plateau, where the number of trees needed to reach the plateau is dependent on the depth of the trees. For mixed-depth and only overfitted ensembles, on the simple dataset, the highest test accuracy was 0.960 with a tie between the balanced and only overfitted compositions, while only overfitted attained the best cross-validated score of 0.966; on the medium dataset, the only-overfit composition achieved both the highest test accuracy of 0.685 and the best cross-validated score of 0.691; on the complex dataset, only overfitted trees achieved the highest test accuracy of 0.610 and the most stable cross-validation, with majority overfitted exhibiting a marginally higher cross-validation (CV) mean of 0.564 versus 0.563 for only overfitted.\\
 
 The remainder of the report is organized as follows: Section~2 provides background; Section~3 details the methodology and implementation; Section~4 describes the empirical procedure; Section~5 presents results and discussion; Section~6 concludes with implications and future directions.
 
@@ -56,12 +55,12 @@ random forests.
 The decision tree is a supervised learning algorithm used for classification and regression tasks. The decision tree works by recursively 
 splitting the data into subsets based on feature values, creating a tree-like model of decisions. Each internal node represents a condition on a 
 feature, each branch represents the outcome of the test, and each leaf node represents a class label in classification or a continuous value 
-in regression. Decision trees are easy to interpret with the rule based structure, but are prone to overfitting, especially with deep trees. The overfitting is 
+in regression. Decision trees are easy to interpret with the rule-based structure, but are prone to overfitting, especially with deep trees. The overfitting is 
 mitigated in random forests by averaging predictions across many trees, which reduces variance.
 
 \subsection{Ensemble Learning: Bagging}
-Bagging, or Bootstrap Aggregating, is an ensemble learning technique that leverages averaging of multiple models to increase the stability and accuracy of a final cohort of learners. The algorithm works by training multiple models on different subsets of the training data, which are created by randomly sampling with 
- replacement known as bootstrapping. The final prediction is made by aggregating the predictions of all individual models, typically by 
+Bagging, or Bootstrap Aggregating, is an ensemble learning technique that leverages the averaging of multiple models to increase the stability and accuracy of a final cohort of learners. The algorithm works by training multiple models on different subsets of the training data, which are created by randomly sampling with 
+ replacement, known as bootstrapping. The final prediction is made by aggregating the predictions of all individual models, typically by 
  averaging for regression or majority voting for classification. Bagging helps reduce variance and combat overfitting, making the approach 
  particularly effective for high-variance models like decision trees.
 
@@ -104,29 +103,29 @@ Three synthetic, tabular classification datasets of increasing complexity were p
   \resizebox{\columnwidth}{!}{%
   \begin{tabular}{@{}lcccccc@{}}
     \toprule
-    Dataset & Samples & Features & (Informative, Redundant) & Classes & Overlap & Noise \\
+ Dataset & Samples & Features & (Informative, Redundant) & Classes & Overlap & Noise \\
     \midrule
-    Simple  & 500   & 10  & (8, 2)  & 2 & 2.0 & 0.0 \\
-    Medium  & 2000  & 25  & (18, 5) & 3 & 1.0 & 0.2 \\
-    Complex & 6000  & 50  & (35, 10)& 4 & 0.7 & 0.3 \\
+ Simple  & 500   & 10  & (8, 2)  & 2 & 2.0 & 0.0 \\
+ Medium  & 2000  & 25  & (18, 5) & 3 & 1.0 & 0.2 \\
+ Complex & 6000  & 50  & (35, 10)& 4 & 0.7 & 0.3 \\
     \bottomrule
   \end{tabular}%
-  }
+ }
   \caption{Summary of synthetic datasets used in experiments. The informative and redundant features are specified to control complexity. Class overlap and label noise increase with complexity.}
   \label{tab:datasets}
 \end{table}
 
-\textbf{Train/test split:} A stratified split with a split of 70/30 for training and testing respectively, and fixed random states preserves class proportions across splits and guarantees identical partitions across runs.
+  \textbf{Train/test split:} A stratified 70/30 train--test split with fixed random states preserves class proportions across splits and guarantees identical partitions across runs.
 
 
-\textbf{Preprocessing:} No scaling or normalization is applied as decision trees are insensitive to monotonic feature transforms. No imputation is required as the synthetic data contain no missing values. No label encoding is needed as the labels are already integers.
+\textbf{Preprocessing:} No scaling or normalization is applied as decision trees are insensitive to monotonic feature transforms. No imputation is required as the synthetic data contains no missing values. No label encoding is needed as the labels are already integers.
 
-\subsection{Random forest Model}
+\subsection{Random Forest model}
 
 A custom scikit-learn compatible estimator was implemented by extending \texttt{BaseEstimator} and \texttt{ClassifierMixin}. Each base learner is a \texttt{DecisionTreeClassifier}. The 
 ensemble exposes the hyperparameters: \texttt{n\_estimators}, \texttt{max\_depth}, \texttt{max\_features}, \texttt{bootstrap}, \texttt{criterion}, 
 \texttt{min\_samples\_*}, \texttt{max\_leaf\_nodes}, and \texttt{ccp\_alpha}. These parameters allow control over tree complexity and randomness. Each individual tree needed 
-to be able to be individually controlled to allow for the mixed underfit/overfit experiments.
+to be individually controlled to allow for the mixed underfit/overfit experiments.
 
 Training uses standard bagging: for each tree, a bootstrap sample is drawn. A distinct, reproducible random seed is generated per tree from a generator seeded by the estimator's random seed. Each tree \texttt{max\_features} parameter enforces feature sub-sampling at each split, mirroring the random subspace mechanism. The final classification averages the class probabilities across trees and enforces a majority vote.
 
@@ -138,11 +137,11 @@ The model has the following characteristics:
 
 
 \subsection{Cross-validation procedure}
-Across all experiments, performance for each hyperparameter setting was estimated with K-fold stratified cross-validation on the training split only using \texttt{StratifiedKFold} from \texttt{sklearn.model\_selection} \cite{scikit-learn}, 
+Across all experiments, performance for each hyperparameter setting was estimated with K-fold stratified cross-validation (CV) on the training split only using \texttt{StratifiedKFold} from \texttt{sklearn.model\_selection} \cite{scikit-learn}, 
 reporting the mean and standard deviation of accuracy. Concretely, for the tree-depth, feature-selection, and depth by trees grids, stratified folds for classification were used to compute cross-validated accuracy scores, and record CV mean and CV standard deviation. The held-out test split is evaluated separately to provide a single final generalization number, but not to select hyperparameters. Where an optimal depth is required to center configurations, the depth is chosen by maximizing the CV mean from the prior depth experiment.
 
 \subsection{Statistical testing protocol}
-For each dataset, repeated stratified K-fold cross-validation with five folds and seven repeats provides fold-wise accuracies for each of the five ensemble compositions. The Friedman test serves as a global check for any differences among configurations. When significant, one-sided Wilcoxon signed-rank tests compare the expected best configuration, the only overfitted trees configuration, against each alternative, with Holm-adjusted $p$-values to control family-wise error. Unless stated otherwise, the significance level is set to $\alpha=0.05$, and post-hoc rejections are determined by comparing Holm-adjusted $p$-values against $\alpha$.
+For each dataset, repeated stratified k-fold cross-validation with five folds and seven repeats provides fold-wise accuracies for each of the five ensemble compositions. The Friedman test serves as a global check for any differences among configurations. When significant, one-sided Wilcoxon signed-rank tests compare the expected best configuration, the only overfitted trees configuration, against each alternative, with Holm-adjusted $p$-values to control family-wise error. Unless stated otherwise, the significance level is set to $\alpha=0.05$, and post-hoc rejections are determined by comparing Holm-adjusted $p$-values against $\alpha$.
 
 
 \section{Empirical Procedure}
@@ -157,7 +156,7 @@ The three datasets Simple, Medium, and Complex were generated as described in th
 A global seed of 42 was used. Per-tree seeds were drawn from a generator seeded by the global seed value to ensure determinism. Unless varied explicitly, defaults for the decision trees were:
 \begin{itemize}
   \item Criterion for split quality was the Gini impurity.
-  \item Minimum samples to split a node was two.
+  \item Minimum samples to split a node were two.
   \item Minimum samples per leaf was one.
   \item No pruning.
   \item Bootstrap sampling.
@@ -172,17 +171,17 @@ A global seed of 42 was used. Per-tree seeds were drawn from a generator seeded 
 \end{itemize}
 
 \subsection{Cross-validation for Experiments}
-All experiments used five-fold stratified cross-validation on the training split. For each hyperparameter configuration the cross-validation mean and standard deviation was reported. The held-out test split was evaluated separately to report train and test accuracy. The same reproducible controls applied across all experiments. For each configuration, the following were recorded: train accuracy, test accuracy and CV mean and standard deviation. 
+All experiments used five-fold stratified cross-validation on the training split. For each hyperparameter configuration, the cross-validation mean and standard deviation were reported. The held-out test split was evaluated separately to report train and test accuracy. The same reproducible controls were applied across all experiments. For each configuration, the following were recorded: train accuracy, test accuracy, and CV mean and standard deviation. 
 
 \subsection{Experiment 1: Maximum Tree Depth}
 The objective of Experiment 1 was to isolate the effect of maximum tree depth on generalization and overfitting. The maximum depth was grid-searched from very shallow to very deep trees while holding other factors constant. A forest of decision trees was trained, and all features are used at each split so that each tree was as strong as possible.
 
 \subsection{Experiment 2: Number of Features per Split}
-The objective was to quantify the effect of per-split feature subsampling while holding depth near the optimal values found in Experiment~1. The experiment fixed the maximum depth to the CV optimal values where a depth of 8, 15, 20 was used for Simple, Medium and Complex respectively. The size of the ensemble was limited to 30, 60, and 90 trees for the Simple, Medium, and Complex datasets respectively, and the experiment swept the maximum number of features per split over \{1, 2, 3, 5, 7, 10, 15, 20, 25, 30, 35, 40, 45, 50\}, and skipped values that exceeded each dataset's dimensionality.
+The objective was to quantify the effect of per-split feature subsampling while holding depth near the optimal values found in Experiment~1. The experiment fixed the maximum depth to the CV optimal values, where a depth of 8, 15, and 20 was used for Simple, Medium, and Complex, respectively. The size of the ensemble was limited to 30, 60, and 90 trees for the Simple, Medium, and Complex datasets respectively, and the experiment swept the maximum number of features per split over \{1, 2, 3, 5, 7, 10, 15, 20, 25, 30, 35, 40, 45, 50\}, and skipped values that exceeded each dataset's dimensionality.
 
 \subsection{Experiment 3: Depth versus Number of Trees}
-The objective was to study the interaction between ensemble size and tree depth. In the experiment the number of features considered per split was fixed to the square root of the total number of features to provide a moderate level of randomness. Tree depth was swept over the dataset-specific depth grids while the number of
-  trees was varied per dataset. Results were visualized as heatmaps of test accuracy on the depth of the trees versus the size of the ensemble. A further analysis was conducted to quantify how increasing the number of trees reduces variance up to a plateau and how the benefit of additional trees depends on tree depth.
+The objective was to study the interaction between ensemble size and tree depth. In the experiment, the number of features considered per split was fixed to the square root of the total number of features to provide a moderate level of randomness. Tree depth was swept over the dataset-specific depth grids while the number of
+ trees was varied per dataset. Results were visualized as heatmaps of test accuracy on the depth of the trees versus the size of the ensemble. A further analysis was conducted to quantify how increasing the number of trees reduces variance up to a plateau and how the benefit of additional trees depends on tree depth.
 
 \subsection{Experiment 4: Mixed-Depth Ensembles}
 The experiment evaluated ensembles that mix underfitting and overfitting trees to probe bias-variance blending. Controls were fixed where the number of features per split was set to the optimal values from Experiment 2, and ensemble sizes and per-dataset maximum tree depths used the optima from Experiment 3.
@@ -194,13 +193,13 @@ Five ensemble compositions of trees were compared:
   \item majority overfitted with 25\% underfitted, 75\% overfitted;
   \item all overfitted. 
 \end{itemize}
-Underfitted depths were sampled from depths below the optimal and overfitted depths from just above the optimal up to the maximum. The goal was to determine whether mixing tree capacities yields improved generalization or stability compared to homogeneous ensembles of the same size.
+Underfitted depths were sampled from depths below the optimal, and overfitted depths from just above the optimal up to the maximum. The goal was to determine whether mixing tree capacities yields improved generalization or stability compared to homogeneous ensembles of the same size.
 
 
 
 \section{Research Results}
 
-The section reports results for all four experiments. For each configuration the cross-validated accuracy mean and standard deviation over five folds on the training split and the held-out test accuracy are reported. 
+The section reports results for all four experiments. For each configuration, the cross-validated accuracy mean and standard deviation over five folds on the training split and the held-out test accuracy are reported. 
 
 \subsection{Experiment 1: Maximum Tree Depth}
 
@@ -213,7 +212,7 @@ Across datasets, increased maximum depth initially raised both CV and test accur
   \label{fig:exp1-depth-acc}
 \end{figure}
 
- The results in Figures~\ref{fig:exp1-depth-acc} show the relationship between maximum tree depth and both test and cross-validated accuracy. As expected, very shallow trees in the ensemble underfit the data, which results in low accuracy on both training and test sets. As depth increases, accuracy improves significantly, indicating that the model is capturing more complex patterns in the data. However, beyond a certain depth for example,  depth 8 for Simple, 15 for Medium, and 20 for Complex, the test accuracy plateaus. The behavior is expected as once each tree has reached its maximum depth, growing the trees further does not improve performance. The ensemble itself also does not result in worse performance despite the trees being further overfitted as the aggregating effect of the ensemble removes the noise. The optimal depths identified align with the complexity of each dataset, with more complex datasets requiring deeper trees to capture the structure. These results occur due to the bias-variance trade-off inherent in decision trees. Shallow trees have high bias and low variance, leading to underfitting, while deep trees have low bias and high variance, leading to overfitting. With more overfitted trees in the ensemble, the variance would average out more effectively, allowing for deeper trees to be used without overfitting.
+ The results in Figures~\ref{fig:exp1-depth-acc} show the relationship between maximum tree depth and both test and cross-validated accuracy. As expected, very shallow trees in the ensemble underfit the data, which results in low accuracy on both training and test sets. As depth increases, accuracy improves significantly, indicating that the model is capturing more complex patterns in the data. However, beyond a certain depth, for example,  depth 8 for Simple, 15 for Medium, and 20 for Complex, the test accuracy plateaus. The behavior is expected as once each tree has reached its maximum depth, growing the trees further does not improve performance. The ensemble itself also does not result in worse performance despite the trees being further overfitted, as the aggregating effect of the ensemble removes the noise. The optimal depths identified align with the complexity of each dataset, with more complex datasets requiring deeper trees to capture the structure. These results occur due to the bias-variance trade-off inherent in decision trees. Shallow trees have high bias and low variance, leading to underfitting, while deep trees have low bias and high variance, leading to overfitting. With more overfitted trees in the ensemble, the variance would average out more effectively, allowing for deeper trees to be used without overfitting.
 
 \subsection{Experiment 2: Number of Features per Split}
 
@@ -225,18 +224,18 @@ Varying the number of features considered per split yields very modest gains tha
   \begin{subfigure}[b]{\columnwidth}
     \centering
     \includegraphics[width=\linewidth]{images/all_datasets_accuracy_vs_features.png}
-    \caption{Medium: Test and CV accuracy versus maximum features considered per split.}
+  \caption{Medium: Test and cross-validated accuracy versus maximum features considered per split.}
     \label{fig:exp2-medium-acc}
   \end{subfigure}
   \caption{Number of features per split versus accuracy.}
   \label{fig:exp2-accuracy-features}
 \end{figure}
 
-The results in Figure~\ref{fig:exp2-medium-acc} illustrate how varying the number of features considered at each split affects test and cross-validated accuracy. As the number of features increases, there is only a slight improvement in accuracy up to a point, after which the performance does not show any clear signs of improvement. Because each individual tree was allowed to grow deep, the benefit of considering more features at each split is mitigated by the increased correlation between trees. The correlation reduces the effectiveness of bagging, as the ensemble relies on diverse predictions from its members to reduce variance. Therefore, while increasing the number of features per split enhances the strength of individual trees, the increased correlation also increases similarity, which limits the ensemble's overall performance. The results in the graph suggest that the optimal number of features to consider at each split is near the proposed heuristic of the square root of the total number of features, which is approximately three, five, and seven for Simple, Medium and Complex datasets respectively. The finding aligns with common practices in random forest implementations, where using a subset of features helps maintain diversity among trees while still allowing them to be sufficiently strong.
+The results in Figure~\ref{fig:exp2-medium-acc} illustrate how varying the number of features considered at each split affects test and cross-validated accuracy. As the number of features increases, there is only a slight improvement in accuracy up to a point, after which the performance does not show any clear signs of improvement. Because each individual tree was allowed to grow deep, the benefit of considering more features at each split is mitigated by the increased correlation between trees. The correlation reduces the effectiveness of bagging, as the ensemble relies on diverse predictions from its members to reduce variance. Therefore, while increasing the number of features per split enhances the strength of individual trees, the increased correlation also increases similarity, which limits the ensemble's overall performance. The results in the graph suggest that the optimal number of features to consider at each split is near the proposed heuristic of the square root of the total number of features, which is approximately three, five, and seven for Simple, Medium, and Complex datasets, respectively. The finding aligns with common practices in random forest implementations, where using a subset of features helps maintain diversity among trees while still allowing them to be sufficiently strong.
 
 
 \subsection{Experiment 3: Depth versus Number of Trees}
-The heatmaps show a clear interaction between depth and ensemble size: deeper trees require more trees to stabilize variance, while extra trees are needed to achieve better performance. Accuracy concentrates along a ridge where both parameters are sufficient; increasing one without the other offers little benefit, marking natural plateaus. Each heatmap in Figure~\ref{fig:exp3-depth-trees-heatmaps} has the same pattern - there is a clear relationship between the number of trees in the ensemble and the maximum depth of the trees in the forest. Each heatmap shows a convergence to an optimal configuration. The forest created is dependent on the maximum depth as seen in Experiment~1, but the performance is also dependent on the number of trees. The results show that even when increasing the maximum depth, the best results come from increasing the number of trees in conjunction. The general trend shows that more trees in the ensemble and deeper trees both contribute to higher accuracy, which is expected in the case of bagging. The improvement in accuracy with more and deeper trees is due to the overall reduction in variance that bagging provides where, although individual trees overfit, the ensemble averages out respective errors. However, if there are not enough trees in the ensemble of overfitted trees, the variance does not average out sufficiently, leading to the seen degradation in test performance.
+The heatmaps show a clear interaction between depth and ensemble size: deeper trees require more trees to stabilize variance, while extra trees are needed to achieve better performance. Accuracy concentrates along a ridge where both parameters are sufficient; increasing one without the other offers little benefit, marking natural plateaus. Each heatmap in Figure~\ref{fig:exp3-depth-trees-heatmaps} has the same pattern - there is a clear relationship between the number of trees in the ensemble and the maximum depth of the trees in the forest. Each heatmap shows a convergence to an optimal configuration. The forest created is dependent on the maximum depth, as seen in Experiment~1, but the performance is also dependent on the number of trees. The results show that even when increasing the maximum depth, the best results come from increasing the number of trees in conjunction. The general trend shows that more trees in the ensemble and deeper trees both contribute to higher accuracy, which is expected in the case of bagging. The improvement in accuracy with more and deeper trees is due to the overall reduction in variance that bagging provides, where, although individual trees overfit, the ensemble averages out respective errors. However, if there are not enough trees in the ensemble of overfitted trees, the variance does not average out sufficiently, leading to the observed degradation in test performance.
 
 
 \begin{figure}[H]
@@ -333,7 +332,7 @@ Majority Overfitted   & 1.000 & 0.597 & $0.564 \pm 0.021$ \\
  The results in Tables~\ref{tab:exp4-simple}, \ref{tab:exp4-medium}, and \ref{tab:exp4-complex} show the performance of ensembles with different compositions of underfitted and overfitted trees across the three datasets. A clear trend emerged where ensembles composed entirely of overfitted trees consistently achieved the highest test accuracy and cross-validated accuracy. The trend suggested that, in the context of bagging, the high variance of overfitted trees was effectively averaged out by the ensemble, which led to better generalization. Mixed compositions did not outperform the all-overfit configuration, which indicated that the benefits of averaging high-variance learners outweighed the potential advantages of bias-variance blending through mixed depths. The results are not surprising, but one might have guessed that a mix of underfitted and overfitted trees would provide a better balance of bias and variance, leading to improved generalization. However, the effectiveness of bagging in reducing variance appeared to be sufficient to allow overfitted trees to perform best. Therefore, including enough trees within the ensemble was essential to ensure robustness. In another approach, weaker learners could be used exclusively, such as shallow trees, and follow the boosting approach of sequentially correcting errors. 
 
  \subsection{Global and post-hoc statistical tests}
-To test for differences among the five ensemble compositions on each dataset, a Friedman test was applied to 35 paired cross-validation blocks, followed by Wilcoxon signed-rank tests which were one-sided and Holm-corrected, comparing the ``Only Overfitted'' configuration against each alternative. The omnibus Friedman results were: \textit{simple}: $\chi^2=21.122$; \textit{medium}: $\chi^2=69.402$; \textit{complex}: $\chi^2=82.083$. Each test had $p<0.0001$. The low p-values indicate statistically significant differences among configurations.\\
+To test for differences among the five ensemble compositions on each dataset, a Friedman test was applied to 35 paired cross-validation blocks, followed by Wilcoxon signed-rank tests, which were one-sided and Holm-corrected, comparing the ``Only Overfitted'' configuration against each alternative. The omnibus Friedman results were: \textit{simple}: $\chi^2=21.122$; \textit{medium}: $\chi^2=69.402$; \textit{complex}: $\chi^2=82.083$. Each test had $p<0.0001$. The low p-values indicate statistically significant differences among configurations.\\
 
  On the \textit{simple} dataset, ``Only Overfitted'' is significantly better than ``Only Underfitted'' after Holm correction, with Holm $p=0.001989$, while gains over the other three compositions are not statistically significant where mean accuracy deltas are small with values between 0.1\% to 1.5\%. The other configurations are not significantly different from each other because the problem is small and relatively easy. Trees saturate quickly, and the structures become highly similar across compositions. Strong bagging further reduces variance, so fold-wise paired differences fall within sampling noise. Refer to Table~\ref{tab:wilcoxon-simple} for details.\\
 
@@ -367,16 +366,16 @@ On the \textit{medium} dataset, ``Only Overfitted'' significantly outperforms al
 \toprule
 Comparator & W & $p$ & Holm $p$ & Reject & Mean $\Delta$ Accuracy \\
 \midrule
-Only Underfitted      & 627.00 & 0.00000 & 0.00000 & True  & 0.03520 \\
-Majority Underfitted  & 541.50 & 0.00000 & 0.00000 & True  & 0.02130 \\
-Balanced               & 562.50 & 0.00000 & 0.00001 & True  & 0.01710 \\
+Only Underfitted      & 627.00 & $< 0.0001$ & $< 0.0001$ & True  & 0.03520 \\
+Majority Underfitted  & 541.50 & $< 0.0001$ & $< 0.0001$ & True  & 0.02130 \\
+Balanced               & 562.50 & $< 0.0001$ & $< 0.0001$ & True  & 0.01710 \\
 Majority Overfitted   & 363.50 & 0.00349 & 0.00349 & True  & 0.00950 \\
 \bottomrule
 \end{tabular}%
 }
 \end{table}
 
-On the \textit{complex} dataset, ``Only Overfitted'' attains the highest test accuracy as seen in Table~\ref{tab:exp4-complex} and the highest cross-validated mean accuracy where the CV accuracy was $0.563 \pm 0.008$, showing both superior hold-out performance and the most stable CV results among compositions.  Furthermore, Wilcoxon post-hoc tests confirm these gains are statistically significant against all alternatives where the Holm-adjusted value was $p \le 0.00040$, with mean accuracy improvements ranging from +0.0077 for  ``Majority Overfit'' to +0.0286 for ``Only Underfit''. Refer to Table~\ref{tab:wilcoxon-complex} for details.\\ 
+On the \textit{complex} dataset, ``Only Overfitted'' attains the highest test accuracy as seen in Table~\ref{tab:exp4-complex} and the highest cross-validated mean accuracy, where the CV accuracy was $0.563 \pm 0.008$, showing both superior hold-out performance and the most stable CV results among compositions.  Furthermore, Wilcoxon post-hoc tests confirm these gains are statistically significant against all alternatives where the Holm-adjusted value was $p \le 0.00040$, with mean accuracy improvements ranging from +0.0077 for  ``Majority Overfitted'' to +0.0286 for ``Only Underfitted''. Refer to Table~\ref{tab:wilcoxon-complex} for details.\\ 
 
 
 \begin{table}[H]
@@ -388,9 +387,9 @@ On the \textit{complex} dataset, ``Only Overfitted'' attains the highest test ac
 \toprule
 Comparator & W & $p$ & Holm $p$ & Reject & Mean $\Delta$ Accuracy \\
 \midrule
-Only Underfitted      & 595.00 & 0.00000 & 0.00000 & True  & 0.02860 \\
-Majority Underfitted  & 610.50 & 0.00000 & 0.00000 & True  & 0.01950 \\
-Balanced           & 581.00 & 0.00001 & 0.00001 & True  & 0.01150 \\
+Only Underfitted      & 595.00 & $< 0.0001$ & $< 0.0001$ & True  & 0.02860 \\
+Majority Underfitted  & 610.50 & $< 0.0001$ & $< 0.0001$ & True  & 0.01950 \\
+Balanced           & 581.00 & $< 0.0001$ & $< 0.0001$ & True  & 0.01150 \\
 Majority Overfitted   & 519.50 & 0.00040 & 0.00040 & True  & 0.00770 \\
 \bottomrule
 \end{tabular}%
@@ -405,17 +404,17 @@ The main findings are consistent with bias-variance theory and answer the follow
 \begin{itemize}
   \item Maximum depth: Test and cross-validated accuracy increase from shallow to moderate depths, then plateau once the trees saturate. The depth that maximizes generalization increases with task complexity. With sufficiently many trees, deeper models become more viable because bagging reduces variance.
   \item Features per split: Allowing more features strengthens individual trees but raises inter-tree correlation. Accuracy improves to a plateau, after which gains are marginal or flat. The optimal number of features per split is often near $\sqrt{d}$.
-  \item Depth versus ensemble size: The trend for better performance includes both depth and the number of trees being sufficiently large enough and tuned to the dataset complexity. Deeper trees require larger ensembles to stabilize variance. The parameters are limited by each other, where increasing one without the other beyond a certain point yields little benefit.
+  \item Depth versus ensemble size: The trend for better performance includes both depth and the number of trees being sufficiently large and tuned to the dataset complexity. Deeper trees require larger ensembles to stabilize variance. The parameters are limited by each other, where increasing one without the other beyond a certain point yields little benefit.
   \item Mixed-depth ensembles: Under strong bagging, ensembles composed solely of overfitted trees matched or outperformed mixed-capacity ensembles on test and CV accuracy, with comparable or smaller gaps. 
 \end{itemize}
 
 The following practical suggestions emerged from these results: (i) pick depth by maximizing CV performance; (ii) grow the number of trees until CV mean stabilizes and its variance shrinks, noting that deeper forests require more trees; and (iii) use sufficiently many trees in ensembles of overfitted trees to obtain the best performance.
 
-Limitations and future work: the study used synthetic, balanced datasets and focused on accuracy where if extending to real-world datasets, additional metrics, and class imbalance would broaden conclusions. Secondly, exploring other ensemble methods like boosting or stacking could reveal different dynamics. Finally, investigating interactions with other hyperparameters such as minimum samples per leaf or pruning would provide a more comprehensive understanding of random forest tuning.
-Overall, the best configurations balance depth, feature subsampling, and ensemble size, with preferred values growing with task complexity. Under strong bagging, larger ensembles of deeper trees generally deliver the most stable and accurate performance.
+Limitations and future work: the study used synthetic, balanced datasets and focused on accuracy, where, if extending to real-world datasets, additional metrics and class imbalance would broaden conclusions. Secondly, exploring other ensemble methods like boosting or stacking could reveal different dynamics. Finally, investigating interactions with other hyperparameters, such as minimum samples per leaf or pruning, would provide a more comprehensive understanding of random forest tuning.
+Overall, the best configurations balance depth, feature subsampling, and ensemble size, with preferred values increasing with task complexity. Under strong bagging, larger ensembles of deeper trees generally deliver the most stable and accurate performance.
 
 
-The code for the report is available on GitHub: \url{https://github.com/grantxxcoder/25849646rw441Assignment4}.
+The code for the report is available at github.com/grantxxcoder/25849646rw441Assignment4.
 \appendix
 
 \section*{List of Acronyms}

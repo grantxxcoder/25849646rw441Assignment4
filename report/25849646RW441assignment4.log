@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.26)  15 OCT 2025 22:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.5.26)  15 OCT 2025 23:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -220,9 +220,6 @@ Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
 \c@ALC@depth=\count285
 \ALC@tlm=\skip54
 \algorithmicindent=\skip55
-) (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
-\Urlmuskip=\muskip17
-Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 ) (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen175
@@ -280,20 +277,20 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 ) (./25849646RW441assignment4.aux)
 \openout1 = `25849646RW441assignment4.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
 
 -- Lines per column: 56 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -318,52 +315,47 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
-Underfull \hbox (badness 2310) in paragraph at lines 41--42
+Underfull \hbox (badness 2310) in paragraph at lines 40--41
 \OT1/ptm/m/n/10 to strong gen-er-al-iza-tion, ro-bust-ness, and mod-est tun-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
 
  []
 
 
-Underfull \hbox (badness 2418) in paragraph at lines 43--44
+Underfull \hbox (badness 2418) in paragraph at lines 42--43
 \OT1/ptm/m/n/10 depth and fea-ture sub-sam-pling in-flu-ence ran-dom for-est
  []
 
 
-Underfull \hbox (badness 3482) in paragraph at lines 43--44
+Underfull \hbox (badness 3482) in paragraph at lines 42--43
 \OT1/ptm/m/n/10 com-pos-ing en-sem-bles that in-ten-tion-ally mix un-der-fit-ted
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--44
+Underfull \hbox (badness 10000) in paragraph at lines 42--43
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--46
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
 
  []
 
 
-Underfull \hbox (badness 3449) in paragraph at lines 47--48
+Underfull \hbox (badness 3449) in paragraph at lines 46--47
 \OT1/ptm/m/n/10 stag-nate; the op-ti-mal depth in-creases with com-plex-ity,
  []
 
 
-Underfull \hbox (badness 1831) in paragraph at lines 47--48
-\OT1/ptm/m/n/10 medium, and com-plex datasets re-spec-tively. With depth
- []
-
-
-Underfull \hbox (badness 1496) in paragraph at lines 47--48
+Underfull \hbox (badness 1496) in paragraph at lines 46--47
 \OT1/ptm/m/n/10 dras-ti-cally im-prove per-for-mance. The in-clu-sion of more
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 47--48
+Underfull \hbox (badness 10000) in paragraph at lines 46--47
 
  []
 
@@ -371,135 +363,144 @@ Underfull \hbox (badness 10000) in paragraph at lines 47--48
 
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 75.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 74.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 75.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 74.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 1755) in paragraph at lines 75--76
+Underfull \hbox (badness 1755) in paragraph at lines 74--75
 [] []\OT1/ptm/m/n/10 Training data $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 X; y\OT1/cmr/m/n/10 )$\OT1/ptm/m/n/10 , n[]estimators, max[]depth,
  []
 
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 99.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 98.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 3068) in paragraph at lines 99--100
+Underfull \hbox (badness 3068) in paragraph at lines 98--99
 []\OT1/ptm/m/n/10 Three syn-thetic, tab-u-lar clas-si-fi-ca-tion datasets of in-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--130
+Underfull \hbox (badness 10000) in paragraph at lines 125--129
 []\OT1/ptm/m/n/10 A cus-tom scikit-learn com-pat-i-ble es-ti-ma-tor was
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--130
+Underfull \hbox (badness 10000) in paragraph at lines 125--129
 \OT1/ptm/m/n/10 im-ple-mented by ex-tend-ing \OT1/pcr/m/n/10 BaseEstimator \OT1/ptm/m/n/10 and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--130
+Underfull \hbox (badness 10000) in paragraph at lines 125--129
 \OT1/pcr/m/n/10 ClassifierMixin\OT1/ptm/m/n/10 . Each base learner is a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--130
+Underfull \hbox (badness 10000) in paragraph at lines 125--129
 \OT1/pcr/m/n/10 DecisionTreeClassifier\OT1/ptm/m/n/10 . The en-sem-ble ex-poses
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--130
+Underfull \hbox (badness 10000) in paragraph at lines 125--129
 \OT1/ptm/m/n/10 the hy-per-pa-ram-e-ters: \OT1/pcr/m/n/10 n_estimators\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 max_depth\OT1/ptm/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 126--130
+Underfull \hbox (badness 10000) in paragraph at lines 125--129
 \OT1/pcr/m/n/10 max_features\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 bootstrap\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 criterion\OT1/ptm/m/n/10 ,
  []
 
 [2]
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 169.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+Underfull \hbox (badness 2205) in paragraph at lines 140--142
+\OT1/ptm/m/n/10 from \OT1/pcr/m/n/10 sklearn.model_selection \OT1/ptm/m/n/10 [Pe-dregosa et al.,
+ []
+
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 168.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 169.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 168.
  [3]
 <images/all_datasets_depth_accuracy.pdf, id=21, 557.92442pt x 413.32794pt>
 File: images/all_datasets_depth_accuracy.pdf Graphic file (type pdf)
 <use images/all_datasets_depth_accuracy.pdf>
-Package pdftex.def Info: images/all_datasets_depth_accuracy.pdf  used on input line 211.
+Package pdftex.def Info: images/all_datasets_depth_accuracy.pdf  used on input line 210.
 (pdftex.def)             Requested size: 252.0pt x 186.6896pt.
 <images/all_datasets_accuracy_vs_features.png, id=22, 497.2176pt x 367.6134pt>
 File: images/all_datasets_accuracy_vs_features.png Graphic file (type png)
 <use images/all_datasets_accuracy_vs_features.png>
-Package pdftex.def Info: images/all_datasets_accuracy_vs_features.png  used on input line 227.
+Package pdftex.def Info: images/all_datasets_accuracy_vs_features.png  used on input line 226.
 (pdftex.def)             Requested size: 252.0pt x 186.3136pt.
  [4 <./images/all_datasets_depth_accuracy.pdf> <./images/all_datasets_accuracy_vs_features.png>]
 <images/simple_depth_vs_trees_heatmap.pdf, id=56, 557.92442pt x 413.3844pt>
 File: images/simple_depth_vs_trees_heatmap.pdf Graphic file (type pdf)
 <use images/simple_depth_vs_trees_heatmap.pdf>
-Package pdftex.def Info: images/simple_depth_vs_trees_heatmap.pdf  used on input line 245.
+Package pdftex.def Info: images/simple_depth_vs_trees_heatmap.pdf  used on input line 244.
 (pdftex.def)             Requested size: 252.0pt x 186.7151pt.
 <images/medium_depth_vs_trees_heatmap.pdf, id=57, 557.92442pt x 413.3844pt>
 File: images/medium_depth_vs_trees_heatmap.pdf Graphic file (type pdf)
 <use images/medium_depth_vs_trees_heatmap.pdf>
-Package pdftex.def Info: images/medium_depth_vs_trees_heatmap.pdf  used on input line 251.
+Package pdftex.def Info: images/medium_depth_vs_trees_heatmap.pdf  used on input line 250.
 (pdftex.def)             Requested size: 252.0pt x 186.7151pt.
 <images/complex_depth_vs_trees_heatmap.pdf, id=58, 557.92442pt x 413.3844pt>
 File: images/complex_depth_vs_trees_heatmap.pdf Graphic file (type pdf)
 <use images/complex_depth_vs_trees_heatmap.pdf>
-Package pdftex.def Info: images/complex_depth_vs_trees_heatmap.pdf  used on input line 256.
+Package pdftex.def Info: images/complex_depth_vs_trees_heatmap.pdf  used on input line 255.
 (pdftex.def)             Requested size: 252.0pt x 186.7151pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1975) in paragraph at lines 266--268
+Underfull \hbox (badness 1975) in paragraph at lines 265--267
 []\OT1/ptm/m/n/10 To stan-dard-ize sub-se-quent com-par-isons, the fol-low-ing
  []
 
 [5 <./images/simple_depth_vs_trees_heatmap.pdf> <./images/medium_depth_vs_trees_heatmap.pdf> <./images/complex_depth_vs_trees_heatmap.pdf>]
-Underfull \hbox (badness 2591) in paragraph at lines 269--270
+Underfull \hbox (badness 2591) in paragraph at lines 268--269
 []\OT1/pcr/m/n/10 optimal_depths \OT1/ptm/m/n/10 = \OMS/cmsy/m/n/10 f\OT1/pcr/m/n/10 simple\OT1/ptm/m/n/10 : 8, \OT1/pcr/m/n/10 medium\OT1/ptm/m/n/10 : 10,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 336--337
+Underfull \hbox (badness 10000) in paragraph at lines 335--336
 []\OT1/ptm/m/n/10 To test for dif-fer-ences among the five en-sem-ble
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 336--337
+Underfull \hbox (badness 10000) in paragraph at lines 335--336
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 338--339
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 358--359
+Underfull \hbox (badness 10000) in paragraph at lines 357--358
 
  []
 
 
-Underfull \hbox (badness 3701) in paragraph at lines 379--380
+Underfull \hbox (badness 3701) in paragraph at lines 378--379
 \OT1/ptm/m/n/10 and the most sta-ble CV re-sults among com-po-si-tions.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 379--380
+Underfull \hbox (badness 10000) in paragraph at lines 378--379
 
  []
 
 [6]
-Overfull \hbox (4.4403pt too wide) in paragraph at lines 425--431
+Underfull \hbox (badness 10000) in paragraph at lines 417--419
+[]\OT1/ptm/m/n/10 The code for the re-port is avail-able at
+ []
+
+
+Overfull \hbox (4.4403pt too wide) in paragraph at lines 424--430
 [] 
  []
 
@@ -522,15 +523,15 @@ L3 programming layer <2024-01-22>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 5553 strings out of 474222
- 94272 string characters out of 5748733
+ 5469 strings out of 474222
+ 93122 string characters out of 5748733
  1953975 words of memory out of 5000000
- 27744 multiletter control sequences out of 15000+600000
+ 27664 multiletter control sequences out of 15000+600000
  597648 words of font info for 114 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,12n,77p,1652b,502s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 67i,12n,77p,1661b,502s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/newtx/ztmr.pfb>
-Output written on 25849646RW441assignment4.pdf (7 pages, 682715 bytes).
+Output written on 25849646RW441assignment4.pdf (7 pages, 682922 bytes).
 PDF statistics:
  149 PDF objects out of 1000 (max. 8388607)
  90 compressed objects within 1 object stream
